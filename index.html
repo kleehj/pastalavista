@@ -117,6 +117,12 @@ main{max-width:660px;margin:0 auto;padding:16px 14px 60px}
 .steps li div{flex:1}
 .flip{display:flex;gap:8px;font-size:13px;background:#FFF6E4;border:1px solid var(--gold);color:#6B5410;border-radius:10px;padding:9px 11px;margin:4px 0 8px;line-height:1.5}
 .flip b{color:#4d3c08}
+.gal{display:flex;gap:9px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:4px 0 8px;padding-bottom:2px}
+.gal::-webkit-scrollbar{display:none}
+.gal figure{flex:0 0 auto;width:150px;margin:0}
+.gal img{width:150px;height:100px;object-fit:cover;border-radius:11px;display:block;box-shadow:var(--shadow)}
+.gal figcaption{font-size:11px;color:var(--ink-soft);margin-top:4px;line-height:1.3}
+.dayhead + .gal{margin:0 0 14px}
 .spots{margin:4px 0 4px}
 .spot{border-top:1px dashed var(--line);padding:10px 0 4px}
 .spot:first-child{border-top:0}
@@ -335,7 +341,7 @@ const PODERI_DINNER = [
 
 // Cetona base (Thu 23 / Fri 24) — same day-shape pattern. Photos to come (photoTBD placeholders).
 const CETONA_SHAPES = [
- {e:'🌄',g:'g3',verified:true,photoTBD:'Montepulciano — Piazza Grande',title:'Val d’Orcia Day',pitch:'The big scenic loop west — Renaissance hilltop, tufa wine cellars, a white travertine soak',
+ {e:'🌄',g:'g3',verified:true,img:'photos/montepulciano.jpg',gallery:[['photos/montepulciano-cellar.jpg','Montepulciano cellar (the kid hook)'],['photos/pienza.jpg','Pienza'],['photos/bagni-san-filippo.jpg','Fosso Bianco / Bagni San Filippo']],title:'Val d’Orcia Day',pitch:'The big scenic loop west — Renaissance hilltop, tufa wine cellars, a white travertine soak',
   drive:'Montepulciano ~30 min · legs short once out there',hours:'full day out',price:'lunch + tastings + free soak',
   steps:[
    {t:'AM',txt:'Drive to <b>Montepulciano</b> (~30 min). Hilltop Renaissance town. <b>Kid hook:</b> the historic cellars dug into the tufa (Cantina De’ Ricci, Contucci) — cool, cavernous, an adventure and real heat relief. <b>Adults:</b> walk-in Vino Nobile tastings at the Corso enoteche, no booking needed. Apéro in Piazza Grande, lunch in town.'},
@@ -343,7 +349,7 @@ const CETONA_SHAPES = [
    {t:'LAST',txt:'<b>Bagni San Filippo / Fosso Bianco</b> (31 min from Pienza) — the white travertine “Balena Bianca” hot cascade in the forest, FREE. Do it <b>last</b>: sulphur + mud, then the 45-min drive home to shower.'}],
   warn:'Book nothing in the countryside — stick to in-town cellars/enoteche (kids can’t taste; the cellars are their draw). Fosso Bianco: short slippery forest trail (water shoes), sulphur smell, don’t wear favourite swimwear, can feel crowded. Water is warm, not cooling — a sight + soak, not heat relief.',
   links:[['🗺️ Montepulciano',mapsQ('Montepulciano Piazza Grande')],['🗺️ Pienza',mapsQ('Pienza')],['🗺️ Fosso Bianco',mapsQ('Fosso Bianco Bagni San Filippo')]]},
- {e:'🏊',g:'g2',verified:true,photoTBD:'Chiusi — Labirinto di Porsenna',title:'Local / Gentle Day',pitch:'Low driving, all ≤15 min east — villa pool + an underground Etruscan adventure',
+ {e:'🏊',g:'g2',verified:true,img:'photos/chiusi.jpg',gallery:[['photos/san-casciano.jpg','San Casciano dei Bagni']],title:'Local / Gentle Day',pitch:'Low driving, all ≤15 min east — villa pool + an underground Etruscan adventure',
   drive:'Chiusi 11 min · San Casciano 15 min',hours:'pool + one cool outing',price:'guided tour small · pool free',
   steps:[
    {t:'Anchor',txt:'<b>Villa pool</b> — the primary kid-water for the southern half. Build the day around it.'},
@@ -358,14 +364,14 @@ const CETONA_SHAPES = [
 ];
 
 const CETONA_DINNER = [
- {e:'🍸',g:'g1',verified:true,photoTBD:'Cetona — Piazza Garibaldi at dusk',title:'Cetona town',pitch:'Dinner + passeggiata on the doorstep — the easy default',
+ {e:'🍸',g:'g1',verified:true,img:'photos/da-nilo.jpg',title:'Cetona town',pitch:'Dinner + passeggiata on the doorstep — the easy default',
   drive:'0 min · walk',hours:'evening on the piazza',price:'reserve for da Nilo',
   more:'Your own square. Evening passeggiata on Piazza Garibaldi, dinner without a drive. Provisioning: <b>FEMA deli</b> (Piazza Garibaldi 21 — hams, pecorino, wine); village shops open to 19:30 daily (Sun &amp; Wed early close).',
   spots:[
    {name:'Ristorante da Nilo',rating:'Michelin Guide',desc:'Cetona’s best/fanciest — Piazza Garibaldi, seasonal menu, indoor + outdoor, great beer list. The adults’ nicer night. Reserve (confirm the number in town).',hours:'dinner · reserve',map:mapsQ('Ristorante da Nilo Cetona')},
    {name:'Bar Sport',rating:'casual',desc:'Next to da Nilo — light lunches, homemade gelato, the best coffee on the square, outdoor seating. The everyday family spot.',hours:'day + evening',map:mapsQ('Bar Sport Cetona')}],
   links:[['🗺️ Piazza Garibaldi',mapsQ('Piazza Garibaldi Cetona')],['🗺️ FEMA deli',mapsQ('FEMA Cetona')]]},
- {e:'🌆',g:'g3',verified:true,photoTBD:'Montepulciano / Monticchiello at golden hour',title:'Val d’Orcia village',pitch:'The “make an evening of it” upgrade when you’re already out west',
+ {e:'🌆',g:'g3',verified:true,img:'photos/monticchiello.jpg',title:'Val d’Orcia village',pitch:'The “make an evening of it” upgrade when you’re already out west',
   drive:'Montepulciano ~30 min · Monticchiello ~40 min',hours:'golden hour + dinner',price:'reserve ahead',
   more:'The upgrade for a night you’re already touring west. <b>Montepulciano</b>: apéro-hour, then dinner in Piazza Grande after the wine day. <b>Monticchiello</b> (~40 min): a tiny, atmospheric Val d’Orcia hamlet flagged as a lovely dinner village.',
   warn:'Monticchiello: verify a specific restaurant and book before relying on it.',
@@ -468,6 +474,7 @@ const DAYS = [
   intro:'Whichever town you didn’t do Monday. Same after-6pm play — towers or funicular, gelato, a long table. <b>Mind the Tuesday closures below.</b>'},
 
  {id:'wed22',dow:'Wed',num:'22',name:'Poderi → Cetona',base:'Transfer day via Monteriggioni + Siena',lock:'semi',
+  gallery:[['photos/monteriggioni-transfer.jpg','Monteriggioni'],['photos/siena.jpg','Siena — Piazza del Campo']],
   tracks:[{name:null,rows:[
    {t:'08:30',title:'Pack, pay, pool goodbye',s:'Poderi checkout 8:00–10:30. <b>Pay €1,830 on departure — 5% discount if cash</b> + tourist tax ~€37.50 cash.',
     warn:'Settle the farm-activities tab too.'},
@@ -602,6 +609,10 @@ function rowHtml(r){
     </div></li>`;
 }
 
+function galleryHtml(g){
+  return `<div class="gal">${g.map(([src,label])=>`<figure><img loading="lazy" src="${src}" alt="${label}" onerror="this.closest('figure').remove()"><figcaption>${label}</figcaption></figure>`).join('')}</div>`;
+}
+
 function optHtml(o){
   const hero = `<div class="hero ${o.g||'g1'}">
       ${o.img?`<img loading="lazy" src="${o.img}" alt="${o.title}" onload="this.classList.add('ok')" onerror="this.remove()">`:''}
@@ -627,6 +638,7 @@ function optHtml(o){
         </div>
       </div>`).join('')}</div>`:'';
   const flip = o.flip?`<div class="flip">🔄 <div>${o.flip}</div></div>`:'';
+  const gallery = o.gallery?galleryHtml(o.gallery):'';
   const links = (o.links||[]).map(l=>`<a class="btn dir" href="${l[1]}" target="_blank" rel="noopener">${l[0]}</a>`).join('');
   return `<details class="opt">
     <summary>${hero}
@@ -638,6 +650,7 @@ function optHtml(o){
       ${o.more?`<p>${o.more}</p>`:''}
       ${steps}
       ${spots}
+      ${gallery}
       ${flip}
       ${o.warn?`<div class="warn" style="margin-bottom:8px">⚠️ <span>${o.warn}</span></div>`:''}
       <div class="btnrow">
@@ -668,6 +681,7 @@ function dayScreen(d){
     <div class="base">${d.base}</div>
     ${chipRow(d)}
   </div>`;
+  if(d.gallery) h += galleryHtml(d.gallery);
   if(d.sections){
     if(d.intro) h += `<div class="pickbar">☝️ ${d.intro}</div>`;
     d.sections.forEach(sec=>{
