@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Pastalavista 2026</title>
-<meta name="description" content="Kleeh + Tann families · Rome &amp; Tuscany · Jul 17–26 2026">
+<meta name="description" content="Kleehs + Hoosiers · Rome &amp; Tuscany · Jul 17–26 2026">
+<meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#C05A33">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -100,7 +101,18 @@ main{max-width:660px;margin:0 auto;padding:16px 14px 60px}
 .btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink-soft)}
 
 /* ---------- menu cards ---------- */
-.pickbar{font-size:13.5px;color:var(--ink-soft);background:#F4ECDD;border:1px dashed var(--terra-soft);border-radius:12px;padding:10px 13px;margin-bottom:14px}
+.pickbar{font-size:13.5px;color:var(--ink-soft);background:#F4ECDD;border:1px dashed var(--terra-soft);border-radius:12px;padding:11px 13px;margin-bottom:16px;line-height:1.55}
+.pickbar b{color:var(--ink)}
+.menuhead{font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--green);margin:18px 2px 10px;display:flex;align-items:center;gap:8px}
+.menuhead::after{content:"";flex:1;height:1px;background:var(--line)}
+.secnote{font-size:13px;color:var(--ink-soft);margin:-4px 4px 12px}
+.steps{list-style:none;margin:2px 0 4px;padding:0}
+.steps li{display:flex;gap:10px;padding:6px 0;border-top:1px dashed var(--line);font-size:13.5px}
+.steps li:first-child{border-top:0}
+.steps .st{flex:0 0 42px;font-weight:700;color:var(--terra-dark);font-size:12px;padding-top:1px}
+.steps li div{flex:1}
+.flip{display:flex;gap:8px;font-size:13px;background:#FFF6E4;border:1px solid var(--gold);color:#6B5410;border-radius:10px;padding:9px 11px;margin:4px 0 8px;line-height:1.5}
+.flip b{color:#4d3c08}
 .opt{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
 .opt summary{list-style:none;cursor:pointer;position:relative}
 .opt summary::-webkit-details-marker{display:none}
@@ -171,12 +183,16 @@ footer{max-width:660px;margin:0 auto;padding:0 18px 40px;font-size:12px;color:#B
 
 <main id="app"></main>
 
-<footer>Pastalavista 2026 · Kleeh + Tann families · buon viaggio 🍝</footer>
+<footer>Pastalavista 2026 · Kleehs + Hoosiers · buon viaggio 🍝</footer>
 
 <script>
 /* =====================  DATA  ===================== */
 
 const mapsQ = q => 'https://maps.google.com/?q=' + encodeURIComponent(q);
+// Place link with a verified Google place_id (preferred). Fall back to mapsQ(name) when no id.
+const mapsPid = (name,id) => id
+  ? 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(name) + '&query_place_id=' + id
+  : mapsQ(name);
 const dirTo = (o,dst,mode) => 'https://www.google.com/maps/dir/?api=1&origin=' + encodeURIComponent(o) + '&destination=' + encodeURIComponent(dst) + '&travelmode=' + (mode||'driving');
 const wm = f => 'https://commons.wikimedia.org/wiki/Special:FilePath/' + f + '?width=800';
 
@@ -184,43 +200,49 @@ const HEAT = '🥵 Heat wave · mid-90s °F — mornings out, shade or pool at m
 
 /* ---- shared card menus ---- */
 
-const MENU_PODERI = [
- {k:'A',e:'🏊',g:'g2',title:'Farm Day at Poderi',pitch:'Infinity pool + everything bookable at reception',
-  drive:'0 min — you are here',hours:'Pool all day',price:'Activities priced per person',
-  more:'Wine tasting, cooking class, pizza class, e-bikes and truffle hunt are all bookable at reception — ask the evening before. BBQ at the apartment. No pool towels provided (you brought yours… right?).',
-  maps:mapsQ('Poderi Arcangelo San Gimignano')},
- {k:'B',e:'🏰',g:'g1',img:wm('San_Gimignano_04.jpg'),title:'San Gimignano town',pitch:'Medieval Manhattan — towers, alleys, world-champion gelato',
-  drive:'~15 min drive',hours:'Town always open · Torre Grossa ~10:00–19:30',price:'Free to wander · tower ~€9',
-  more:'Gelateria Dondoli on Piazza della Cisterna is the mandatory stop. Best plan in the heat: go after 17:00 for the evening passeggiata and golden light, dinner in town.',
-  warn:'Midday = crowds + full sun. Park at P2/P3/P4 lots and walk in — the center is ZTL.',
-  maps:mapsQ('San Gimignano'),dir:dirTo('Poderi Arcangelo San Gimignano','San Gimignano')},
- {k:'C',e:'🏛️',g:'g3',img:wm('Volterra_panorama.jpg'),title:'Volterra + SentierElsa walk',pitch:'Etruscan hill town + a shaded turquoise river walk',
-  drive:'Volterra ~40 min · SentierElsa ~25 min',hours:'SentierElsa daylight hours',price:'Etruscan museum ~€10 · river walk free',
-  more:'Volterra: alabaster workshops, Roman theatre, Etruscan museum — less crowded than San Gimignano. Pair with the SentierElsa river trail at Colle di Val d’Elsa on the way home: shaded path along unreal turquoise water, kids can paddle.',
-  warn:'Water shoes help on the river stones.',
-  maps:mapsQ('Volterra'),dir:dirTo('Poderi Arcangelo San Gimignano','Volterra')},
- {k:'D',e:'🍷',g:'g4',img:wm('Greve_in_Chianti,_piazza_Matteotti.jpg'),title:'Chianti villages drive',pitch:'Castellina → Radda → Greve → Panzano, the classic loop',
-  drive:'~40 min to Castellina · full loop half a day',hours:'Villages always open',price:'Lunch + tastings as you go',
-  more:'Roll between stone villages on the SR222. Piazza Matteotti in Greve for lunch, butcher-legend Dario Cecchini in Panzano if the group wants a carnivore spectacle. Wine tasting for the adults, piazza gelato for the kids.',
-  warn:'Winding roads — anyone carsick rides up front.',
-  maps:mapsQ('Castellina in Chianti'),dir:dirTo('Poderi Arcangelo San Gimignano','Greve in Chianti')},
- {k:'E',e:'🚲',g:'g2',img:wm('Lucca,_Piazza_dell’Anfiteatro.jpg'),title:'Lucca day',pitch:'Bike the Renaissance walls, piazza-hop below',
-  drive:'~1 h 15 drive',hours:'Walls always open · bike hire ~09:00–19:30',price:'Bikes ~€5–6/h · family quadricycles available',
-  more:'Rent bikes at Porta Santa Maria and loop the 4 km tree-lined wall — flat, car-free, kid-perfect. Then Piazza dell’Anfiteatro, climb the tree-topped Torre Guinigi, buccellato pastry.',
-  warn:'Longest drive of the open days — leave by 09:00.',
-  maps:mapsQ('Lucca'),dir:dirTo('Poderi Arcangelo San Gimignano','Lucca')},
- {k:'F',e:'🏘️',g:'g1',title:'Certaldo Alto',pitch:'Tiny brick hill town by funicular — the quiet one',
-  drive:'~25 min drive',hours:'Funicular ~07:30–24:00 (summer)',price:'Funicular ~€3 return',
-  more:'Park in the lower town, ride the funicular up to Boccaccio’s red-brick borgo. One main street, tower views, zero tour buses. Lovely at aperitivo hour; combine with a pool morning.',
-  maps:mapsQ('Certaldo Alto'),dir:dirTo('Poderi Arcangelo San Gimignano','Certaldo')},
- {k:'G',e:'🎈',g:'g4',title:'Hot-air balloon',pitch:'Sunrise over the towers — the big-ticket wow',
-  drive:'Meet point ~30–45 min, before dawn',hours:'Launch ~05:30–06:00, back by ~09:30',price:'💶💶 roughly €250+/pp — the splurge',
-  more:'Sunrise flight over the Chianti/Val d’Elsa hills, prosecco landing, rest of the day at the pool. Needs booking days ahead and calm weather — decide early.',
-  warn:'Very early wake-up; age/height minimums vary by operator — check for Theo.',
-  maps:mapsQ('San Gimignano')},
- {k:'H',e:'🌗',g:'g3',title:'Split-group day',pitch:'Some at the pool, some out adventuring',
-  drive:'Two cars = freedom',hours:'—',price:'—',
-  more:'Nothing says the eight of you move as one. Pool + farm activities for one car, any option above for the other. Regroup for dinner and compare notes.'},
+// San Gimignano base (Mon 20 / Tue 21) — day-shape "Lego blocks".
+// Rhythm: one morning outing → lunch → pool/river through the 2–5pm heat → golden-hour town + apéro → dinner ~7:30. "Home by 5" is a feature. Max two real stops/day.
+const PODERI_SHAPES = [
+ {e:'🏞️',g:'g2',verified:true,title:'Monteriggioni + Colle + River',pitch:'The gentle day — a castle photo, a crowd-free walled town, an afternoon in cold turquoise water',
+  drive:'~1 h 23 total driving, no backtrack',hours:'home by ~5',price:'basically free',
+  steps:[
+   {t:'AM',txt:'Poderi → <b>Monteriggioni</b> (33 min). A disciplined 30-min ring-wall walk + photo — it’s a 30-minute stop, not a morning.'},
+   {t:'~11',txt:'→ <b>Colle di Val d’Elsa</b> (15 min). Lived-in walled old town, no crowds. Free parking below the old town (follow signs to Volterra); upper town is one long strollable street, a lift links upper/lower. Lunch here.'},
+   {t:'PM',txt:'→ <b>SentierElsa river</b> (5 min). Swim in the gorge through the hottest hours.'},
+   {t:'Eve',txt:'Home, then dinner in a dinner town (below).'}],
+  flip:'<b>Flip the afternoon.</b> Town-first → river cools you through the hot part of the day (best on scorchers). River-first → kids swim fresh in the AM, then end on a golden-hour town + dinner. Colle and the river are 5 min apart — swapping costs nothing.',
+  links:[['🗺️ Monteriggioni',mapsQ('Monteriggioni')],['🗺️ Colle parking',mapsQ('Parcheggio Porta Vecchia Colle di Val d\'Elsa')],['🗺️ SentierElsa',mapsQ('SentierElsa Ponte di San Marziale Colle di Val d\'Elsa')]]},
+ {e:'🏛️',g:'g3',verified:true,title:'Volterra',pitch:'The far one, worth it — a lived-in Etruscan/Roman town, then a restful pool afternoon',
+  drive:'43 min each way',hours:'cool morning + pool PM',price:'lunch + alabaster',
+  steps:[
+   {t:'AM',txt:'Poderi → <b>Volterra</b> (43 min — go in the cool morning). Lived-in Etruscan/Roman town: alabaster workshops, Roman theatre. Our kind of town, not a honeypot.'},
+   {t:'Lunch',txt:'In town.'},
+   {t:'PM',txt:'Home → <b>villa pool</b>. Volterra stands alone (it’s the far one), so pair it with a restful pool afternoon rather than the river.'},
+   {t:'Eve',txt:'Dinner in a dinner town (below).'}],
+  links:[['🗺️ Volterra parking',mapsQ('Volterra parking')]]},
+ {e:'🏊',g:'g2',verified:true,title:'Farm Day',pitch:'Zero driving — pool + on-site experiences. The heat-spike / worn-out day',
+  drive:'0 min',hours:'all day at Poderi',price:'experiences booked at reception',
+  more:'Stay put. Pool, plus on-site bookables (reserve at reception the evening before): wine &amp; EVO-oil tasting with a cellar tour, a Tuscan cooking class, a pizza-making class, e-bikes. Good for a heat-spike day or when everyone’s worn out. No pool towels provided — bring them.'},
+];
+
+const PODERI_WATER = [
+ {e:'💦',g:'g2',verified:true,title:'SentierElsa river',pitch:'FREE turquoise gorge — snaps onto any afternoon as the heat-escape',
+  drive:'28 min (San Marziale entrance)',hours:'daylight, no gate',price:'free (paid parking)',
+  more:'Free, no gate. Turquoise river, ~4 km round-trip trail, the <b>Diborrato Waterfall</b> (15 m drop into a deep pool). Recommended entrance: <b>Ponte di San Marziale, Gracciano</b>. Park at Fluviale Elsa Parking, ~200 m from the entrance (paid). Shallow designated areas are OK for little ones (Theo) under supervision. Best as an afternoon heat-escape — shaded gorge, cold water.',
+  warn:'<b>Water shoes essential</b> (slippery stone fords, sharp rocks). Deep waterfall pools = strong swimmers only. NO lifeguards, currents change — never let kids swim unsupervised. No restrooms or shops: bring water, snacks, towels, a dry bag.',
+  links:[['🗺️ San Marziale entrance',mapsQ('SentierElsa Ponte di San Marziale Colle di Val d\'Elsa')],['🗺️ Fluviale Elsa parking',mapsQ('Parcheggio Fluviale Elsa Gracciano')]]},
+];
+
+const PODERI_DINNER = [
+ {e:'🏙️',g:'g1',verified:true,img:wm('San_Gimignano_04.jpg'),title:'San Gimignano',pitch:'Golden-hour towers + world-champion gelato — after 6pm only',
+  drive:'17 min (P2 Montemaggio)',hours:'go AFTER 6pm',price:'dinner for 8 · reserve',
+  more:'Go <b>after 6pm only</b> — it’s mobbed 10–5 (the Gordes of Tuscany). Golden-hour towers, then <b>Gelateria Dondoli</b> (world-champion gelato). Dinner for 8 (all reserve in July): <b>Le Vecchie Mura</b> (famous terrace view — reserve ahead, ~€2/pp terrace charge), La Mandragola, Osteria del Carcere, Trattoria Rigoletto.',
+  links:[['🗺️ Le Vecchie Mura',mapsQ('Le Vecchie Mura San Gimignano')],['🗺️ Parking P2',mapsQ('Parcheggio Montemaggio San Gimignano')]]},
+ {e:'🚡',g:'g4',verified:true,title:'Certaldo Alto',pitch:'Quieter, more local — funicular up to a medieval old town',
+  drive:'9 min',hours:'evening',price:'dinner for 8 · reserve',
+  more:'Quieter and more local than San Gimignano (our Lourmarin candidate). Ride the funicular up to the medieval old town — a kid win, and it saves climbing in the heat. Dinner in the old town: <b>Il Castello</b> (next to the funicular, garden with valley views) or <b>Enoteca Boccaccio</b>. Both reserve.',
+  warn:'Verify the funicular’s same-day hours — posted times aren’t always respected.',
+  links:[['🗺️ Funicolare di Certaldo',mapsQ('Funicolare di Certaldo')]]},
 ];
 
 const MENU_CETONA = [
@@ -267,26 +289,29 @@ const MENU_CETONA = [
 const DAYS = [
  {id:'fri17',dow:'Fri',num:'17',name:'Arrivals',base:'Rome · two tracks',lock:'locked',
   tracks:[
-   {name:'Track A — Tanns + Gus · land FCO morning',rows:[
+   {name:'Track A — Hoosiers · land FCO morning',rows:[
     {t:'AM',title:'FCO → BIG HOUSE COLOSSEO',s:'Leonardo Express to Termini or taxi — <b>fixed €55</b> FCO→center from the official rank. Via Merulana 105.',
      btns:[['maps','🗺️ Maps',mapsQ('Via Merulana 105 Roma')],['tel','📞 Host',null,'+393514967316']]},
     {t:'Day',title:'Mission: stay awake until ~21:00',s:'Beat the jet lag (Indy is 6 h behind). Light wandering only — Monti neighborhood, gelato currency for the kids.'},
     {t:'PM',title:'Colosseum exterior at sunset',s:'10 min walk from the apartment. No tickets, just the postcard.',
      btns:[['dir','🚶 Walk there',dirTo('Via Merulana 105 Roma','Colosseo Roma','walking')]]},
-    {t:'19:30',title:'Dinner for 5 — Gus’s pick 🍝',s:'<b>Decision pending</b> — Gus is choosing from the concierge list. Frontrunner by geography: <b>Il Focolare</b>, Via Nino Bixio 36 (~8 min walk, €15–28/pp, kid-friendly).',pending:true,
-     btns:[['maps','🗺️ Il Focolare',mapsQ('Il Focolare Via Nino Bixio 36 Roma')]]},
+    {t:'19:40',title:'Dinner for 5 — Il Focolare ✅ 🍝',s:'<b>Confirmed</b> (Allison Tann) · <b>7:40pm</b>, 3 adults + 2 kids. Via Gabriele Rossetti 40, 00152 Roma. Tel +39 06 581 8395.',
+     warn:'This is across the river in Monteverde — a taxi from Via Merulana (~20–25 min), not the walkable spot from the old plan. Book a FreeNow cab.',
+     btns:[['maps','🗺️ Il Focolare',mapsQ('Il Focolare Via Gabriele Rossetti 40 Roma')],['tel','📞 Restaurant',null,'+39065818395'],['dir','🍴 TheFork','https://www.thefork.com/restaurant/il-focolare-r543939']]},
     {t:'21:00',title:'Early night',s:'You made it. Domani si comincia.'}]},
-   {name:'Track B — Kleehs + JT · land FCO 22:45',rows:[
+   {name:'Track B — Kleehs · land FCO 22:45',rows:[
     {t:'19:15',title:'BA 562 · LHR T5 → FCO',s:'Ref <b>XP4CEN</b> · seats 9A/9B/9C · lands <b>22:45</b>.',hl:true},
     {t:'23:15',title:'Taxi to Ciao Bella',s:'Official rank outside T3 — <b>fixed €55</b> to the center. Via Mecenate 27. Arrival ~midnight, host Floriana is notified.',
      btns:[['maps','🗺️ Maps',mapsQ('Via Mecenate 27 Roma')]]},
-    {t:'00:00',title:'Crash 😴',s:'Booking #5234860983 · PIN 8083. Big day tomorrow.'}]}
+    {t:'00:00',title:'Crash at Ciao Bella 😴',s:'Via Mecenate 27 · Booking #5234860983 · door PIN <b>8083</b> · host Floriana. Big day tomorrow.',
+     btns:[['dir','📄 Booking.com confirmation','https://secure.booking.com/confirmation.en-us.html?label=gen173bo-10EgVpbmJveCiCAjjoB0gzWANoUIgBAZgBM7gBB8gBDdgBA-gBAfgBAYgCAZgCIagCAbgCuono0gbAAgHSAiQxYzEzNzJlYS1kMjE5LTQ2ZWYtODNlNi0wNGU3ZjQ1OTVhNmPYAgHgAgE&sid=892e38033dac1f14be76c9d4297042e0&aid=304142&auth_key=jnpE1m7x6zQHbNFM&source=mytrips']]}]}
   ]},
 
  {id:'sat18',dow:'Sat',num:'18',name:'The Epic Day',base:'Rome · all 9 together',lock:'locked',heat:true,
   tracks:[{name:null,rows:[
-   {t:'08:00',title:'Breakfast in Monti',s:'Slow start — cornetto e cappuccino.'},
-   {t:'09:15',title:'2 taxis to the Vatican',s:'~€15–20 each. Be at the entrance by <b>09:30</b>.',
+   {t:'08:00',title:'Group breakfast — all 9 ☕',s:'Meet-up before the day kicks off. Two options on Piazza Vittorio, ~5 min from both apartments:<br>· <b>Gatsby Café</b> (opens 8:00) — sit-down room, kid plates (pancakes, eggs, fruit), real coffee. Good for a proper group meal. ⭐4.3<br>· <b>Caffè del Portico</b> (opens 7:00) — cheap, quick stand-up cornetto + cappuccino, outdoor seats. Fast start. ⭐4.4',
+    btns:[['maps','🗺️ Gatsby Café',mapsPid('Gatsby Cafè','ChIJpXZt_bxhLxMRroOO2MeKxtw')],['maps','🗺️ Caffè del Portico',mapsPid('Caffè del Portico','ChIJofUHOb1hLxMRaQZupeMZyOE')]]},
+   {t:'09:15',title:'2 taxis to the Vatican',s:'Book via the <b>FreeNow</b> app (Rome cabs don’t cruise for hails — app or taxi rank only). ~€15–20 each. Be at the entrance by <b>09:30</b>.',
     btns:[['maps','🗺️ Vatican Museums',mapsQ('Musei Vaticani Roma')]]},
    {t:'10:00',title:'Vatican guided tour · 10:00–13:00',s:'Official booking <b>2L2N0QSF7WTNZPQCL</b> (visit 267845/2026-4) · 8 tickets (Theo free). Sistine Chapel + St Peter’s via the Scala Regia shortcut.<br><b>Day-of:</b> entrance <b>CORRIDOIO2 / PASSAGEWAY 2</b>, show voucher + ID outside 30 min before → after security, stairs on the far left → “Guided Tours” desk to collect tickets and meet the guide.',hl:true,
     warn:'Dress code: shoulders + knees covered, kids too. Small bags only. Bring passports for the reduced-fare tickets.',
@@ -297,14 +322,15 @@ const DAYS = [
    {t:'15:00',title:'Golf cart tour · 15:00–18:00',s:'Private, 9 pax · Royal Tours Rome · Viator ref <b>1411499199</b> · paid by Ali. Pickup/drop at the apartments. Route customizable: Trevi, Pantheon, Spanish Steps, Navona, Castel Sant’Angelo, food stop facing the Colosseum.',hl:true,
     warn:'Pickup point still to be set in Viator + booster for Theo to be flagged.'},
    {t:'18:00',title:'Decompress at the apartments',s:'AC, showers, kids horizontal.'},
-   {t:'19:30',title:'Group dinner (9) 🍷',s:'<b>Ali is booking via concierge.</b> Jason’s lean: <b>Il Sorpasso</b> (exact address being confirmed) then an evening wander — Piazza Santa Maria in Trastevere, gelato, Ponte Sisto. Taxis 10–15 min, ~€12–18, 2–3 cabs.',pending:true,
-    btns:[['maps','🗺️ Il Sorpasso',mapsQ('Il Sorpasso Roma')]]},
+   {t:'19:00',title:'Group dinner — Osteria dell’Anima ✅ 🍷',s:'<b>Confirmed</b> (Allison) · <b>7:00pm</b>, 9 pax (6 adults + 3 kids). Via di Santa Maria dell’Anima 8, right by <b>Piazza Navona</b>. Tel +39 06 686 4661. After dinner: wander Navona, the Pantheon lit up, gelato, back via the Corso — all walkable from the table.',
+    btns:[['maps','🗺️ Osteria dell’Anima',mapsQ('Osteria dell\'Anima Via di Santa Maria dell\'Anima 8 Roma')],['tel','📞 Restaurant',null,'+39066864661']]},
    {t:'22:00',title:'Home, sleep',s:'Big travel day tomorrow.'}]}],
   foot:'⚠️ Heat plan: siesta window intentionally traded for the air-conditioned cart 15:00–18:00. Water bottles everywhere.'},
 
  {id:'sun19',dow:'Sun',num:'19',name:'Rome → San Gimignano',base:'Train + cars · JT flies home',lock:'locked',
   tracks:[{name:null,rows:[
-   {t:'08:00',title:'Slow breakfast, pack',s:'Checkout is firm-ish: Ciao Bella by 10:30.'},
+   {t:'08:00',title:'Breakfast, then pack ☕',s:'<b>Gatsby Café</b> on Piazza Vittorio (sit-down, opens 8:00) is the Sunday move — <b>Caffè del Portico is closed Sundays</b>. Or skip it and grab cornetti at Termini’s Mercato Centrale on the way to the train. Checkout is firm-ish: Ciao Bella by 10:30.',
+    btns:[['maps','🗺️ Gatsby Café',mapsPid('Gatsby Cafè','ChIJpXZt_bxhLxMRroOO2MeKxtw')]]},
    {t:'10:00',title:'Check out both apartments',s:'Ciao Bella + BIG HOUSE, keys per host instructions.'},
    {t:'10:30',title:'To Termini',s:'Ciao Bella → Termini is a <b>12 min walk</b>. Optional: Mercato Centrale inside the station (air-con!) for train picnic supplies.',
     btns:[['dir','🚶 Walk to Termini',dirTo('Via Mecenate 27 Roma','Roma Termini','walking')]]},
@@ -314,7 +340,7 @@ const DAYS = [
    {t:'13:31',title:'Arrive Firenze Santa Maria Novella',s:'Stretch, gelato if the queue is short.'},
    {t:'13:40',title:'2 taxis to Alamo',s:'Rank outside SMN → “Alamo, Via Palagio degli Spini” (~€20–25 each, 10–12 min).',
     btns:[['maps','🗺️ Alamo FLR',mapsQ('Alamo Via Palagio degli Spini Firenze')]]},
-   {t:'14:15',title:'Pick up both cars',s:'Kleeh: Alamo ref <b>2116801281</b> (booked 17:00 — early pickup being confirmed). Docs: Jason’s Mastercard, passport, licence. Tann car booked by Ali. Alamo is open 08–23.',hl:true,
+   {t:'14:15',title:'Pick up both cars',s:'Kleeh: Alamo ref <b>2116801281</b> (booked 17:00 — early pickup being confirmed). Docs: Jason’s Mastercard, passport, licence. Hoosiers’ car booked by Ali. Alamo is open 08–23.',hl:true,
     btns:[['tel','📞 Alamo +39 055 310150',null,'+39055310150']],
     warn:'If early pickup isn’t confirmed, plan B: espresso + playground until 17:00, arrive Poderi ~18:30 — still fine for the 20:00 dinner.'},
    {t:'15:00',title:'Drive to San Gimignano · ~1 h 15',s:'Firenze–Siena superstrada (SR2), exit <b>Poggibonsi Nord</b> → Poderi Arcangelo.',
@@ -324,11 +350,19 @@ const DAYS = [
     btns:[['maps','🗺️ Poderi Arcangelo',mapsQ('Poderi Arcangelo San Gimignano')]]},
    {t:'20:00',title:'Farm dinner on the terrace 🍷',s:'€32/pp, kids ≤10 discounted 30–60% — <b>being pre-confirmed with Chiara</b>.',pending:true}]}]},
 
- {id:'mon20',dow:'Mon',num:'20',name:'Tuscany · pick one',base:'Base: Poderi Arcangelo, San Gimignano',lock:'pick',heat:true,menu:MENU_PODERI,
-  intro:'One menu, two days (Mon + Tue) — pick one per day. Pool bookends recommended: adventure in the morning, water by 14:00. Details being finalized; drive times are from the farm.'},
+ {id:'mon20',dow:'Mon',num:'20',name:'Build your day',base:'Base: Poderi Arcangelo, San Gimignano',lock:'pick',heat:true,
+  intro:'Two days here (Mon + Tue), built from blocks — not fixed. <b>The rhythm:</b> one morning outing → lunch → pool or river through the 2–5pm heat → golden-hour town + apéro → dinner ~7:30. “Home by 5” is a feature; max two real stops a day. Suggested shape: one day Volterra (effort) + one gentle Monteriggioni/Colle/River day — or swap either for a Farm Day. Pick the dinner town per night, don’t repeat.',
+  sections:[
+   {label:'☀️ Day shape — pick one',items:PODERI_SHAPES},
+   {label:'💦 Afternoon water — snaps onto any day',items:PODERI_WATER},
+   {label:'🍷 Dinner town — pick per night (don’t repeat)',items:PODERI_DINNER}]},
 
- {id:'tue21',dow:'Tue',num:'21',name:'Tuscany · pick one',base:'Base: Poderi Arcangelo, San Gimignano',lock:'pick',heat:true,menu:MENU_PODERI,
-  intro:'Same menu as Monday — whatever you didn’t pick yesterday. Farm activities (cooking class, truffle hunt…) need booking at reception the day before.'},
+ {id:'tue21',dow:'Tue',num:'21',name:'Build your day',base:'Base: Poderi Arcangelo, San Gimignano · day 2',lock:'pick',heat:true,
+  intro:'Same blocks as Monday — build the second day from whatever you didn’t do. If Monday was Volterra, Tuesday leans gentle (Monteriggioni/Colle/River) or restful (Farm Day). On-site farm experiences need booking at reception the evening before.',
+  sections:[
+   {label:'☀️ Day shape — pick one',items:PODERI_SHAPES},
+   {label:'💦 Afternoon water — snaps onto any day',items:PODERI_WATER},
+   {label:'🍷 Dinner town — pick per night (don’t repeat)',items:PODERI_DINNER}]},
 
  {id:'wed22',dow:'Wed',num:'22',name:'Poderi → Cetona',base:'Transfer day via Monteriggioni + Siena',lock:'semi',
   tracks:[{name:null,rows:[
@@ -354,12 +388,12 @@ const DAYS = [
   extra:{e:'👨‍🍳',g:'g4',title:'Farewell dinner 🥂',pitch:'Friday night · all 8 · group decision pending',
    more:'Opt-in splurge idea: <b>Chef Walter cooks at the villa</b> (unpriced yet — placeholder). Alternative: a long table in Cetona’s piazza. Either way: toast the trip, embarrass the dads, let the kids stay up.'}},
 
- {id:'sat25',dow:'Sat',num:'25',name:'Departures',base:'Cetona → Rome · Tanns + Gus fly home',lock:'semi',
+ {id:'sat25',dow:'Sat',num:'25',name:'Departures',base:'Cetona → Rome · Hoosiers fly home',lock:'semi',
   tracks:[{name:null,rows:[
    {t:'08:00',title:'Pack, settle utilities in cash',s:'San Girolamo checkout by 10:00. Leave by <b>~09:30</b> — it’s ~2 h to FCO and the flight is at 15:00.'},
    {t:'09:30',title:'Both cars → Rome',s:'A1 south. <b>Optional Orvieto stop</b> (duomo façade, 30 min off the highway) only if wheels are rolling by 09:30 sharp.',
     btns:[['dir','🚗 To FCO',dirTo('Podere San Girolamo Cetona','Aeroporto Fiumicino')],['maps','🗺️ Orvieto',mapsQ('Duomo di Orvieto')]]},
-   {t:'12:30',title:'Tanns + Gus → FCO ✈️',s:'Drop the Tann rental at FCO, check in for the <b>15:00</b> departure. Hugs, tears, arrivederci.',hl:true},
+   {t:'12:30',title:'Hoosiers → FCO ✈️',s:'Drop the Hoosiers’ rental at FCO, check in for the <b>15:00</b> departure. Hugs, tears, arrivederci.',hl:true},
    {t:'14:30',title:'Kleehs drop car · Via Sardegna 25',s:'Alamo return, Ludovisi district — <b>outside the ZTL</b>. Target ~14:30.',
     btns:[['maps','🗺️ Via Sardegna 25',mapsQ('Via Sardegna 25 Roma')]]},
    {t:'15:00',title:'To Condominio Monti',s:'Walk/taxi to Via dei Serpenti 109 · ref 57492808 · contact Letizia.',
@@ -381,18 +415,18 @@ const REF = [
   {t:'Kleeh out — BA 562 · Fri Jul 17',s:'LHR T5 <b>19:15</b> → FCO <b>22:45</b> · seats 9A/9B/9C',codes:['XP4CEN']},
   {t:'Kleeh back — BA 559 · Sun Jul 26',s:'FCO <b>19:55</b> → LHR <b>21:30</b>',codes:['XP4CEN']},
   {t:'JT back — BA 547 · Sun Jul 19',s:'FCO <b>18:15</b> → LHR <b>19:55</b> (out on BA 562 with family)',codes:['XT67HP']},
-  {t:'Tanns + Gus',s:'Arrive FCO <b>Fri Jul 17 AM</b> (flight # TBD) · depart FCO <b>Sat Jul 25, 15:00</b>'}]},
+  {t:'Hoosiers',s:'Arrive FCO <b>Fri Jul 17 AM</b> (flight # TBD) · depart FCO <b>Sat Jul 25, 15:00</b>'}]},
  {h:'🚄 Trains',cards:[
   {t:'Italo 8914 · Sun Jul 19',s:'Roma Termini <b>11:55</b> → Firenze SMN <b>13:31</b> · 8 pax',codes:['HBKW4C']},
   {t:'Leonardo Express',s:'Termini ↔ FCO · <b>€14/adult</b> · 32 min · every 15 min. Used by JT (Jul 19) + Kleehs (Jul 26).'}]},
  {h:'🚗 Cars',cards:[
   {t:'Kleeh — Alamo (Enterprise-run) via GotRentalCars',s:'Peugeot 2008 or similar · £306 prepaid.<br><b>Pickup:</b> FLR, Via Palagio degli Spini, Sun Jul 19 — booked 17:00, arriving ~14:30 (early pickup being confirmed).<br><b>Return:</b> Sat Jul 25, Via Sardegna 25, Roma (Ludovisi, outside ZTL), target ~14:30.<br><b>At pickup:</b> Jason’s Mastercard, passport, licence.',
    codes:['2116801281','583136797'],tel:['+39055310150','Alamo FLR'],maps:['Alamo Via Palagio degli Spini Firenze','Pickup'],maps2:['Via Sardegna 25 Roma','Return']},
-  {t:'Tann — booked by Ali',s:'FLR pickup Sun Jul 19 · FCO drop Sat Jul 25 AM.'}]},
+  {t:'Hoosiers — booked by Ali',s:'FLR pickup Sun Jul 19 · FCO drop Sat Jul 25 AM.'}]},
  {h:'🛏️ Lodging',cards:[
-  {t:'1 · Ciao Bella — Kleehs + JT · Jul 17–19',s:'Via Mecenate 27, Roma · Booking.com · £562 paid · host Floriana · checkout 10:30',
-   codes:['5234860983','PIN 8083'],maps:['Via Mecenate 27 Roma','Maps']},
-  {t:'2 · BIG HOUSE COLOSSEO — Tanns + Gus · Jul 17–19',s:'Via Merulana 105, Roma · VRBO',
+  {t:'1 · Ciao Bella — Kleehs · Jul 17–19',s:'Via Mecenate 27, Roma · Booking.com · £562 paid · host Floriana · checkout 10:30',
+   codes:['5234860983','PIN 8083'],link:['https://secure.booking.com/confirmation.en-us.html?label=gen173bo-10EgVpbmJveCiCAjjoB0gzWANoUIgBAZgBM7gBB8gBDdgBA-gBAfgBAYgCAZgCIagCAbgCuono0gbAAgHSAiQxYzEzNzJlYS1kMjE5LTQ2ZWYtODNlNi0wNGU3ZjQ1OTVhNmPYAgHgAgE&sid=892e38033dac1f14be76c9d4297042e0&aid=304142&auth_key=jnpE1m7x6zQHbNFM&source=mytrips','Booking.com confirmation'],maps:['Via Mecenate 27 Roma','Maps']},
+  {t:'2 · BIG HOUSE COLOSSEO — Hoosiers · Jul 17–19',s:'Via Merulana 105, Roma · VRBO',
    tel:['+393514967316','Host'],maps:['Via Merulana 105 Roma','Maps']},
   {t:'3 · Poderi Arcangelo — all 8 · Jul 19–22',s:'Loc. San Gimignano · Raffaello House · infinity pool · BBQ.<br><b>€1,830 confirmed — pay on departure, 5% cash discount</b> + tourist tax €2.50/adult/night cash (~€37.50).<br>Check-in 15:00–19:00 · checkout 8:00–10:30 · contact Chiara.<br>Farm dinner €32/pp at 20:00 (kids ≤10: 30–60% off) · lunch orders by 11:00 · <b>NO pool towels — bring them</b>.',
    mail:'info@poderiarcangelo.it',maps:['Poderi Arcangelo San Gimignano','Maps']},
@@ -405,18 +439,21 @@ const REF = [
    codes:['2L2N0QSF7WTNZPQCL'],pdf:['vatican-voucher.pdf','Voucher (PDF)']},
   {t:'Golf cart tour · Sat Jul 18, 15:00–18:00',s:'Private, 9 pax · Royal Tours Rome via Viator · $107/pp paid by Ali · pickup/drop at apartments (pickup point being set; Theo booster to flag).',
    codes:['1411499199']}]},
+ {h:'🍝 Dinner reservations',cards:[
+  {t:'Fri Jul 17 · Il Focolare — Hoosiers (5)',s:'<b>7:40pm</b> · reserved under Allison Tann · 3 adults + 2 kids.<br>Via Gabriele Rossetti 40, 00152 Roma (Monteverde — taxi from Merulana). Tel +39 06 581 8395.',
+   tel:['+39065818395','Restaurant'],link:['https://www.thefork.com/restaurant/il-focolare-r543939','TheFork'],maps:['Il Focolare Via Gabriele Rossetti 40 Roma','Maps']},
+  {t:'Sat Jul 18 · Osteria dell’Anima — all 9',s:'<b>7:00pm</b> · reserved under Allison · 6 adults + 3 kids.<br>Via di Santa Maria dell’Anima 8, 00186 Roma (by Piazza Navona). Tel +39 06 686 4661.',
+   tel:['+39066864661','Restaurant'],maps:['Osteria dell\'Anima Via di Santa Maria dell\'Anima 8 Roma','Maps']}]},
  {h:'💶 Cash checklist',cards:[
   {t:'Euros to have on hand',s:'Poderi tourist tax ~€37.50 · Poderi balance €1,830 (5% off if cash — €1,738.50) · San Girolamo utilities €150–250 · taxis €55×2 + city hops. <b>ATM (bancomat) run in Rome recommended.</b>'}]},
 ];
 
 const PENDING = [
- {t:'Gus’s Friday dinner pick (5 pax)',who:'Gus'},
- {t:'Saturday group-dinner booking, 9 pax (lean: Il Sorpasso)',who:'Ali'},
  {t:'Viator golf-cart pickup point + Theo booster flag',who:'Ali'},
  {t:'Alamo early-pickup confirmation — +39 055 310150',who:'Jason',tel:'+39055310150'},
  {t:'Sunday 20:00 farm-dinner confirmation with Chiara',who:'Jason'},
- {t:'Tann/Gus inbound flight number',who:'Ali / David T'},
- {t:'Research v2: open-day details for Jul 20–21 & 23–24',who:'Jason + Claude'},
+ {t:'Hoosiers inbound flight number',who:'Ali / David T'},
+ {t:'Research v2: open-day details for Cetona Jul 23–24',who:'Jason + Claude'},
 ];
 
 /* =====================  RENDER  ===================== */
@@ -457,13 +494,16 @@ function optHtml(o){
       ${o.img?`<img loading="lazy" src="${o.img}" alt="${o.title}" onload="this.classList.add('ok')" onerror="this.remove()">`:''}
       <span class="emoji">${o.e}</span>
       ${o.k?`<span class="letter">${o.k}</span>`:''}
-      <span class="fin">being finalized</span>
+      ${o.verified?'':'<span class="fin">being finalized</span>'}
     </div>`;
   const meta = (o.drive||o.hours||o.price)?`<div class="meta">
       ${o.drive?`<span>🚗 ${o.drive}</span>`:''}
       ${o.hours?`<span>🕐 ${o.hours}</span>`:''}
       ${o.price?`<span>💶 ${o.price}</span>`:''}
     </div>`:'';
+  const steps = o.steps?`<ol class="steps">${o.steps.map(s=>`<li><span class="st">${s.t}</span><div>${s.txt}</div></li>`).join('')}</ol>`:'';
+  const flip = o.flip?`<div class="flip">🔄 <div>${o.flip}</div></div>`:'';
+  const links = (o.links||[]).map(l=>`<a class="btn dir" href="${l[1]}" target="_blank" rel="noopener">${l[0]}</a>`).join('');
   return `<details class="opt">
     <summary>${hero}
       <div class="head"><h3>${o.title}</h3><div class="pitch">${o.pitch}</div></div>
@@ -472,10 +512,13 @@ function optHtml(o){
     </summary>
     <div class="more">
       ${o.more?`<p>${o.more}</p>`:''}
+      ${steps}
+      ${flip}
       ${o.warn?`<div class="warn" style="margin-bottom:8px">⚠️ <span>${o.warn}</span></div>`:''}
       <div class="btnrow">
         ${o.maps?`<a class="btn maps" href="${o.maps}" target="_blank" rel="noopener">🗺️ Open in Maps</a>`:''}
         ${o.dir?`<a class="btn dir" href="${o.dir}" target="_blank" rel="noopener">🚗 Directions</a>`:''}
+        ${links}
       </div>
     </div>
   </details>`;
@@ -497,7 +540,15 @@ function dayScreen(d){
     <div class="base">${d.base}</div>
     ${chipRow(d)}
   </div>`;
-  if(d.menu){
+  if(d.sections){
+    if(d.intro) h += `<div class="pickbar">☝️ ${d.intro}</div>`;
+    d.sections.forEach(sec=>{
+      h += `<div class="menuhead">${sec.label}</div>`;
+      if(sec.note) h += `<div class="secnote">${sec.note}</div>`;
+      h += sec.items.map(optHtml).join('');
+    });
+    if(d.extra) h += optHtml(d.extra);
+  } else if(d.menu){
     h += `<div class="pickbar">☝️ ${d.intro}</div>`;
     h += d.menu.map(optHtml).join('');
     if(d.extra) h += optHtml(d.extra);
@@ -521,6 +572,7 @@ function refScreen(){
       if(c.codes) h += c.codes.map(k=>`<button class="code" onclick="copyCode(this,'${k}')">${k} ⧉</button>`).join('');
       let btns='';
       if(c.pdf) btns += `<a class="btn maps" href="${c.pdf[0]}" target="_blank" rel="noopener">📄 ${c.pdf[1]}</a>`;
+      if(c.link) btns += `<a class="btn dir" href="${c.link[0]}" target="_blank" rel="noopener">📄 ${c.link[1]}</a>`;
       if(c.tel) btns += `<a class="btn tel" href="tel:${c.tel[0]}">📞 ${c.tel[1]}</a>`;
       if(c.mail) btns += `<a class="btn tel" href="mailto:${c.mail}">✉️ ${c.mail}</a>`;
       if(c.maps) btns += `<a class="btn maps" href="${mapsQ(c.maps[0])}" target="_blank" rel="noopener">🗺️ ${c.maps[1]}</a>`;
