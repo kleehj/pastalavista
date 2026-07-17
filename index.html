@@ -116,6 +116,16 @@ main{max-width:660px;margin:0 auto;padding:16px 14px 60px}
 .steps li div{flex:1}
 .flip{display:flex;gap:8px;font-size:13px;background:#FFF6E4;border:1px solid var(--gold);color:#6B5410;border-radius:10px;padding:9px 11px;margin:4px 0 8px;line-height:1.5}
 .flip b{color:#4d3c08}
+.spots{margin:4px 0 4px}
+.spot{border-top:1px dashed var(--line);padding:10px 0 4px}
+.spot:first-child{border-top:0}
+.spot-t{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:15px}
+.spot-t .rate{font-size:11.5px;font-weight:700;color:#8a6d0f;background:#FBF3D9;border-radius:6px;padding:1px 7px}
+.spot-t .cl{font-size:11px;font-weight:700;color:#A0431B;background:#F6E3D3;border-radius:6px;padding:1px 7px}
+.spot-d{font-size:13px;color:var(--ink-soft);margin:3px 0 5px;line-height:1.5}
+.spot-h{font-size:12px;color:var(--ink-soft);margin-bottom:7px}
+.alert{font-size:13.5px;background:#F6E3D3;border:1px solid #E0A87A;color:#8A4519;border-radius:12px;padding:11px 13px;margin-bottom:14px;line-height:1.55}
+.alert b{color:#6B3413}
 .opt{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
 .opt summary{list-style:none;cursor:pointer;position:relative}
 .opt summary::-webkit-details-marker{display:none}
@@ -240,14 +250,22 @@ const PODERI_WATER = [
 ];
 
 const PODERI_DINNER = [
- {e:'🏙️',g:'g1',verified:true,img:'photos/san-gimignano.jpg',title:'San Gimignano',pitch:'Golden-hour towers + world-champion gelato — after 6pm only',
-  drive:'17 min (P2 Montemaggio)',hours:'go AFTER 6pm',price:'dinner for 8 · reserve',
-  more:'Go <b>after 6pm only</b> — it’s mobbed 10–5 (the Gordes of Tuscany). Golden-hour towers, then <b>Gelateria Dondoli</b> (world-champion gelato). Dinner for 8 (all reserve in July): <b>Le Vecchie Mura</b> (famous terrace view — reserve ahead, ~€2/pp terrace charge), La Mandragola, Osteria del Carcere, Trattoria Rigoletto.',
-  links:[['🗺️ Le Vecchie Mura',mapsQ('Le Vecchie Mura San Gimignano')],['🗺️ Parking P2',mapsQ('Parcheggio Montemaggio San Gimignano')]]},
- {e:'🚡',g:'g4',verified:true,img:'photos/certaldo.jpg',title:'Certaldo Alto',pitch:'Quieter, more local — funicular up to a medieval old town',
-  drive:'9 min',hours:'evening',price:'dinner for 8 · reserve',
-  more:'Quieter and more local than San Gimignano (our Lourmarin candidate). Ride the funicular up to the medieval old town — a kid win, and it saves climbing in the heat. Dinner in the old town: <b>Il Castello</b> (next to the funicular, garden with valley views) or <b>Enoteca Boccaccio</b>. Both reserve.',
+ {e:'🏙️',g:'g1',verified:true,img:'photos/san-gimignano.jpg',title:'San Gimignano',pitch:'Golden-hour towers, Dondoli gelato, then a table inside the walls',
+  drive:'17 min (P2 Montemaggio)',hours:'roll in after 6pm',price:'reserve for 8',
+  more:'Arrive <b>after 6pm</b>, once the day-trippers clear (mobbed 10–5, the Gordes of Tuscany). Golden-hour towers, <b>Gelateria Dondoli</b> for world-champion gelato, then dinner inside the walls. All three reserve — <b>phone only</b>, book a few days ahead for 8.',
+  spots:[
+   {name:'Le Vecchie Mura',rating:'4.6',desc:'<b>The view.</b> Famous panoramic terrace over the valley, ~€35pp for three courses. Request the terrace (~€2pp) — 1hr+ wait without a booking.',hours:'18:00–21:30',closed:'Closed Tue',tel:'+390577940270',map:mapsPid('Le Vecchie Mura San Gimignano','ChIJDXKCbT88KhMRP3A9mrALxZo')},
+   {name:'Osteria del Carcere',rating:'4.4',desc:'Food-first, no pizza/pasta — Tuscan soups, cheese &amp; cured-meat boards, standout desserts. Same warm team for decades.',hours:'19:30–22:00',closed:'Closed Wed & Thu',tel:'+390577941905',map:mapsPid('Osteria del Carcere San Gimignano','ChIJ18UWFj88KhMR9THE6UfEhBw')},
+   {name:'La Mandragola',rating:'4.4',desc:'Warm, group-friendly all-rounder on the west side. Open every day — the <b>Tuesday-safe</b> pick.',hours:'19:00–21:30 · daily',tel:'+390577940377',map:mapsPid('La Mandragola San Gimignano','ChIJZWcdKDk8KhMRhRT20uC_yzM')}],
+  links:[['🗺️ Parking P2 Montemaggio',mapsQ('Parcheggio Montemaggio San Gimignano')]]},
+ {e:'🚡',g:'g4',verified:true,img:'photos/certaldo.jpg',title:'Certaldo Alto',pitch:'Funicular up to a quiet medieval borgo — more local than San Gim',
+  drive:'9 min',hours:'funicular up',price:'reserve for 8',
+  more:'Quieter and more local than San Gimignano. Ride the funicular up to the medieval borgo — a kid win, and it saves the climb in the heat. Reserve ahead — <b>phone only</b>.',
   warn:'Verify the funicular’s same-day hours — posted times aren’t always respected.',
+  spots:[
+   {name:'Ristorante Il Castello',rating:'4.4',desc:'Best-rated in the old town, by the funicular top. Garden with sweeping valley/sunset views, handles groups well. Book ahead &amp; request a view table.',hours:'18:30–21:30',closed:'Closed Tue',tel:'+3905711900261',map:mapsPid('Ristorante Il Castello Certaldo','ChIJ2Sx8VmU_KhMReNzcxyW7b2M')},
+   {name:'Osteria del Vicario',rating:'4.4',desc:'Terrace with breathtaking views — but <b>fully vegan/vegetarian</b> and only ~8 seats a night. Could be a magical whole-group booking, or wrong for the meat-eaters. Pricier; know before you book.',hours:'reserve essential',tel:'+390571667809',map:mapsPid('Osteria del Vicario Certaldo','ChIJH-Ua_2g_KhMR2USmcCwfFNA')},
+   {name:'Enoteca Boccaccio',rating:'4.6',desc:'Wine bar + light bites (bruschetta, cheese boards, spritz). Great for a lighter apéro evening — <b>not a full group dinner</b>. ~€1pp cover + plate fee.',hours:'11:00–23:00 · daily',tel:'+393336500414',map:mapsPid('Enoteca Boccaccio Certaldo','ChIJnUmDe08_KhMRZUOvBVUHgT0')}],
   links:[['🗺️ Funicolare di Certaldo',mapsQ('Funicolare di Certaldo')]]},
 ];
 
@@ -357,22 +375,23 @@ const DAYS = [
    {t:'20:00',title:'Farm dinner on the terrace 🍷',s:'€32/pp, kids ≤10 discounted 30–60% — <b>being pre-confirmed with Chiara</b>.',pending:true}]}]},
 
  {id:'mon20',dow:'Mon',num:'20',name:'Build your day',base:'Base: Poderi Arcangelo, San Gimignano',lock:'pick',heat:true,
-  intro:'Two days here (Mon + Tue), built from blocks — not fixed. <b>The rhythm:</b> one morning outing → lunch → pool or river through the 2–5pm heat → golden-hour town + apéro → dinner ~7:30. “Home by 5” is a feature; max two real stops a day. Suggested shape: one day Volterra (effort) + one gentle Monteriggioni/Colle/River day — or swap either for a Farm Day. Tonight’s dinner town is the next tab → 🍷',
+  intro:'Two days here (Mon + Tue), built from blocks — not fixed. <b>The rhythm:</b> one morning outing → lunch → pool or river through the 2–5pm heat → golden-hour town + apéro → dinner ~7:30. “Home by 5” is a feature; max two real stops a day. Suggested shape: one day Volterra (effort) + one gentle Monteriggioni/Colle/River day — or swap either for a Farm Day. Tonight’s town + table is the next tab → 🍷',
   sections:[
    {label:'☀️ Day shape — pick one',items:PODERI_SHAPES},
    {label:'💦 Afternoon water — snaps onto any day',items:PODERI_WATER}]},
 
- {id:'din1',dow:'Mon',num:'🍷',name:'Dinner · Monday night',dinner:true,eyebrow:'🍷 Evening · Monday Jul 20',base:'Golden-hour town + dinner · book for 8',lock:'pick',menu:PODERI_DINNER,
-  intro:'Roll out around 6pm when the day-trippers leave. Pick one town tonight — then do the <b>other</b> tomorrow night (don’t repeat). Both reserve in July.'},
+ {id:'din1',dow:'Mon',num:'🍷',name:'Evening out · Monday',dinner:true,eyebrow:'🍷 Golden hour + dinner · Mon Jul 20',base:'A hill town after 6pm, then a table · reserve for 8',lock:'pick',menu:PODERI_DINNER,
+  intro:'Head up around 6pm as the day-trippers leave. Pick a town for tonight — then do the <b>other</b> tomorrow (don’t repeat). Tap a town for its vetted tables; all reserve by phone in July.'},
 
  {id:'tue21',dow:'Tue',num:'21',name:'Build your day',base:'Base: Poderi Arcangelo, San Gimignano · day 2',lock:'pick',heat:true,
-  intro:'Same blocks as Monday — build the second day from whatever you didn’t do. If Monday was Volterra, Tuesday leans gentle (Monteriggioni/Colle/River) or restful (Farm Day). On-site farm experiences need booking at reception the evening before. Tonight’s dinner town is the next tab → 🍷',
+  intro:'Same blocks as Monday — build the second day from whatever you didn’t do. If Monday was Volterra, Tuesday leans gentle (Monteriggioni/Colle/River) or restful (Farm Day). On-site farm experiences need booking at reception the evening before. Tonight’s town + table is the next tab → 🍷',
   sections:[
    {label:'☀️ Day shape — pick one',items:PODERI_SHAPES},
    {label:'💦 Afternoon water — snaps onto any day',items:PODERI_WATER}]},
 
- {id:'din2',dow:'Tue',num:'🍷',name:'Dinner · Tuesday night',dinner:true,eyebrow:'🍷 Evening · Tuesday Jul 21',base:'Golden-hour town + dinner · book for 8',lock:'pick',menu:PODERI_DINNER,
-  intro:'Whichever town you didn’t do Monday. Same after-6pm play — towers or funicular, gelato, a long table.'},
+ {id:'din2',dow:'Tue',num:'🍷',name:'Evening out · Tuesday',dinner:true,eyebrow:'🍷 Golden hour + dinner · Tue Jul 21',base:'A hill town after 6pm, then a table · reserve for 8',lock:'pick',menu:PODERI_DINNER,
+  alert:'<b>Tuesday closures.</b> Le Vecchie Mura (San Gimignano) and Il Castello (Certaldo) are <b>closed tonight</b>. Tuesday-safe tables: <b>La Mandragola</b> in San Gimignano, or <b>Osteria del Vicario</b> / <b>Enoteca Boccaccio</b> in Certaldo.',
+  intro:'Whichever town you didn’t do Monday. Same after-6pm play — towers or funicular, gelato, a long table. <b>Mind the Tuesday closures below.</b>'},
 
  {id:'wed22',dow:'Wed',num:'22',name:'Poderi → Cetona',base:'Transfer day via Monteriggioni + Siena',lock:'semi',
   tracks:[{name:null,rows:[
@@ -512,6 +531,16 @@ function optHtml(o){
       ${o.price?`<span>💶 ${o.price}</span>`:''}
     </div>`:'';
   const steps = o.steps?`<ol class="steps">${o.steps.map(s=>`<li><span class="st">${s.t}</span><div>${s.txt}</div></li>`).join('')}</ol>`:'';
+  const spots = o.spots?`<div class="spots">${o.spots.map(s=>`
+      <div class="spot">
+        <div class="spot-t"><b>${s.name}</b>${s.rating?`<span class="rate">★ ${s.rating}</span>`:''}${s.closed?`<span class="cl">${s.closed}</span>`:''}</div>
+        <div class="spot-d">${s.desc}</div>
+        ${s.hours?`<div class="spot-h">🕐 ${s.hours}</div>`:''}
+        <div class="btnrow">
+          ${s.tel?`<a class="btn tel" href="tel:${s.tel}">📞 Call</a>`:''}
+          ${s.map?`<a class="btn maps" href="${s.map}" target="_blank" rel="noopener">🗺️ Map</a>`:''}
+        </div>
+      </div>`).join('')}</div>`:'';
   const flip = o.flip?`<div class="flip">🔄 <div>${o.flip}</div></div>`:'';
   const links = (o.links||[]).map(l=>`<a class="btn dir" href="${l[1]}" target="_blank" rel="noopener">${l[0]}</a>`).join('');
   return `<details class="opt">
@@ -523,6 +552,7 @@ function optHtml(o){
     <div class="more">
       ${o.more?`<p>${o.more}</p>`:''}
       ${steps}
+      ${spots}
       ${flip}
       ${o.warn?`<div class="warn" style="margin-bottom:8px">⚠️ <span>${o.warn}</span></div>`:''}
       <div class="btnrow">
@@ -559,6 +589,7 @@ function dayScreen(d){
     });
     if(d.extra) h += optHtml(d.extra);
   } else if(d.menu){
+    if(d.alert) h += `<div class="alert">⚠️ ${d.alert}</div>`;
     h += `<div class="pickbar">☝️ ${d.intro}</div>`;
     h += d.menu.map(optHtml).join('');
     if(d.extra) h += optHtml(d.extra);
