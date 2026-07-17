@@ -123,6 +123,9 @@ main{max-width:660px;margin:0 auto;padding:16px 14px 60px}
 .hero .emoji{font-size:52px;filter:drop-shadow(0 3px 6px rgba(51,38,29,.25))}
 .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s}
 .hero img.ok{opacity:1}
+.hero img.ok ~ .emoji{opacity:0}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.28));opacity:0;transition:opacity .4s;pointer-events:none}
+.hero:has(img.ok)::after{opacity:1}
 .hero .letter{
   position:absolute;top:10px;left:10px;width:30px;height:30px;border-radius:10px;
   background:rgba(250,244,232,.92);color:var(--terra-dark);
