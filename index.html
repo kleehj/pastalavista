@@ -57,6 +57,9 @@ nav::-webkit-scrollbar{display:none}
 .tab .dw{display:block;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;opacity:.85}
 .tab .dt{display:block;font-size:15px;font-weight:700}
 .tab.on{background:var(--cream);color:var(--terra-dark)}
+.tab.din{background:rgba(201,162,39,.32)}
+.tab.din .dt{font-size:16px}
+.tab.din.on{background:var(--cream);color:var(--terra-dark)}
 .tab .today-dot{position:absolute;top:5px;right:7px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
 
 /* ---------- day screen ---------- */
@@ -203,7 +206,7 @@ const HEAT = '🥵 Heat wave · mid-90s °F — mornings out, shade or pool at m
 // San Gimignano base (Mon 20 / Tue 21) — day-shape "Lego blocks".
 // Rhythm: one morning outing → lunch → pool/river through the 2–5pm heat → golden-hour town + apéro → dinner ~7:30. "Home by 5" is a feature. Max two real stops/day.
 const PODERI_SHAPES = [
- {e:'🏞️',g:'g2',verified:true,title:'Monteriggioni + Colle + River',pitch:'The gentle day — a castle photo, a crowd-free walled town, an afternoon in cold turquoise water',
+ {e:'🏞️',g:'g2',verified:true,img:'photos/monteriggioni.jpg',title:'Monteriggioni + Colle + River',pitch:'The gentle day — a castle photo, a crowd-free walled town, an afternoon in cold turquoise water',
   drive:'~1 h 23 total driving, no backtrack',hours:'home by ~5',price:'basically free',
   steps:[
    {t:'AM',txt:'Poderi → <b>Monteriggioni</b> (33 min). A disciplined 30-min ring-wall walk + photo — it’s a 30-minute stop, not a morning.'},
@@ -212,7 +215,7 @@ const PODERI_SHAPES = [
    {t:'Eve',txt:'Home, then dinner in a dinner town (below).'}],
   flip:'<b>Flip the afternoon.</b> Town-first → river cools you through the hot part of the day (best on scorchers). River-first → kids swim fresh in the AM, then end on a golden-hour town + dinner. Colle and the river are 5 min apart — swapping costs nothing.',
   links:[['🗺️ Monteriggioni',mapsQ('Monteriggioni')],['🗺️ Colle parking',mapsQ('Parcheggio Porta Vecchia Colle di Val d\'Elsa')],['🗺️ SentierElsa',mapsQ('SentierElsa Ponte di San Marziale Colle di Val d\'Elsa')]]},
- {e:'🏛️',g:'g3',verified:true,title:'Volterra',pitch:'The far one, worth it — a lived-in Etruscan/Roman town, then a restful pool afternoon',
+ {e:'🏛️',g:'g3',verified:true,img:'photos/volterra.jpg',title:'Volterra',pitch:'The far one, worth it — a lived-in Etruscan/Roman town, then a restful pool afternoon',
   drive:'43 min each way',hours:'cool morning + pool PM',price:'lunch + alabaster',
   steps:[
    {t:'AM',txt:'Poderi → <b>Volterra</b> (43 min — go in the cool morning). Lived-in Etruscan/Roman town: alabaster workshops, Roman theatre. Our kind of town, not a honeypot.'},
@@ -220,13 +223,13 @@ const PODERI_SHAPES = [
    {t:'PM',txt:'Home → <b>villa pool</b>. Volterra stands alone (it’s the far one), so pair it with a restful pool afternoon rather than the river.'},
    {t:'Eve',txt:'Dinner in a dinner town (below).'}],
   links:[['🗺️ Volterra parking',mapsQ('Volterra parking')]]},
- {e:'🏊',g:'g2',verified:true,title:'Farm Day',pitch:'Zero driving — pool + on-site experiences. The heat-spike / worn-out day',
+ {e:'🏊',g:'g2',verified:true,img:'photos/poderi-pool.jpg',title:'Farm Day',pitch:'Zero driving — pool + on-site experiences. The heat-spike / worn-out day',
   drive:'0 min',hours:'all day at Poderi',price:'experiences booked at reception',
   more:'Stay put. Pool, plus on-site bookables (reserve at reception the evening before): wine &amp; EVO-oil tasting with a cellar tour, a Tuscan cooking class, a pizza-making class, e-bikes. Good for a heat-spike day or when everyone’s worn out. No pool towels provided — bring them.'},
 ];
 
 const PODERI_WATER = [
- {e:'💦',g:'g2',verified:true,title:'SentierElsa river',pitch:'FREE turquoise gorge — snaps onto any afternoon as the heat-escape',
+ {e:'💦',g:'g2',verified:true,img:'photos/sentierelsa.jpg',title:'SentierElsa river',pitch:'FREE turquoise gorge — snaps onto any afternoon as the heat-escape',
   drive:'28 min (San Marziale entrance)',hours:'daylight, no gate',price:'free (paid parking)',
   more:'Free, no gate. Turquoise river, ~4 km round-trip trail, the <b>Diborrato Waterfall</b> (15 m drop into a deep pool). Recommended entrance: <b>Ponte di San Marziale, Gracciano</b>. Park at Fluviale Elsa Parking, ~200 m from the entrance (paid). Shallow designated areas are OK for little ones (Theo) under supervision. Best as an afternoon heat-escape — shaded gorge, cold water.',
   warn:'<b>Water shoes essential</b> (slippery stone fords, sharp rocks). Deep waterfall pools = strong swimmers only. NO lifeguards, currents change — never let kids swim unsupervised. No restrooms or shops: bring water, snacks, towels, a dry bag.',
@@ -234,11 +237,11 @@ const PODERI_WATER = [
 ];
 
 const PODERI_DINNER = [
- {e:'🏙️',g:'g1',verified:true,img:wm('San_Gimignano_04.jpg'),title:'San Gimignano',pitch:'Golden-hour towers + world-champion gelato — after 6pm only',
+ {e:'🏙️',g:'g1',verified:true,img:'photos/san-gimignano.jpg',title:'San Gimignano',pitch:'Golden-hour towers + world-champion gelato — after 6pm only',
   drive:'17 min (P2 Montemaggio)',hours:'go AFTER 6pm',price:'dinner for 8 · reserve',
   more:'Go <b>after 6pm only</b> — it’s mobbed 10–5 (the Gordes of Tuscany). Golden-hour towers, then <b>Gelateria Dondoli</b> (world-champion gelato). Dinner for 8 (all reserve in July): <b>Le Vecchie Mura</b> (famous terrace view — reserve ahead, ~€2/pp terrace charge), La Mandragola, Osteria del Carcere, Trattoria Rigoletto.',
   links:[['🗺️ Le Vecchie Mura',mapsQ('Le Vecchie Mura San Gimignano')],['🗺️ Parking P2',mapsQ('Parcheggio Montemaggio San Gimignano')]]},
- {e:'🚡',g:'g4',verified:true,title:'Certaldo Alto',pitch:'Quieter, more local — funicular up to a medieval old town',
+ {e:'🚡',g:'g4',verified:true,img:'photos/certaldo.jpg',title:'Certaldo Alto',pitch:'Quieter, more local — funicular up to a medieval old town',
   drive:'9 min',hours:'evening',price:'dinner for 8 · reserve',
   more:'Quieter and more local than San Gimignano (our Lourmarin candidate). Ride the funicular up to the medieval old town — a kid win, and it saves climbing in the heat. Dinner in the old town: <b>Il Castello</b> (next to the funicular, garden with valley views) or <b>Enoteca Boccaccio</b>. Both reserve.',
   warn:'Verify the funicular’s same-day hours — posted times aren’t always respected.',
@@ -351,18 +354,22 @@ const DAYS = [
    {t:'20:00',title:'Farm dinner on the terrace 🍷',s:'€32/pp, kids ≤10 discounted 30–60% — <b>being pre-confirmed with Chiara</b>.',pending:true}]}]},
 
  {id:'mon20',dow:'Mon',num:'20',name:'Build your day',base:'Base: Poderi Arcangelo, San Gimignano',lock:'pick',heat:true,
-  intro:'Two days here (Mon + Tue), built from blocks — not fixed. <b>The rhythm:</b> one morning outing → lunch → pool or river through the 2–5pm heat → golden-hour town + apéro → dinner ~7:30. “Home by 5” is a feature; max two real stops a day. Suggested shape: one day Volterra (effort) + one gentle Monteriggioni/Colle/River day — or swap either for a Farm Day. Pick the dinner town per night, don’t repeat.',
+  intro:'Two days here (Mon + Tue), built from blocks — not fixed. <b>The rhythm:</b> one morning outing → lunch → pool or river through the 2–5pm heat → golden-hour town + apéro → dinner ~7:30. “Home by 5” is a feature; max two real stops a day. Suggested shape: one day Volterra (effort) + one gentle Monteriggioni/Colle/River day — or swap either for a Farm Day. Tonight’s dinner town is the next tab → 🍷',
   sections:[
    {label:'☀️ Day shape — pick one',items:PODERI_SHAPES},
-   {label:'💦 Afternoon water — snaps onto any day',items:PODERI_WATER},
-   {label:'🍷 Dinner town — pick per night (don’t repeat)',items:PODERI_DINNER}]},
+   {label:'💦 Afternoon water — snaps onto any day',items:PODERI_WATER}]},
+
+ {id:'din1',dow:'Mon',num:'🍷',name:'Dinner · Monday night',dinner:true,eyebrow:'🍷 Evening · Monday Jul 20',base:'Golden-hour town + dinner · book for 8',lock:'pick',menu:PODERI_DINNER,
+  intro:'Roll out around 6pm when the day-trippers leave. Pick one town tonight — then do the <b>other</b> tomorrow night (don’t repeat). Both reserve in July.'},
 
  {id:'tue21',dow:'Tue',num:'21',name:'Build your day',base:'Base: Poderi Arcangelo, San Gimignano · day 2',lock:'pick',heat:true,
-  intro:'Same blocks as Monday — build the second day from whatever you didn’t do. If Monday was Volterra, Tuesday leans gentle (Monteriggioni/Colle/River) or restful (Farm Day). On-site farm experiences need booking at reception the evening before.',
+  intro:'Same blocks as Monday — build the second day from whatever you didn’t do. If Monday was Volterra, Tuesday leans gentle (Monteriggioni/Colle/River) or restful (Farm Day). On-site farm experiences need booking at reception the evening before. Tonight’s dinner town is the next tab → 🍷',
   sections:[
    {label:'☀️ Day shape — pick one',items:PODERI_SHAPES},
-   {label:'💦 Afternoon water — snaps onto any day',items:PODERI_WATER},
-   {label:'🍷 Dinner town — pick per night (don’t repeat)',items:PODERI_DINNER}]},
+   {label:'💦 Afternoon water — snaps onto any day',items:PODERI_WATER}]},
+
+ {id:'din2',dow:'Tue',num:'🍷',name:'Dinner · Tuesday night',dinner:true,eyebrow:'🍷 Evening · Tuesday Jul 21',base:'Golden-hour town + dinner · book for 8',lock:'pick',menu:PODERI_DINNER,
+  intro:'Whichever town you didn’t do Monday. Same after-6pm play — towers or funicular, gelato, a long table.'},
 
  {id:'wed22',dow:'Wed',num:'22',name:'Poderi → Cetona',base:'Transfer day via Monteriggioni + Siena',lock:'semi',
   tracks:[{name:null,rows:[
@@ -535,7 +542,7 @@ function chipRow(d){
 
 function dayScreen(d){
   let h = `<div class="dayhead">
-    <div class="eyebrow">${d.dow} · July ${d.num} · 2026</div>
+    <div class="eyebrow">${d.eyebrow || `${d.dow} · July ${d.num} · 2026`}</div>
     <h2>${d.name}</h2>
     <div class="base">${d.base}</div>
     ${chipRow(d)}
@@ -616,7 +623,7 @@ function copyCode(el,txt){
 /* ---- tabs + routing ---- */
 
 const SCREENS = [
-  ...DAYS.map(d=>({id:d.id,dw:d.dow,dt:d.num,render:()=>dayScreen(d)})),
+  ...DAYS.map(d=>({id:d.id,dw:d.dow,dt:d.num,din:d.dinner,render:()=>dayScreen(d)})),
   {id:'ref',dw:'Info',dt:'📋',render:refScreen},
   {id:'pend',dw:'To-do',dt:'⏳',render:pendScreen},
 ];
@@ -631,7 +638,7 @@ function show(id){
   try{history.replaceState(null,'','#'+s.id)}catch(e){}
 }
 
-tabs.innerHTML = SCREENS.map(s=>`<button class="tab" data-id="${s.id}">
+tabs.innerHTML = SCREENS.map(s=>`<button class="tab ${s.din?'din':''}" data-id="${s.id}">
   ${TODAY===s.id?'<span class="today-dot"></span>':''}
   <span class="dw">${s.dw}</span><span class="dt">${s.dt}</span></button>`).join('');
 tabs.addEventListener('click',e=>{
