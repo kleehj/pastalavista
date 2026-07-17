@@ -131,6 +131,9 @@ main{max-width:660px;margin:0 auto;padding:16px 14px 60px}
 .opt summary::-webkit-details-marker{display:none}
 .hero{position:relative;height:132px;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .hero .emoji{font-size:52px;filter:drop-shadow(0 3px 6px rgba(51,38,29,.25))}
+.hero .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:0 16px;text-align:center;color:rgba(255,255,255,.95)}
+.hero .ph-cam{font-size:30px;opacity:.85;filter:drop-shadow(0 2px 4px rgba(51,38,29,.3))}
+.hero .ph-lbl{font-size:11.5px;font-weight:600;letter-spacing:.3px;background:rgba(51,38,29,.42);padding:4px 11px;border-radius:999px;backdrop-filter:blur(2px)}
 .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s}
 .hero img.ok{opacity:1}
 .hero img.ok ~ .emoji{opacity:0}
@@ -210,8 +213,6 @@ const mapsPid = (name,id) => id
   ? 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(name) + '&query_place_id=' + id
   : mapsQ(name);
 const dirTo = (o,dst,mode) => 'https://www.google.com/maps/dir/?api=1&origin=' + encodeURIComponent(o) + '&destination=' + encodeURIComponent(dst) + '&travelmode=' + (mode||'driving');
-const wm = f => 'https://commons.wikimedia.org/wiki/Special:FilePath/' + f + '?width=800';
-
 const HEAT = '🥵 Heat wave · mid-90s °F — mornings out, shade or pool at midday';
 
 /* ---- shared card menus ---- */
@@ -269,44 +270,54 @@ const PODERI_DINNER = [
   links:[['🗺️ Funicolare di Certaldo',mapsQ('Funicolare di Certaldo')]]},
 ];
 
-const MENU_CETONA = [
- {k:'A',e:'♨️',g:'g4',img:wm('Cascate_del_Mulino_-_Saturnia.jpg'),title:'Pitigliano + Saturnia hot springs',pitch:'The tufa-cliff town + free cascading thermal pools — anchor day',
-  drive:'Pitigliano ~1 h 15 · Saturnia ~1 h 30',hours:'Cascate del Mulino open 24/7, free',price:'Springs free · lunch in Pitigliano',
-  more:'Pitigliano rises straight out of a tufa cliff — wander the little Jewish quarter (“Little Jerusalem”) and lunch with a view. Then 25 min to the Cascate del Mulino: milky-blue 37 °C terraces, wonderfully weird. 87 °F water on a 95 °F day is… a choice — but the kids won’t care.',
-  warn:'Biggest driving day. Go early. Water shoes, no valuables at the springs.',
-  maps:mapsQ('Cascate del Mulino Saturnia'),dir:dirTo('Podere San Girolamo Cetona','Pitigliano')},
- {k:'B',e:'⚱️',g:'g3',title:'Chiusi + Sarteano Etruscan day',pitch:'Painted tombs and an underground labyrinth, 15 min away',
-  drive:'~15 min drive',hours:'Museums ~09:00–20:00 · tomb visits guided',price:'~€6–10/site',
-  more:'Chiusi: national Etruscan museum + underground tunnels beneath the cathedral. Sarteano: the Tomba della Quadriga Infernale — a demon charioteer fresco 2,400 years old, guided visits only, small groups.',
-  warn:'Quadriga Infernale must be booked ahead (limited slots, not daily) — decision needed early in the week.',
-  maps:mapsQ('Museo Nazionale Etrusco Chiusi'),dir:dirTo('Podere San Girolamo Cetona','Chiusi')},
- {k:'C',e:'💆',g:'g2',title:'Fonteverde spa',pitch:'Grown-up thermal pools with a Val d’Orcia view',
-  drive:'~20 min drive',hours:'Day access — book a slot',price:'💶 day passes vary; check kids’ hours',
-  more:'Medici-era thermal water, infinity pool staring at Monte Amiata, San Casciano dei Bagni village for a wander after. The pamper option.',
-  warn:'Verify child access hours/ages before promising the kids a pool day here.',
-  maps:mapsQ('Fonteverde San Casciano dei Bagni'),dir:dirTo('Podere San Girolamo Cetona','Fonteverde San Casciano dei Bagni')},
- {k:'D',e:'⛵',g:'g2',img:wm('Lago_Trasimeno_da_Castiglione_del_Lago.jpg'),title:'Lake Trasimeno',pitch:'Ferry to an island, castle walls, swim beaches',
-  drive:'~40 min to Castiglione del Lago',hours:'Ferries roughly hourly',price:'Ferry ~€10 return',
-  more:'Castiglione del Lago’s castle walkway, then the little ferry to Isola Maggiore — lace-making village, lakeside trattoria, shallow swimming. A different Italy: flat, blue, breezy.',
-  maps:mapsQ('Castiglione del Lago'),dir:dirTo('Podere San Girolamo Cetona','Castiglione del Lago')},
- {k:'E',e:'🧀',g:'g1',img:wm('Pienza_Piazza_Pio_II.jpg'),title:'Pienza + Montepulciano',pitch:'Pecorino, postcard lanes, wine-cellar caves',
-  drive:'Montepulciano ~30 min · Pienza ~45 min',hours:'Towns always open',price:'Cheese + wine money',
-  more:'Pienza: the “ideal Renaissance city”, pecorino shops every ten meters, Gladiator-grade Val d’Orcia views from the walls. Montepulciano: grand main street, underground Vino Nobile cellars (cool = literal relief).',
-  warn:'Both are hilly — strollers suffer; carrier for Theo.',
-  maps:mapsQ('Pienza'),dir:dirTo('Podere San Girolamo Cetona','Pienza')},
- {k:'F',e:'🍇',g:'g4',img:wm('Montalcino_-_La_Fortezza.jpg'),title:'Montalcino + Brunello',pitch:'Fortress ramparts and Italy’s most famous red',
-  drive:'~1 h drive',hours:'Fortezza ~09:00–20:00',price:'Tastings ~€15–40',
-  more:'Taste Brunello inside the 14th-century fortezza walls, walk the ramparts, long lunch. Pairs naturally with Sant’Antimo abbey (option G) if the group wants a big loop.',
-  maps:mapsQ('Montalcino'),dir:dirTo('Podere San Girolamo Cetona','Montalcino')},
- {k:'G',e:'⛲',g:'g3',img:wm('Bagno_Vignoni,_la_vasca.jpg'),title:'Bagno Vignoni + Sant’Antimo',pitch:'A village whose main square is a steaming pool + a Romanesque abbey',
-  drive:'~50 min drive',hours:'Abbey daytime; check chant times',price:'Free · free',
-  more:'Bagno Vignoni’s piazza is a Medici-era thermal basin (look, don’t swim — but soak feet in the free channels below). Sant’Antimo is a honey-stone abbey in an olive valley, sometimes with Gregorian chant.',
-  maps:mapsQ('Bagno Vignoni'),dir:dirTo('Podere San Girolamo Cetona','Bagno Vignoni')},
- {k:'H',e:'🏡',g:'g2',title:'Villa day at San Girolamo',pitch:'Pool, garden, Ezzio’s tomatoes, zero driving',
-  drive:'0 min',hours:'—',price:'Free (minus utilities 😉)',
-  more:'The house is the destination: pool, shaded garden, big cooking project, Cetona’s pretty piazza 5 minutes away for coffee and the evening stroll.',
-  maps:mapsQ('Cetona')},
+// Cetona base (Thu 23 / Fri 24) — same day-shape pattern. Photos to come (photoTBD placeholders).
+const CETONA_SHAPES = [
+ {e:'🌄',g:'g3',verified:true,photoTBD:'Montepulciano — Piazza Grande',title:'Val d’Orcia Day',pitch:'The big scenic loop west — Renaissance hilltop, tufa wine cellars, a white travertine soak',
+  drive:'Montepulciano ~30 min · legs short once out there',hours:'full day out',price:'lunch + tastings + free soak',
+  steps:[
+   {t:'AM',txt:'Drive to <b>Montepulciano</b> (~30 min). Hilltop Renaissance town. <b>Kid hook:</b> the historic cellars dug into the tufa (Cantina De’ Ricci, Contucci) — cool, cavernous, an adventure and real heat relief. <b>Adults:</b> walk-in Vino Nobile tastings at the Corso enoteche, no booking needed. Apéro in Piazza Grande, lunch in town.'},
+   {t:'~2pm',txt:'<b>Optional — Pienza</b> (18 min): pecorino-village stroll, best at golden hour. Honeypot — keep it a short walk, drop it if the kids are fried (it’s a 3rd stop).'},
+   {t:'LAST',txt:'<b>Bagni San Filippo / Fosso Bianco</b> (31 min from Pienza) — the white travertine “Balena Bianca” hot cascade in the forest, FREE. Do it <b>last</b>: sulphur + mud, then the 45-min drive home to shower.'}],
+  warn:'Book nothing in the countryside — stick to in-town cellars/enoteche (kids can’t taste; the cellars are their draw). Fosso Bianco: short slippery forest trail (water shoes), sulphur smell, don’t wear favourite swimwear, can feel crowded. Water is warm, not cooling — a sight + soak, not heat relief.',
+  links:[['🗺️ Montepulciano',mapsQ('Montepulciano Piazza Grande')],['🗺️ Pienza',mapsQ('Pienza')],['🗺️ Fosso Bianco',mapsQ('Fosso Bianco Bagni San Filippo')]]},
+ {e:'🏊',g:'g2',verified:true,photoTBD:'Chiusi — Labirinto di Porsenna',title:'Local / Gentle Day',pitch:'Low driving, all ≤15 min east — villa pool + an underground Etruscan adventure',
+  drive:'Chiusi 11 min · San Casciano 15 min',hours:'pool + one cool outing',price:'guided tour small · pool free',
+  steps:[
+   {t:'Anchor',txt:'<b>Villa pool</b> — the primary kid-water for the southern half. Build the day around it.'},
+   {t:'Cool',txt:'<b>Chiusi — Labirinto di Porsenna</b> (11 min). Etruscan underground tunnels + Roman cistern + a 140-step bell-tower climb. ~30-min guided tour, cool underground — the <b>too-hot-day card</b>. Kid hook: the Porsenna golden-treasure legend (golden chariot, golden hen, 5,000 golden chicks).'},
+   {t:'Optional',txt:'<b>San Casciano dei Bagni</b> (15 min) — one of Italy’s prettiest villages + the 2022 Etruscan bronze-treasure story (Santuario Ritrovato museum). Free Roman soaking pools at the foot of the hill.'}],
+  warn:'Labirinto MUST be booked (tour times 10:00 / 10:45 / 11:30 / 12:15 / 14:30 / 15:15 / 16:00 / 16:45). Narrow, descends ~25 m, many stairs — not for claustrophobes. San Casciano: water is HOT (36–41 °C) and pools small/crowded in July — treat it as a village visit + a look at the springs, not a cool swim; steep 5–10 min walk down from the car parks.',
+  links:[['🗺️ Labirinto di Porsenna',mapsQ('Labirinto di Porsenna Chiusi')],['📞 Book Labirinto','tel:+39057820915'],['✉️ Email Labirinto','mailto:museocivicochiusi@gmail.com'],['🗺️ San Casciano',mapsQ('San Casciano dei Bagni')]]},
+ {e:'🍷',g:'g4',verified:true,photoTBD:'Montalcino — Brunello country',title:'Wine day (flex)',pitch:'Only if the adults want a deeper wine pilgrimage — otherwise Montepulciano covers it',
+  drive:'Montalcino ~1 h each way',hours:'full day',price:'tastings €€',
+  more:'Montepulciano (the Val d’Orcia day) already covers wine well. <b>Montalcino</b> (Brunello) is ~1 h each way — a dedicated wine-pilgrimage day, <b>not</b> family-friendly with a 4-year-old. Only worth surfacing if the adults specifically want a deeper wine day; otherwise skip it and do the Val d’Orcia or Local day.',
+  links:[['🗺️ Montalcino',mapsQ('Montalcino')]]},
 ];
+
+const CETONA_DINNER = [
+ {e:'🍸',g:'g1',verified:true,photoTBD:'Cetona — Piazza Garibaldi at dusk',title:'Cetona town',pitch:'Dinner + passeggiata on the doorstep — the easy default',
+  drive:'0 min · walk',hours:'evening on the piazza',price:'reserve for da Nilo',
+  more:'Your own square. Evening passeggiata on Piazza Garibaldi, dinner without a drive. Provisioning: <b>FEMA deli</b> (Piazza Garibaldi 21 — hams, pecorino, wine); village shops open to 19:30 daily (Sun &amp; Wed early close).',
+  spots:[
+   {name:'Ristorante da Nilo',rating:'Michelin Guide',desc:'Cetona’s best/fanciest — Piazza Garibaldi, seasonal menu, indoor + outdoor, great beer list. The adults’ nicer night. Reserve (confirm the number in town).',hours:'dinner · reserve',map:mapsQ('Ristorante da Nilo Cetona')},
+   {name:'Bar Sport',rating:'casual',desc:'Next to da Nilo — light lunches, homemade gelato, the best coffee on the square, outdoor seating. The everyday family spot.',hours:'day + evening',map:mapsQ('Bar Sport Cetona')}],
+  links:[['🗺️ Piazza Garibaldi',mapsQ('Piazza Garibaldi Cetona')],['🗺️ FEMA deli',mapsQ('FEMA Cetona')]]},
+ {e:'🌆',g:'g3',verified:true,photoTBD:'Montepulciano / Monticchiello at golden hour',title:'Val d’Orcia village',pitch:'The “make an evening of it” upgrade when you’re already out west',
+  drive:'Montepulciano ~30 min · Monticchiello ~40 min',hours:'golden hour + dinner',price:'reserve ahead',
+  more:'The upgrade for a night you’re already touring west. <b>Montepulciano</b>: apéro-hour, then dinner in Piazza Grande after the wine day. <b>Monticchiello</b> (~40 min): a tiny, atmospheric Val d’Orcia hamlet flagged as a lovely dinner village.',
+  warn:'Monticchiello: verify a specific restaurant and book before relying on it.',
+  links:[['🗺️ Montepulciano',mapsQ('Montepulciano Piazza Grande')],['🗺️ Monticchiello',mapsQ('Monticchiello')]]},
+];
+
+const CETONA_FAREWELL = {e:'👨‍🍳',g:'g4',verified:true,photoTBD:'Chef Walter at the villa',title:'Farewell dinner — Chef Walter 🥂',pitch:'Opt-in splurge · last night · a private chef at the villa',
+  drive:'0 min',hours:'last night',price:'unpriced — see below',
+  more:'The big send-off idea: <b>Chef Walter cooks at Podere San Girolamo</b> — no drive, kids can crash upstairs, a long table on your own terrace. <b>Unpriced so far</b> — needs a WhatsApp to host Valerio to arrange and quote. Group decision.',
+  warn:'Pending: message Valerio to confirm availability + price for Fri Jul 24.'};
+
+const CETONA_MARKET = {e:'🧺',g:'g3',verified:true,photoTBD:'Sarteano — town / castle',title:'Sarteano market (optional AM)',pitch:'Friday-morning civic market, 10 min — only if you’re passing',
+  drive:'~10 min',hours:'Friday morning',price:'—',
+  more:'Cetona’s own market is Saturday (you leave that day). The nearest weekday is <b>Sarteano, Friday morning</b> (~10 min). Honest note: it’s a general civic market (clothes, housewares, some produce), <b>not</b> the artisan-producer market you might picture — worth a quick pass, not a plan.',
+  links:[['🗺️ Sarteano',mapsQ('Sarteano')]]};
 
 /* ---- days ---- */
 
@@ -409,13 +420,22 @@ const DAYS = [
     btns:[['maps','🗺️ Podere San Girolamo',mapsQ('Podere San Girolamo Cetona')]]},
    {t:'19:30',title:'First Cetona evening',s:'Piazza Garibaldi passeggiata, easy dinner, early night.'}]}]},
 
- {id:'thu23',dow:'Thu',num:'23',name:'Cetona · pick one',base:'Base: Podere San Girolamo, Cetona',lock:'pick',heat:true,menu:MENU_CETONA,
-  intro:'One menu, two days (Thu + Fri) — pick one per day. The Saturnia anchor day (A) eats the most hours; if it’s happening, most crews do it Thursday. Details being finalized.'},
+ {id:'thu23',dow:'Thu',num:'23',name:'Build your day',base:'Base: Podere San Girolamo, Cetona',lock:'pick',heat:true,
+  intro:'Two days here (Thu + Fri), built from blocks. Same rhythm: one main outing → lunch → pool/relax through the 2–5pm heat → golden-hour village + apéro → dinner ~7:30; two real stops a day max. <b>Water’s built in:</b> the Local day (and any pool afternoon) = the villa pool; the Val d’Orcia day ends at the Fosso Bianco soak — a warm sight, not a cool-off. Tonight’s town + table is the next tab → 🍷',
+  sections:[
+   {label:'☀️ Day shape — pick one',items:CETONA_SHAPES}]},
 
- {id:'fri24',dow:'Fri',num:'24',name:'Cetona · pick one',base:'Base: Podere San Girolamo, Cetona · last full day',lock:'pick',heat:true,menu:MENU_CETONA,
-  intro:'Last full day — whatever the group loved-but-missed. Keep the evening free:',
-  extra:{e:'👨‍🍳',g:'g4',title:'Farewell dinner 🥂',pitch:'Friday night · all 8 · group decision pending',
-   more:'Opt-in splurge idea: <b>Chef Walter cooks at the villa</b> (unpriced yet — placeholder). Alternative: a long table in Cetona’s piazza. Either way: toast the trip, embarrass the dads, let the kids stay up.'}},
+ {id:'din3',dow:'Thu',num:'🍷',name:'Evening out · Thursday',dinner:true,eyebrow:'🍷 Golden hour + dinner · Thu Jul 23',base:'Cetona’s piazza, or a Val d’Orcia village · reserve for 8',lock:'pick',menu:CETONA_DINNER,
+  intro:'Cetona town is the easy default — dinner + passeggiata on the doorstep, no drive. Or make an evening of it in a Val d’Orcia village if you’re already out west. Pick one; book ahead for 8.'},
+
+ {id:'fri24',dow:'Fri',num:'24',name:'Build your day',base:'Base: Podere San Girolamo, Cetona · last full day',lock:'pick',heat:true,
+  intro:'Last full day — whatever you didn’t do Thursday. Same blocks; keep the evening free for the farewell (next tab). One optional low-key add below.',
+  sections:[
+   {label:'☀️ Day shape — pick one',items:CETONA_SHAPES}],
+  extra:CETONA_MARKET},
+
+ {id:'din4',dow:'Fri',num:'🥂',name:'Farewell evening · Friday',dinner:true,eyebrow:'🥂 Last night · Fri Jul 24',base:'Send-off dinner · pick one',lock:'pick',menu:CETONA_DINNER,extra:CETONA_FAREWELL,
+  intro:'The last supper of the trip. The splurge idea is <b>Chef Walter at the villa</b> (below — pending pricing), or the same Cetona / Val d’Orcia tables as any night.'},
 
  {id:'sat25',dow:'Sat',num:'25',name:'Departures',base:'Cetona → Rome · Hoosiers fly home',lock:'semi',
   tracks:[{name:null,rows:[
@@ -482,7 +502,8 @@ const PENDING = [
  {t:'Alamo early-pickup confirmation — +39 055 310150',who:'Jason',tel:'+39055310150'},
  {t:'Sunday 20:00 farm-dinner confirmation with Chiara',who:'Jason'},
  {t:'Hoosiers inbound flight number',who:'Ali / David T'},
- {t:'Research v2: open-day details for Cetona Jul 23–24',who:'Jason + Claude'},
+ {t:'Farewell dinner Fri Jul 24 — WhatsApp Valerio re: Chef Walter (availability + price)',who:'Jason'},
+ {t:'Book Labirinto di Porsenna (Chiusi) if doing the Local day — +39 0578 20915',who:'Jason',tel:'+39057820915'},
 ];
 
 /* =====================  RENDER  ===================== */
@@ -521,7 +542,8 @@ function rowHtml(r){
 function optHtml(o){
   const hero = `<div class="hero ${o.g||'g1'}">
       ${o.img?`<img loading="lazy" src="${o.img}" alt="${o.title}" onload="this.classList.add('ok')" onerror="this.remove()">`:''}
-      ${(o.img&&o.img.startsWith('photos/'))?'':`<span class="emoji">${o.e}</span>`}
+      ${o.photoTBD?`<span class="ph"><span class="ph-cam">📷</span><span class="ph-lbl">Photo coming · ${o.photoTBD}</span></span>`
+        :(o.img&&o.img.startsWith('photos/'))?'':`<span class="emoji">${o.e}</span>`}
       ${o.k?`<span class="letter">${o.k}</span>`:''}
       ${o.verified?'':'<span class="fin">being finalized</span>'}
     </div>`;
