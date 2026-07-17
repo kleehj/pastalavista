@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pastalavista 2026</title>
+<meta name="description" content="Kleeh + Tann families · Rome &amp; Tuscany · Jul 17–26 2026">
+<meta name="theme-color" content="#C05A33">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Pastalavista">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --terra:#C05A33; --terra-dark:#A34527; --terra-soft:#EAC3AF;
+  --cream:#FAF4E8; --card:#FFFDF8; --ink:#33261D; --ink-soft:#7A6A5C;
+  --green:#2E4A33; --green-soft:#DFE6DA; --olive:#8B8B4F;
+  --gold:#C9A227; --line:#EBDFCC;
+  --shadow:0 1px 2px rgba(51,38,29,.06),0 4px 14px rgba(51,38,29,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:120px}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:var(--cream); color:var(--ink);
+  font-size:15.5px; line-height:1.5;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+h1,h2,h3,.disp{font-family:'Fraunces',Georgia,serif}
+a{color:var(--terra-dark)}
+
+/* ---------- header ---------- */
+header{
+  position:sticky;top:0;z-index:50;
+  background:linear-gradient(180deg,var(--terra) 0%,var(--terra-dark) 100%);
+  padding-top:env(safe-area-inset-top);
+  box-shadow:0 2px 10px rgba(51,38,29,.25);
+}
+.brand{display:flex;align-items:baseline;justify-content:space-between;padding:10px 16px 2px}
+.brand h1{color:var(--cream);font-size:21px;font-weight:700;letter-spacing:.5px}
+.brand h1 span{color:#F2C98F}
+.brand small{color:#F2C98F;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase}
+nav{display:flex;overflow-x:auto;gap:6px;padding:8px 12px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+nav::-webkit-scrollbar{display:none}
+.tab{
+  flex:0 0 auto;border:0;cursor:pointer;border-radius:14px;
+  background:rgba(250,244,232,.13);color:var(--cream);
+  padding:7px 13px 6px;text-align:center;line-height:1.15;
+  font-family:'Inter',sans-serif;position:relative;
+}
+.tab .dw{display:block;font-size:10px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;opacity:.85}
+.tab .dt{display:block;font-size:15px;font-weight:700}
+.tab.on{background:var(--cream);color:var(--terra-dark)}
+.tab .today-dot{position:absolute;top:5px;right:7px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+
+/* ---------- day screen ---------- */
+main{max-width:660px;margin:0 auto;padding:16px 14px 60px}
+.dayhead{padding:6px 4px 14px}
+.dayhead .eyebrow{font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--terra-dark)}
+.dayhead h2{font-size:30px;font-weight:700;line-height:1.1;margin:2px 0 4px}
+.dayhead .base{font-size:13.5px;color:var(--ink-soft)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:999px;letter-spacing:.3px}
+.chip.locked{background:var(--green);color:#fff}
+.chip.pick{background:var(--gold);color:#3d2f05}
+.chip.semi{background:var(--olive);color:#fff}
+.chip.heat{background:#F6E3D3;color:#A0431B}
+.chip.today{background:var(--terra);color:#fff}
+
+/* ---------- timeline ---------- */
+.trackname{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--green);margin:20px 4px 10px;display:flex;align-items:center;gap:8px}
+.trackname::after{content:"";flex:1;height:1px;background:var(--line)}
+.tl{list-style:none;position:relative;padding-left:74px}
+.tl::before{content:"";position:absolute;left:58px;top:8px;bottom:8px;width:2px;background:var(--terra-soft);border-radius:2px}
+.tl li{position:relative;margin-bottom:10px}
+.tl li::before{content:"";position:absolute;left:-21px;top:16px;width:10px;height:10px;border-radius:50%;background:var(--terra);border:2px solid var(--cream)}
+.tl li.hl::before{background:var(--gold)}
+.tl .time{position:absolute;left:-74px;top:13px;width:46px;text-align:right;font-size:11.5px;font-weight:700;color:var(--terra-dark);line-height:1.2}
+.tlcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:11px 13px;box-shadow:var(--shadow)}
+.tl li.hl .tlcard{border-color:var(--gold);background:#FFFAEB}
+.tlcard .t{font-weight:600;font-size:15px}
+.tlcard .s{font-size:13.5px;color:var(--ink-soft);margin-top:2px}
+.tlcard .s b{color:var(--ink)}
+.warn{display:flex;gap:6px;font-size:13px;background:#FBEEE2;color:#8A4519;border-radius:9px;padding:7px 10px;margin-top:8px}
+.note{font-size:13px;background:var(--green-soft);color:var(--green);border-radius:9px;padding:7px 10px;margin-top:8px}
+.btnrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:9px}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;text-decoration:none;
+  font-size:13.5px;font-weight:600;border-radius:11px;padding:9px 13px;
+  min-height:40px;border:0;cursor:pointer;font-family:'Inter',sans-serif;
+}
+.btn.maps{background:var(--green);color:#fff}
+.btn.dir{background:var(--green-soft);color:var(--green)}
+.btn.tel{background:#F6E3D3;color:var(--terra-dark)}
+.btn.ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink-soft)}
+
+/* ---------- menu cards ---------- */
+.pickbar{font-size:13.5px;color:var(--ink-soft);background:#F4ECDD;border:1px dashed var(--terra-soft);border-radius:12px;padding:10px 13px;margin-bottom:14px}
+.opt{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
+.opt summary{list-style:none;cursor:pointer;position:relative}
+.opt summary::-webkit-details-marker{display:none}
+.hero{position:relative;height:132px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero .emoji{font-size:52px;filter:drop-shadow(0 3px 6px rgba(51,38,29,.25))}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s}
+.hero img.ok{opacity:1}
+.hero .letter{
+  position:absolute;top:10px;left:10px;width:30px;height:30px;border-radius:10px;
+  background:rgba(250,244,232,.92);color:var(--terra-dark);
+  font-family:'Fraunces',serif;font-weight:700;font-size:16px;
+  display:flex;align-items:center;justify-content:center;z-index:2;
+}
+.hero .fin{
+  position:absolute;top:10px;right:10px;z-index:2;
+  font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
+  background:rgba(51,38,29,.55);color:#F7ECD4;border-radius:999px;padding:4px 9px;backdrop-filter:blur(3px);
+}
+.g1{background:linear-gradient(135deg,#C05A33,#E09B6B)}
+.g2{background:linear-gradient(135deg,#2E4A33,#6E8F5E)}
+.g3{background:linear-gradient(135deg,#8B8B4F,#C9BE7C)}
+.g4{background:linear-gradient(135deg,#A34527,#C9A227)}
+.opt .head{padding:12px 14px 4px}
+.opt .head h3{font-size:19px;font-weight:600;line-height:1.2}
+.opt .head .pitch{font-size:13.5px;color:var(--ink-soft);margin-top:3px}
+.meta{display:flex;flex-wrap:wrap;gap:5px 12px;padding:8px 14px 12px;font-size:12.5px;color:var(--ink-soft)}
+.meta span{display:inline-flex;align-items:center;gap:4px;font-weight:500}
+.opt .more{padding:0 14px 14px;border-top:1px dashed var(--line);margin-top:2px;padding-top:11px}
+.opt .more p{font-size:14px;margin-bottom:8px}
+.expander{display:flex;justify-content:center;padding:0 0 8px;color:var(--terra-soft);font-size:11px;letter-spacing:1px}
+.opt[open] .expander{display:none}
+
+/* ---------- reference ---------- */
+.refsec{margin-bottom:22px}
+.refsec>h3{font-size:21px;font-weight:700;color:var(--green);margin:0 4px 10px;display:flex;align-items:center;gap:8px}
+.refsec>h3::after{content:"";flex:1;height:1px;background:var(--line)}
+.refcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 14px;box-shadow:var(--shadow);margin-bottom:10px}
+.refcard .t{font-weight:600;font-size:15.5px}
+.refcard .s{font-size:13.5px;color:var(--ink-soft);margin-top:3px}
+.refcard .s b{color:var(--ink)}
+.code{
+  display:inline-flex;align-items:center;gap:6px;cursor:pointer;border:0;
+  font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:13.5px;font-weight:600;
+  background:#F1E6CF;color:#6B4A12;border-radius:8px;padding:5px 9px;margin:6px 6px 0 0;
+}
+.code:active{background:var(--gold);color:#fff}
+
+/* ---------- pending ---------- */
+.pend{display:flex;gap:11px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 14px;box-shadow:var(--shadow);margin-bottom:10px}
+.pend input{width:22px;height:22px;margin-top:1px;accent-color:var(--green);flex:0 0 auto}
+.pend.done label{text-decoration:line-through;color:var(--ink-soft)}
+.pend label{font-size:14.5px}
+.pend .who{display:block;font-size:12px;color:var(--terra-dark);font-weight:600;margin-top:2px}
+
+footer{max-width:660px;margin:0 auto;padding:0 18px 40px;font-size:12px;color:#B3A28F;text-align:center}
+@media(min-width:700px){ .brand h1{font-size:24px} .hero{height:170px} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>PASTA<span>LA</span>VISTA</h1>
+    <small>Roma · Toscana 2026</small>
+  </div>
+  <nav id="tabs"></nav>
+</header>
+
+<main id="app"></main>
+
+<footer>Pastalavista 2026 · Kleeh + Tann families · buon viaggio 🍝</footer>
+
+<script>
+/* =====================  DATA  ===================== */
+
+const mapsQ = q => 'https://maps.google.com/?q=' + encodeURIComponent(q);
+const dirTo = (o,dst,mode) => 'https://www.google.com/maps/dir/?api=1&origin=' + encodeURIComponent(o) + '&destination=' + encodeURIComponent(dst) + '&travelmode=' + (mode||'driving');
+const wm = f => 'https://commons.wikimedia.org/wiki/Special:FilePath/' + f + '?width=800';
+
+const HEAT = '🥵 Heat wave · mid-90s °F — mornings out, shade or pool at midday';
+
+/* ---- shared card menus ---- */
+
+const MENU_PODERI = [
+ {k:'A',e:'🏊',g:'g2',title:'Farm Day at Poderi',pitch:'Infinity pool + everything bookable at reception',
+  drive:'0 min — you are here',hours:'Pool all day',price:'Activities priced per person',
+  more:'Wine tasting, cooking class, pizza class, e-bikes and truffle hunt are all bookable at reception — ask the evening before. BBQ at the apartment. No pool towels provided (you brought yours… right?).',
+  maps:mapsQ('Poderi Arcangelo San Gimignano')},
+ {k:'B',e:'🏰',g:'g1',img:wm('San_Gimignano_04.jpg'),title:'San Gimignano town',pitch:'Medieval Manhattan — towers, alleys, world-champion gelato',
+  drive:'~15 min drive',hours:'Town always open · Torre Grossa ~10:00–19:30',price:'Free to wander · tower ~€9',
+  more:'Gelateria Dondoli on Piazza della Cisterna is the mandatory stop. Best plan in the heat: go after 17:00 for the evening passeggiata and golden light, dinner in town.',
+  warn:'Midday = crowds + full sun. Park at P2/P3/P4 lots and walk in — the center is ZTL.',
+  maps:mapsQ('San Gimignano'),dir:dirTo('Poderi Arcangelo San Gimignano','San Gimignano')},
+ {k:'C',e:'🏛️',g:'g3',img:wm('Volterra_panorama.jpg'),title:'Volterra + SentierElsa walk',pitch:'Etruscan hill town + a shaded turquoise river walk',
+  drive:'Volterra ~40 min · SentierElsa ~25 min',hours:'SentierElsa daylight hours',price:'Etruscan museum ~€10 · river walk free',
+  more:'Volterra: alabaster workshops, Roman theatre, Etruscan museum — less crowded than San Gimignano. Pair with the SentierElsa river trail at Colle di Val d’Elsa on the way home: shaded path along unreal turquoise water, kids can paddle.',
+  warn:'Water shoes help on the river stones.',
+  maps:mapsQ('Volterra'),dir:dirTo('Poderi Arcangelo San Gimignano','Volterra')},
+ {k:'D',e:'🍷',g:'g4',img:wm('Greve_in_Chianti,_piazza_Matteotti.jpg'),title:'Chianti villages drive',pitch:'Castellina → Radda → Greve → Panzano, the classic loop',
+  drive:'~40 min to Castellina · full loop half a day',hours:'Villages always open',price:'Lunch + tastings as you go',
+  more:'Roll between stone villages on the SR222. Piazza Matteotti in Greve for lunch, butcher-legend Dario Cecchini in Panzano if the group wants a carnivore spectacle. Wine tasting for the adults, piazza gelato for the kids.',
+  warn:'Winding roads — anyone carsick rides up front.',
+  maps:mapsQ('Castellina in Chianti'),dir:dirTo('Poderi Arcangelo San Gimignano','Greve in Chianti')},
+ {k:'E',e:'🚲',g:'g2',img:wm('Lucca,_Piazza_dell’Anfiteatro.jpg'),title:'Lucca day',pitch:'Bike the Renaissance walls, piazza-hop below',
+  drive:'~1 h 15 drive',hours:'Walls always open · bike hire ~09:00–19:30',price:'Bikes ~€5–6/h · family quadricycles available',
+  more:'Rent bikes at Porta Santa Maria and loop the 4 km tree-lined wall — flat, car-free, kid-perfect. Then Piazza dell’Anfiteatro, climb the tree-topped Torre Guinigi, buccellato pastry.',
+  warn:'Longest drive of the open days — leave by 09:00.',
+  maps:mapsQ('Lucca'),dir:dirTo('Poderi Arcangelo San Gimignano','Lucca')},
+ {k:'F',e:'🏘️',g:'g1',title:'Certaldo Alto',pitch:'Tiny brick hill town by funicular — the quiet one',
+  drive:'~25 min drive',hours:'Funicular ~07:30–24:00 (summer)',price:'Funicular ~€3 return',
+  more:'Park in the lower town, ride the funicular up to Boccaccio’s red-brick borgo. One main street, tower views, zero tour buses. Lovely at aperitivo hour; combine with a pool morning.',
+  maps:mapsQ('Certaldo Alto'),dir:dirTo('Poderi Arcangelo San Gimignano','Certaldo')},
+ {k:'G',e:'🎈',g:'g4',title:'Hot-air balloon',pitch:'Sunrise over the towers — the big-ticket wow',
+  drive:'Meet point ~30–45 min, before dawn',hours:'Launch ~05:30–06:00, back by ~09:30',price:'💶💶 roughly €250+/pp — the splurge',
+  more:'Sunrise flight over the Chianti/Val d’Elsa hills, prosecco landing, rest of the day at the pool. Needs booking days ahead and calm weather — decide early.',
+  warn:'Very early wake-up; age/height minimums vary by operator — check for Theo.',
+  maps:mapsQ('San Gimignano')},
+ {k:'H',e:'🌗',g:'g3',title:'Split-group day',pitch:'Some at the pool, some out adventuring',
+  drive:'Two cars = freedom',hours:'—',price:'—',
+  more:'Nothing says the eight of you move as one. Pool + farm activities for one car, any option above for the other. Regroup for dinner and compare notes.'},
+];
+
+const MENU_CETONA = [
+ {k:'A',e:'♨️',g:'g4',img:wm('Cascate_del_Mulino_-_Saturnia.jpg'),title:'Pitigliano + Saturnia hot springs',pitch:'The tufa-cliff town + free cascading thermal pools — anchor day',
+  drive:'Pitigliano ~1 h 15 · Saturnia ~1 h 30',hours:'Cascate del Mulino open 24/7, free',price:'Springs free · lunch in Pitigliano',
+  more:'Pitigliano rises straight out of a tufa cliff — wander the little Jewish quarter (“Little Jerusalem”) and lunch with a view. Then 25 min to the Cascate del Mulino: milky-blue 37 °C terraces, wonderfully weird. 87 °F water on a 95 °F day is… a choice — but the kids won’t care.',
+  warn:'Biggest driving day. Go early. Water shoes, no valuables at the springs.',
+  maps:mapsQ('Cascate del Mulino Saturnia'),dir:dirTo('Podere San Girolamo Cetona','Pitigliano')},
+ {k:'B',e:'⚱️',g:'g3',title:'Chiusi + Sarteano Etruscan day',pitch:'Painted tombs and an underground labyrinth, 15 min away',
+  drive:'~15 min drive',hours:'Museums ~09:00–20:00 · tomb visits guided',price:'~€6–10/site',
+  more:'Chiusi: national Etruscan museum + underground tunnels beneath the cathedral. Sarteano: the Tomba della Quadriga Infernale — a demon charioteer fresco 2,400 years old, guided visits only, small groups.',
+  warn:'Quadriga Infernale must be booked ahead (limited slots, not daily) — decision needed early in the week.',
+  maps:mapsQ('Museo Nazionale Etrusco Chiusi'),dir:dirTo('Podere San Girolamo Cetona','Chiusi')},
+ {k:'C',e:'💆',g:'g2',title:'Fonteverde spa',pitch:'Grown-up thermal pools with a Val d’Orcia view',
+  drive:'~20 min drive',hours:'Day access — book a slot',price:'💶 day passes vary; check kids’ hours',
+  more:'Medici-era thermal water, infinity pool staring at Monte Amiata, San Casciano dei Bagni village for a wander after. The pamper option.',
+  warn:'Verify child access hours/ages before promising the kids a pool day here.',
+  maps:mapsQ('Fonteverde San Casciano dei Bagni'),dir:dirTo('Podere San Girolamo Cetona','Fonteverde San Casciano dei Bagni')},
+ {k:'D',e:'⛵',g:'g2',img:wm('Lago_Trasimeno_da_Castiglione_del_Lago.jpg'),title:'Lake Trasimeno',pitch:'Ferry to an island, castle walls, swim beaches',
+  drive:'~40 min to Castiglione del Lago',hours:'Ferries roughly hourly',price:'Ferry ~€10 return',
+  more:'Castiglione del Lago’s castle walkway, then the little ferry to Isola Maggiore — lace-making village, lakeside trattoria, shallow swimming. A different Italy: flat, blue, breezy.',
+  maps:mapsQ('Castiglione del Lago'),dir:dirTo('Podere San Girolamo Cetona','Castiglione del Lago')},
+ {k:'E',e:'🧀',g:'g1',img:wm('Pienza_Piazza_Pio_II.jpg'),title:'Pienza + Montepulciano',pitch:'Pecorino, postcard lanes, wine-cellar caves',
+  drive:'Montepulciano ~30 min · Pienza ~45 min',hours:'Towns always open',price:'Cheese + wine money',
+  more:'Pienza: the “ideal Renaissance city”, pecorino shops every ten meters, Gladiator-grade Val d’Orcia views from the walls. Montepulciano: grand main street, underground Vino Nobile cellars (cool = literal relief).',
+  warn:'Both are hilly — strollers suffer; carrier for Theo.',
+  maps:mapsQ('Pienza'),dir:dirTo('Podere San Girolamo Cetona','Pienza')},
+ {k:'F',e:'🍇',g:'g4',img:wm('Montalcino_-_La_Fortezza.jpg'),title:'Montalcino + Brunello',pitch:'Fortress ramparts and Italy’s most famous red',
+  drive:'~1 h drive',hours:'Fortezza ~09:00–20:00',price:'Tastings ~€15–40',
+  more:'Taste Brunello inside the 14th-century fortezza walls, walk the ramparts, long lunch. Pairs naturally with Sant’Antimo abbey (option G) if the group wants a big loop.',
+  maps:mapsQ('Montalcino'),dir:dirTo('Podere San Girolamo Cetona','Montalcino')},
+ {k:'G',e:'⛲',g:'g3',img:wm('Bagno_Vignoni,_la_vasca.jpg'),title:'Bagno Vignoni + Sant’Antimo',pitch:'A village whose main square is a steaming pool + a Romanesque abbey',
+  drive:'~50 min drive',hours:'Abbey daytime; check chant times',price:'Free · free',
+  more:'Bagno Vignoni’s piazza is a Medici-era thermal basin (look, don’t swim — but soak feet in the free channels below). Sant’Antimo is a honey-stone abbey in an olive valley, sometimes with Gregorian chant.',
+  maps:mapsQ('Bagno Vignoni'),dir:dirTo('Podere San Girolamo Cetona','Bagno Vignoni')},
+ {k:'H',e:'🏡',g:'g2',title:'Villa day at San Girolamo',pitch:'Pool, garden, Ezzio’s tomatoes, zero driving',
+  drive:'0 min',hours:'—',price:'Free (minus utilities 😉)',
+  more:'The house is the destination: pool, shaded garden, big cooking project, Cetona’s pretty piazza 5 minutes away for coffee and the evening stroll.',
+  maps:mapsQ('Cetona')},
+];
+
+/* ---- days ---- */
+
+const DAYS = [
+ {id:'fri17',dow:'Fri',num:'17',name:'Arrivals',base:'Rome · two tracks',lock:'locked',
+  tracks:[
+   {name:'Track A — Tanns + Gus · land FCO morning',rows:[
+    {t:'AM',title:'FCO → BIG HOUSE COLOSSEO',s:'Leonardo Express to Termini or taxi — <b>fixed €55</b> FCO→center from the official rank. Via Merulana 105.',
+     btns:[['maps','🗺️ Maps',mapsQ('Via Merulana 105 Roma')],['tel','📞 Host',null,'+393514967316']]},
+    {t:'Day',title:'Mission: stay awake until ~21:00',s:'Beat the jet lag (Indy is 6 h behind). Light wandering only — Monti neighborhood, gelato currency for the kids.'},
+    {t:'PM',title:'Colosseum exterior at sunset',s:'10 min walk from the apartment. No tickets, just the postcard.',
+     btns:[['dir','🚶 Walk there',dirTo('Via Merulana 105 Roma','Colosseo Roma','walking')]]},
+    {t:'19:30',title:'Dinner for 5 — Gus’s pick 🍝',s:'<b>Decision pending</b> — Gus is choosing from the concierge list. Frontrunner by geography: <b>Il Focolare</b>, Via Nino Bixio 36 (~8 min walk, €15–28/pp, kid-friendly).',pending:true,
+     btns:[['maps','🗺️ Il Focolare',mapsQ('Il Focolare Via Nino Bixio 36 Roma')]]},
+    {t:'21:00',title:'Early night',s:'You made it. Domani si comincia.'}]},
+   {name:'Track B — Kleehs + JT · land FCO 22:45',rows:[
+    {t:'19:15',title:'BA 562 · LHR T5 → FCO',s:'Ref <b>XP4CEN</b> · seats 9A/9B/9C · lands <b>22:45</b>.',hl:true},
+    {t:'23:15',title:'Taxi to Ciao Bella',s:'Official rank outside T3 — <b>fixed €55</b> to the center. Via Mecenate 27. Arrival ~midnight, host Floriana is notified.',
+     btns:[['maps','🗺️ Maps',mapsQ('Via Mecenate 27 Roma')]]},
+    {t:'00:00',title:'Crash 😴',s:'Booking #5234860983 · PIN 8083. Big day tomorrow.'}]}
+  ]},
+
+ {id:'sat18',dow:'Sat',num:'18',name:'The Epic Day',base:'Rome · all 9 together',lock:'locked',heat:true,
+  tracks:[{name:null,rows:[
+   {t:'08:00',title:'Breakfast in Monti',s:'Slow start — cornetto e cappuccino.'},
+   {t:'09:15',title:'2 taxis to the Vatican',s:'~€15–20 each. Be at the entrance by <b>09:30</b>.',
+    btns:[['maps','🗺️ Vatican Museums',mapsQ('Musei Vaticani Roma')]]},
+   {t:'10:00',title:'Vatican guided tour · 10:00–13:00',s:'Official booking <b>2L2N0QSF7WTNZPQCL</b> (visit 267845/2026-4) · 8 tickets (Theo free). Sistine Chapel + St Peter’s via the Scala Regia shortcut.<br><b>Day-of:</b> entrance <b>CORRIDOIO2 / PASSAGEWAY 2</b>, show voucher + ID outside 30 min before → after security, stairs on the far left → “Guided Tours” desk to collect tickets and meet the guide.',hl:true,
+    warn:'Dress code: shoulders + knees covered, kids too. Small bags only. Bring passports for the reduced-fare tickets.',
+    btns:[['maps','📄 Voucher (PDF)','vatican-voucher.pdf'],['maps','🗺️ Museums entrance',mapsQ('Viale Vaticano Musei Vaticani entrance Roma')]]},
+   {t:'13:00',title:'Lunch near the Vatican',s:'<b>Bonci Pizzarium</b> (legendary pizza al taglio, casual, no reservation) or a Borgo Pio trattoria.',
+    btns:[['maps','🗺️ Pizzarium',mapsQ('Bonci Pizzarium Roma')]]},
+   {t:'14:15',title:'Taxis back to the apartments',s:'Home by ~14:45 for pickup.'},
+   {t:'15:00',title:'Golf cart tour · 15:00–18:00',s:'Private, 9 pax · Royal Tours Rome · Viator ref <b>1411499199</b> · paid by Ali. Pickup/drop at the apartments. Route customizable: Trevi, Pantheon, Spanish Steps, Navona, Castel Sant’Angelo, food stop facing the Colosseum.',hl:true,
+    warn:'Pickup point still to be set in Viator + booster for Theo to be flagged.'},
+   {t:'18:00',title:'Decompress at the apartments',s:'AC, showers, kids horizontal.'},
+   {t:'19:30',title:'Group dinner (9) 🍷',s:'<b>Ali is booking via concierge.</b> Jason’s lean: <b>Il Sorpasso</b> (exact address being confirmed) then an evening wander — Piazza Santa Maria in Trastevere, gelato, Ponte Sisto. Taxis 10–15 min, ~€12–18, 2–3 cabs.',pending:true,
+    btns:[['maps','🗺️ Il Sorpasso',mapsQ('Il Sorpasso Roma')]]},
+   {t:'22:00',title:'Home, sleep',s:'Big travel day tomorrow.'}]}],
+  foot:'⚠️ Heat plan: siesta window intentionally traded for the air-conditioned cart 15:00–18:00. Water bottles everywhere.'},
+
+ {id:'sun19',dow:'Sun',num:'19',name:'Rome → San Gimignano',base:'Train + cars · JT flies home',lock:'locked',
+  tracks:[{name:null,rows:[
+   {t:'08:00',title:'Slow breakfast, pack',s:'Checkout is firm-ish: Ciao Bella by 10:30.'},
+   {t:'10:00',title:'Check out both apartments',s:'Ciao Bella + BIG HOUSE, keys per host instructions.'},
+   {t:'10:30',title:'To Termini',s:'Ciao Bella → Termini is a <b>12 min walk</b>. Optional: Mercato Centrale inside the station (air-con!) for train picnic supplies.',
+    btns:[['dir','🚶 Walk to Termini',dirTo('Via Mecenate 27 Roma','Roma Termini','walking')]]},
+   {t:'11:30',title:'JT splits ✈️',s:'Leonardo Express to FCO (€14, 32 min, every 15 min) for <b>BA 547 dep 18:15</b> (ref XT67HP) — or he lingers solo and trains out later; his flight allows either.',
+    btns:[['maps','🗺️ Leonardo Express',mapsQ('Leonardo Express Roma Termini')]]},
+   {t:'11:55',title:'Italo 8914 departs · car? seats on ticket',s:'Ticket <b>HBKW4C</b> · 8 pax · Roma Termini → Firenze SMN.',hl:true},
+   {t:'13:31',title:'Arrive Firenze Santa Maria Novella',s:'Stretch, gelato if the queue is short.'},
+   {t:'13:40',title:'2 taxis to Alamo',s:'Rank outside SMN → “Alamo, Via Palagio degli Spini” (~€20–25 each, 10–12 min).',
+    btns:[['maps','🗺️ Alamo FLR',mapsQ('Alamo Via Palagio degli Spini Firenze')]]},
+   {t:'14:15',title:'Pick up both cars',s:'Kleeh: Alamo ref <b>2116801281</b> (booked 17:00 — early pickup being confirmed). Docs: Jason’s Mastercard, passport, licence. Tann car booked by Ali. Alamo is open 08–23.',hl:true,
+    btns:[['tel','📞 Alamo +39 055 310150',null,'+39055310150']],
+    warn:'If early pickup isn’t confirmed, plan B: espresso + playground until 17:00, arrive Poderi ~18:30 — still fine for the 20:00 dinner.'},
+   {t:'15:00',title:'Drive to San Gimignano · ~1 h 15',s:'Firenze–Siena superstrada (SR2), exit <b>Poggibonsi Nord</b> → Poderi Arcangelo.',
+    btns:[['dir','🚗 Directions',dirTo('Via Palagio degli Spini Firenze','Poderi Arcangelo San Gimignano')]],
+    warn:'Fuel up near the superstrada, not central Florence. Grocery: Coop in Poggibonsi before the final 15 min.'},
+   {t:'16:15',title:'Arrive Poderi Arcangelo 🏡',s:'Check-in (15:00–19:00), Raffaello House. Kids → <b>infinity pool</b>. Remember: no pool towels provided.',hl:true,
+    btns:[['maps','🗺️ Poderi Arcangelo',mapsQ('Poderi Arcangelo San Gimignano')]]},
+   {t:'20:00',title:'Farm dinner on the terrace 🍷',s:'€32/pp, kids ≤10 discounted 30–60% — <b>being pre-confirmed with Chiara</b>.',pending:true}]}]},
+
+ {id:'mon20',dow:'Mon',num:'20',name:'Tuscany · pick one',base:'Base: Poderi Arcangelo, San Gimignano',lock:'pick',heat:true,menu:MENU_PODERI,
+  intro:'One menu, two days (Mon + Tue) — pick one per day. Pool bookends recommended: adventure in the morning, water by 14:00. Details being finalized; drive times are from the farm.'},
+
+ {id:'tue21',dow:'Tue',num:'21',name:'Tuscany · pick one',base:'Base: Poderi Arcangelo, San Gimignano',lock:'pick',heat:true,menu:MENU_PODERI,
+  intro:'Same menu as Monday — whatever you didn’t pick yesterday. Farm activities (cooking class, truffle hunt…) need booking at reception the day before.'},
+
+ {id:'wed22',dow:'Wed',num:'22',name:'Poderi → Cetona',base:'Transfer day via Monteriggioni + Siena',lock:'semi',
+  tracks:[{name:null,rows:[
+   {t:'08:30',title:'Pack, pay, pool goodbye',s:'Poderi checkout 8:00–10:30. <b>Pay €1,830 on departure — 5% discount if cash</b> + tourist tax ~€37.50 cash.',
+    warn:'Settle the farm-activities tab too.'},
+   {t:'10:30',title:'Drive to Monteriggioni · ~30 min',s:'The tiny ring-wall castle town from the €1 coin. One coffee, one wall-walk, 45 minutes.',
+    btns:[['maps','🗺️ Monteriggioni',mapsQ('Monteriggioni')],['dir','🚗 Directions',dirTo('Poderi Arcangelo San Gimignano','Monteriggioni')]]},
+   {t:'12:00',title:'Siena — lunch + Piazza del Campo',s:'Park at Il Campo/Santa Caterina lots (ZTL!). Lunch, the shell-shaped Campo, Duomo façade. Skip anything with a queue — it’s 95 °F.',
+    btns:[['maps','🗺️ Piazza del Campo',mapsQ('Piazza del Campo Siena')]]},
+   {t:'15:00',title:'Drive toward Cetona · ~1 h 15',s:'Autostrada A1 direction Roma, exit Chiusi–Chianciano Terme.',
+    btns:[['dir','🚗 Directions',dirTo('Siena','Podere San Girolamo Cetona')]]},
+   {t:'15:30',title:'PAM grocery stop, Chiusi',s:'Big shop for the villa — 3 dinners, breakfasts, pool snacks.',
+    btns:[['maps','🗺️ PAM Chiusi',mapsQ('PAM supermercato Chiusi')]]},
+   {t:'16:30',title:'Check in · Podere San Girolamo 🏡',s:'Check-in from 16:00 · VRBO <b>HA-DS223T</b> · balance <b>€1,481.25 due today</b>. Hosts Valerio &amp; Daniela, gardener Ezzio. Utilities €15–25/day at consumption — have €150–250 cash for the stay.',hl:true,
+    btns:[['maps','🗺️ Podere San Girolamo',mapsQ('Podere San Girolamo Cetona')]]},
+   {t:'19:30',title:'First Cetona evening',s:'Piazza Garibaldi passeggiata, easy dinner, early night.'}]}]},
+
+ {id:'thu23',dow:'Thu',num:'23',name:'Cetona · pick one',base:'Base: Podere San Girolamo, Cetona',lock:'pick',heat:true,menu:MENU_CETONA,
+  intro:'One menu, two days (Thu + Fri) — pick one per day. The Saturnia anchor day (A) eats the most hours; if it’s happening, most crews do it Thursday. Details being finalized.'},
+
+ {id:'fri24',dow:'Fri',num:'24',name:'Cetona · pick one',base:'Base: Podere San Girolamo, Cetona · last full day',lock:'pick',heat:true,menu:MENU_CETONA,
+  intro:'Last full day — whatever the group loved-but-missed. Keep the evening free:',
+  extra:{e:'👨‍🍳',g:'g4',title:'Farewell dinner 🥂',pitch:'Friday night · all 8 · group decision pending',
+   more:'Opt-in splurge idea: <b>Chef Walter cooks at the villa</b> (unpriced yet — placeholder). Alternative: a long table in Cetona’s piazza. Either way: toast the trip, embarrass the dads, let the kids stay up.'}},
+
+ {id:'sat25',dow:'Sat',num:'25',name:'Departures',base:'Cetona → Rome · Tanns + Gus fly home',lock:'semi',
+  tracks:[{name:null,rows:[
+   {t:'08:00',title:'Pack, settle utilities in cash',s:'San Girolamo checkout by 10:00. Leave by <b>~09:30</b> — it’s ~2 h to FCO and the flight is at 15:00.'},
+   {t:'09:30',title:'Both cars → Rome',s:'A1 south. <b>Optional Orvieto stop</b> (duomo façade, 30 min off the highway) only if wheels are rolling by 09:30 sharp.',
+    btns:[['dir','🚗 To FCO',dirTo('Podere San Girolamo Cetona','Aeroporto Fiumicino')],['maps','🗺️ Orvieto',mapsQ('Duomo di Orvieto')]]},
+   {t:'12:30',title:'Tanns + Gus → FCO ✈️',s:'Drop the Tann rental at FCO, check in for the <b>15:00</b> departure. Hugs, tears, arrivederci.',hl:true},
+   {t:'14:30',title:'Kleehs drop car · Via Sardegna 25',s:'Alamo return, Ludovisi district — <b>outside the ZTL</b>. Target ~14:30.',
+    btns:[['maps','🗺️ Via Sardegna 25',mapsQ('Via Sardegna 25 Roma')]]},
+   {t:'15:00',title:'To Condominio Monti',s:'Walk/taxi to Via dei Serpenti 109 · ref 57492808 · contact Letizia.',
+    btns:[['maps','🗺️ Maps',mapsQ('Via dei Serpenti 109 Roma')],['tel','📞 Letizia',null,'+39064885889']]},
+   {t:'18:00',title:'Free Rome evening',s:'Monti at golden hour: Piazza della Madonna dei Monti, last carbonara, Colosseum lit up.'}]}]},
+
+ {id:'sun26',dow:'Sun',num:'26',name:'Ciao, Roma',base:'Kleehs → London',lock:'semi',
+  tracks:[{name:null,rows:[
+   {t:'AM',title:'Slow Monti morning',s:'Checkout per Letizia’s instructions. Last cornetto, souvenir sweep, no agenda.'},
+   {t:'16:30',title:'Leonardo Express to FCO',s:'Termini → FCO, €14/adult, 32 min, every 15 min. David travels reduced/free — check at the machine.',
+    btns:[['dir','🚶 To Termini',dirTo('Via dei Serpenti 109 Roma','Roma Termini','walking')]]},
+   {t:'19:55',title:'BA 559 · FCO → LHR 21:30',s:'Arrivederci, Italia. 🇮🇹',hl:true}]}]},
+];
+
+/* ---- reference ---- */
+
+const REF = [
+ {h:'✈️ Flights',cards:[
+  {t:'Kleeh out — BA 562 · Fri Jul 17',s:'LHR T5 <b>19:15</b> → FCO <b>22:45</b> · seats 9A/9B/9C',codes:['XP4CEN']},
+  {t:'Kleeh back — BA 559 · Sun Jul 26',s:'FCO <b>19:55</b> → LHR <b>21:30</b>',codes:['XP4CEN']},
+  {t:'JT back — BA 547 · Sun Jul 19',s:'FCO <b>18:15</b> → LHR <b>19:55</b> (out on BA 562 with family)',codes:['XT67HP']},
+  {t:'Tanns + Gus',s:'Arrive FCO <b>Fri Jul 17 AM</b> (flight # TBD) · depart FCO <b>Sat Jul 25, 15:00</b>'}]},
+ {h:'🚄 Trains',cards:[
+  {t:'Italo 8914 · Sun Jul 19',s:'Roma Termini <b>11:55</b> → Firenze SMN <b>13:31</b> · 8 pax',codes:['HBKW4C']},
+  {t:'Leonardo Express',s:'Termini ↔ FCO · <b>€14/adult</b> · 32 min · every 15 min. Used by JT (Jul 19) + Kleehs (Jul 26).'}]},
+ {h:'🚗 Cars',cards:[
+  {t:'Kleeh — Alamo (Enterprise-run) via GotRentalCars',s:'Peugeot 2008 or similar · £306 prepaid.<br><b>Pickup:</b> FLR, Via Palagio degli Spini, Sun Jul 19 — booked 17:00, arriving ~14:30 (early pickup being confirmed).<br><b>Return:</b> Sat Jul 25, Via Sardegna 25, Roma (Ludovisi, outside ZTL), target ~14:30.<br><b>At pickup:</b> Jason’s Mastercard, passport, licence.',
+   codes:['2116801281','583136797'],tel:['+39055310150','Alamo FLR'],maps:['Alamo Via Palagio degli Spini Firenze','Pickup'],maps2:['Via Sardegna 25 Roma','Return']},
+  {t:'Tann — booked by Ali',s:'FLR pickup Sun Jul 19 · FCO drop Sat Jul 25 AM.'}]},
+ {h:'🛏️ Lodging',cards:[
+  {t:'1 · Ciao Bella — Kleehs + JT · Jul 17–19',s:'Via Mecenate 27, Roma · Booking.com · £562 paid · host Floriana · checkout 10:30',
+   codes:['5234860983','PIN 8083'],maps:['Via Mecenate 27 Roma','Maps']},
+  {t:'2 · BIG HOUSE COLOSSEO — Tanns + Gus · Jul 17–19',s:'Via Merulana 105, Roma · VRBO',
+   tel:['+393514967316','Host'],maps:['Via Merulana 105 Roma','Maps']},
+  {t:'3 · Poderi Arcangelo — all 8 · Jul 19–22',s:'Loc. San Gimignano · Raffaello House · infinity pool · BBQ.<br><b>€1,830 confirmed — pay on departure, 5% cash discount</b> + tourist tax €2.50/adult/night cash (~€37.50).<br>Check-in 15:00–19:00 · checkout 8:00–10:30 · contact Chiara.<br>Farm dinner €32/pp at 20:00 (kids ≤10: 30–60% off) · lunch orders by 11:00 · <b>NO pool towels — bring them</b>.',
+   mail:'info@poderiarcangelo.it',maps:['Poderi Arcangelo San Gimignano','Maps']},
+  {t:'4 · Podere San Girolamo — all 8 · Jul 22–25',s:'Cetona · VRBO · <b>€2,295.46 total</b> (€814.21 paid · <b>€1,481.25 due Jul 22</b>).<br>Check-in 16:00 · checkout 10:00 · hosts Valerio &amp; Daniela · gardener Ezzio.<br>Utilities €15–25/day at consumption — <b>bring €150–250 cash</b>.',
+   codes:['HA-DS223T'],maps:['Podere San Girolamo Cetona','Maps']},
+  {t:'5 · Condominio Monti — Kleehs · Jul 25–26',s:'Via dei Serpenti 109, Roma · €311 · contact Letizia',
+   codes:['57492808'],tel:['+39064885889','Letizia'],maps:['Via dei Serpenti 109 Roma','Maps']}]},
+ {h:'🎟️ Booked activities',cards:[
+  {t:'Vatican guided tour · Sat Jul 18, 10:00',s:'Official Vatican booking · visit 267845/2026-4 · €290 paid · 8 tickets (5 full + 3 reduced; Theo free) · <b>passports required</b> for reduced fares · dress code shoulders + knees · arrive 30 min early, entrance PASSAGEWAY 2, meet at “Guided Tours” desk.',
+   codes:['2L2N0QSF7WTNZPQCL'],pdf:['vatican-voucher.pdf','Voucher (PDF)']},
+  {t:'Golf cart tour · Sat Jul 18, 15:00–18:00',s:'Private, 9 pax · Royal Tours Rome via Viator · $107/pp paid by Ali · pickup/drop at apartments (pickup point being set; Theo booster to flag).',
+   codes:['1411499199']}]},
+ {h:'💶 Cash checklist',cards:[
+  {t:'Euros to have on hand',s:'Poderi tourist tax ~€37.50 · Poderi balance €1,830 (5% off if cash — €1,738.50) · San Girolamo utilities €150–250 · taxis €55×2 + city hops. <b>ATM (bancomat) run in Rome recommended.</b>'}]},
+];
+
+const PENDING = [
+ {t:'Gus’s Friday dinner pick (5 pax)',who:'Gus'},
+ {t:'Saturday group-dinner booking, 9 pax (lean: Il Sorpasso)',who:'Ali'},
+ {t:'Viator golf-cart pickup point + Theo booster flag',who:'Ali'},
+ {t:'Alamo early-pickup confirmation — +39 055 310150',who:'Jason',tel:'+39055310150'},
+ {t:'Sunday 20:00 farm-dinner confirmation with Chiara',who:'Jason'},
+ {t:'Tann/Gus inbound flight number',who:'Ali / David T'},
+ {t:'Research v2: open-day details for Jul 20–21 & 23–24',who:'Jason + Claude'},
+];
+
+/* =====================  RENDER  ===================== */
+
+const app = document.getElementById('app');
+const tabs = document.getElementById('tabs');
+
+function todayId(){
+  const n = new Date();
+  if(n.getFullYear()===2026 && n.getMonth()===6 && n.getDate()>=17 && n.getDate()<=26){
+    const d = DAYS.find(d=>+d.num===n.getDate());
+    return d ? d.id : null;
+  }
+  return null;
+}
+const TODAY = todayId();
+
+function btnHtml(b){
+  const [cls,label,href,tel] = b;
+  if(tel) return `<a class="btn tel" href="tel:${tel}">${label}</a>`;
+  return `<a class="btn ${cls}" href="${href}" target="_blank" rel="noopener">${label}</a>`;
+}
+
+function rowHtml(r){
+  return `<li class="${r.hl?'hl':''}">
+    <span class="time">${r.t}</span>
+    <div class="tlcard">
+      <div class="t">${r.title}${r.pending?' <span class="chip pick" style="font-size:10px;vertical-align:2px">pending</span>':''}</div>
+      ${r.s?`<div class="s">${r.s}</div>`:''}
+      ${r.warn?`<div class="warn">⚠️ <span>${r.warn}</span></div>`:''}
+      ${r.note?`<div class="note">${r.note}</div>`:''}
+      ${r.btns?`<div class="btnrow">${r.btns.map(btnHtml).join('')}</div>`:''}
+    </div></li>`;
+}
+
+function optHtml(o){
+  const hero = `<div class="hero ${o.g||'g1'}">
+      ${o.img?`<img loading="lazy" src="${o.img}" alt="${o.title}" onload="this.classList.add('ok')" onerror="this.remove()">`:''}
+      <span class="emoji">${o.e}</span>
+      ${o.k?`<span class="letter">${o.k}</span>`:''}
+      <span class="fin">being finalized</span>
+    </div>`;
+  const meta = (o.drive||o.hours||o.price)?`<div class="meta">
+      ${o.drive?`<span>🚗 ${o.drive}</span>`:''}
+      ${o.hours?`<span>🕐 ${o.hours}</span>`:''}
+      ${o.price?`<span>💶 ${o.price}</span>`:''}
+    </div>`:'';
+  return `<details class="opt">
+    <summary>${hero}
+      <div class="head"><h3>${o.title}</h3><div class="pitch">${o.pitch}</div></div>
+      ${meta}
+      <div class="expander">▾ TAP FOR DETAILS ▾</div>
+    </summary>
+    <div class="more">
+      ${o.more?`<p>${o.more}</p>`:''}
+      ${o.warn?`<div class="warn" style="margin-bottom:8px">⚠️ <span>${o.warn}</span></div>`:''}
+      <div class="btnrow">
+        ${o.maps?`<a class="btn maps" href="${o.maps}" target="_blank" rel="noopener">🗺️ Open in Maps</a>`:''}
+        ${o.dir?`<a class="btn dir" href="${o.dir}" target="_blank" rel="noopener">🚗 Directions</a>`:''}
+      </div>
+    </div>
+  </details>`;
+}
+
+function chipRow(d){
+  const lock = {locked:['locked','🔒 Locked timeline'],semi:['semi','🔗 Semi-locked'],pick:['pick','☝️ Pick one']}[d.lock];
+  return `<div class="chips">
+    ${TODAY===d.id?'<span class="chip today">TODAY</span>':''}
+    <span class="chip ${lock[0]}">${lock[1]}</span>
+    ${d.heat?`<span class="chip heat">${HEAT}</span>`:''}
+  </div>`;
+}
+
+function dayScreen(d){
+  let h = `<div class="dayhead">
+    <div class="eyebrow">${d.dow} · July ${d.num} · 2026</div>
+    <h2>${d.name}</h2>
+    <div class="base">${d.base}</div>
+    ${chipRow(d)}
+  </div>`;
+  if(d.menu){
+    h += `<div class="pickbar">☝️ ${d.intro}</div>`;
+    h += d.menu.map(optHtml).join('');
+    if(d.extra) h += optHtml(d.extra);
+  } else {
+    d.tracks.forEach(tr=>{
+      if(tr.name) h += `<div class="trackname">${tr.name}</div>`;
+      h += `<ul class="tl">${tr.rows.map(rowHtml).join('')}</ul>`;
+    });
+    if(d.foot) h += `<div class="warn" style="margin-top:4px">${d.foot}</div>`;
+  }
+  return h;
+}
+
+function refScreen(){
+  let h = `<div class="dayhead"><div class="eyebrow">Everything in one place</div><h2>Reference 📋</h2>
+    <div class="base">Tap any code to copy it · tap 📞 to dial</div></div>`;
+  REF.forEach(sec=>{
+    h += `<div class="refsec"><h3>${sec.h}</h3>`;
+    sec.cards.forEach(c=>{
+      h += `<div class="refcard"><div class="t">${c.t}</div><div class="s">${c.s}</div>`;
+      if(c.codes) h += c.codes.map(k=>`<button class="code" onclick="copyCode(this,'${k}')">${k} ⧉</button>`).join('');
+      let btns='';
+      if(c.pdf) btns += `<a class="btn maps" href="${c.pdf[0]}" target="_blank" rel="noopener">📄 ${c.pdf[1]}</a>`;
+      if(c.tel) btns += `<a class="btn tel" href="tel:${c.tel[0]}">📞 ${c.tel[1]}</a>`;
+      if(c.mail) btns += `<a class="btn tel" href="mailto:${c.mail}">✉️ ${c.mail}</a>`;
+      if(c.maps) btns += `<a class="btn maps" href="${mapsQ(c.maps[0])}" target="_blank" rel="noopener">🗺️ ${c.maps[1]}</a>`;
+      if(c.maps2) btns += `<a class="btn maps" href="${mapsQ(c.maps2[0])}" target="_blank" rel="noopener">🗺️ ${c.maps2[1]}</a>`;
+      if(btns) h += `<div class="btnrow">${btns}</div>`;
+      h += `</div>`;
+    });
+    h += `</div>`;
+  });
+  return h;
+}
+
+function pendScreen(){
+  const done = JSON.parse(localStorage.getItem('plv-pending')||'{}');
+  let h = `<div class="dayhead"><div class="eyebrow">Open items</div><h2>Pending ⏳</h2>
+    <div class="base">Checks save on this phone only</div></div>`;
+  PENDING.forEach((p,i)=>{
+    h += `<div class="pend ${done[i]?'done':''}" id="pend${i}">
+      <input type="checkbox" id="pc${i}" ${done[i]?'checked':''} onchange="togglePend(${i},this.checked)">
+      <label for="pc${i}">${p.t}<span class="who">→ ${p.who}</span>
+      ${p.tel?`<a class="btn tel" style="margin-top:7px" href="tel:${p.tel}">📞 Call</a>`:''}</label>
+    </div>`;
+  });
+  return h;
+}
+
+function togglePend(i,v){
+  const done = JSON.parse(localStorage.getItem('plv-pending')||'{}');
+  done[i]=v; localStorage.setItem('plv-pending',JSON.stringify(done));
+  document.getElementById('pend'+i).classList.toggle('done',v);
+}
+
+function copyCode(el,txt){
+  const t = txt.replace(/^PIN /,'');
+  (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>{
+    const old = el.textContent; el.textContent = '✓ copied';
+    setTimeout(()=>{el.textContent = old;},1200);
+  }).catch(()=>{});
+}
+
+/* ---- tabs + routing ---- */
+
+const SCREENS = [
+  ...DAYS.map(d=>({id:d.id,dw:d.dow,dt:d.num,render:()=>dayScreen(d)})),
+  {id:'ref',dw:'Info',dt:'📋',render:refScreen},
+  {id:'pend',dw:'To-do',dt:'⏳',render:pendScreen},
+];
+
+function show(id){
+  const s = SCREENS.find(x=>x.id===id) || SCREENS[0];
+  app.innerHTML = s.render();
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.id===s.id));
+  const on = document.querySelector('.tab.on');
+  if(on) on.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
+  window.scrollTo(0,0);
+  try{history.replaceState(null,'','#'+s.id)}catch(e){}
+}
+
+tabs.innerHTML = SCREENS.map(s=>`<button class="tab" data-id="${s.id}">
+  ${TODAY===s.id?'<span class="today-dot"></span>':''}
+  <span class="dw">${s.dw}</span><span class="dt">${s.dt}</span></button>`).join('');
+tabs.addEventListener('click',e=>{
+  const b = e.target.closest('.tab'); if(b) show(b.dataset.id);
+});
+
+show(location.hash.replace('#','') || TODAY || 'fri17');
+</script>
+</body>
+</html>
