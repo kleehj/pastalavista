@@ -74,6 +74,7 @@ main{max-width:660px;margin:0 auto;padding:16px 14px 60px}
 .chip.pick{background:var(--gold);color:#3d2f05}
 .chip.semi{background:var(--olive);color:#fff}
 .chip.heat{background:#F6E3D3;color:#A0431B}
+.chip.wx{background:#E7EEF2;color:#2E5568;font-variant-numeric:tabular-nums}
 .chip.today{background:var(--terra);color:#fff}
 
 /* ---------- timeline ---------- */
@@ -213,7 +214,69 @@ const mapsPid = (name,id) => id
   ? 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(name) + '&query_place_id=' + id
   : mapsQ(name);
 const dirTo = (o,dst,mode) => 'https://www.google.com/maps/dir/?api=1&origin=' + encodeURIComponent(o) + '&destination=' + encodeURIComponent(dst) + '&travelmode=' + (mode||'driving');
-const HEAT = '🥵 Heat wave · mid-90s °F — mornings out, shade or pool at midday';
+const HEAT = '🥵 Heat wave — mornings out, shade or pool at midday';
+
+/* ---- live weather (Open-Meteo, free, no key, °F) ---- */
+const LOCS = {
+  rome:  {lat:41.9028, lon:12.4964},
+  sangim:{lat:43.4677, lon:11.0430}, // San Gimignano / Poderi Arcangelo
+  cetona:{lat:42.9636, lon:11.8996},
+};
+// which base each screen sits at (+ explicit date for the dinner screens)
+const DAYMETA = {
+  fri17:{loc:'rome'},   sat18:{loc:'rome'},   sun19:{loc:'sangim'},
+  mon20:{loc:'sangim'}, din1:{loc:'sangim',date:'2026-07-20'},
+  tue21:{loc:'sangim'}, din2:{loc:'sangim',date:'2026-07-21'},
+  wed22:{loc:'cetona'}, thu23:{loc:'cetona'}, din3:{loc:'cetona',date:'2026-07-23'},
+  fri24:{loc:'cetona'}, din4:{loc:'cetona',date:'2026-07-24'},
+  sat25:{loc:'rome'},   sun26:{loc:'rome'},
+};
+let WX = null;
+const wxDateFor = d => { const m = DAYMETA[d.id]; return m ? (m.date || '2026-07-' + String(d.num).padStart(2,'0')) : null; };
+function wxIcon(c){
+  if(c===0) return '☀️';
+  if(c<=2) return '🌤️';
+  if(c===3) return '☁️';
+  if(c<=48) return '🌫️';
+  if(c<=57) return '🌦️';
+  if(c<=67) return '🌧️';
+  if(c<=77) return '🌨️';
+  if(c<=82) return '🌦️';
+  if(c<=86) return '🌨️';
+  return '⛈️';
+}
+function fillWx(){
+  if(!WX) return;
+  document.querySelectorAll('.chip.wx').forEach(el=>{
+    const loc = WX[el.dataset.loc]; const w = loc && loc[el.dataset.date];
+    if(w && w.max!=null){ el.textContent = `${wxIcon(w.code)} ${Math.round(w.max)}° / ${Math.round(w.min)}°F`; el.hidden=false; }
+  });
+}
+function loadWeather(){
+  try{
+    const c = JSON.parse(localStorage.getItem('plv-wx')||'null');
+    if(c && c.ts && (Date.now()-c.ts) < 3*3600*1000 && c.data){ WX = c.data; fillWx(); return; }
+  }catch(e){}
+  const keys = Object.keys(LOCS);
+  const lat = keys.map(k=>LOCS[k].lat).join(',');
+  const lon = keys.map(k=>LOCS[k].lon).join(',');
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone=Europe%2FRome&forecast_days=16`;
+  fetch(url).then(r=>r.json()).then(j=>{
+    const arr = Array.isArray(j) ? j : [j];
+    const data = {};
+    keys.forEach((k,i)=>{
+      const dd = arr[i] && arr[i].daily; if(!dd || !dd.time) return;
+      const m = {};
+      dd.time.forEach((t,idx)=>{ m[t] = {max:dd.temperature_2m_max[idx], min:dd.temperature_2m_min[idx], code:dd.weather_code[idx]}; });
+      data[k] = m;
+    });
+    if(Object.keys(data).length){
+      WX = data;
+      try{ localStorage.setItem('plv-wx', JSON.stringify({ts:Date.now(), data})); }catch(e){}
+      fillWx();
+    }
+  }).catch(e=>{});
+}
 
 /* ---- shared card menus ---- */
 
@@ -588,8 +651,11 @@ function optHtml(o){
 
 function chipRow(d){
   const lock = {locked:['locked','🔒 Locked timeline'],semi:['semi','🔗 Semi-locked'],pick:['pick','☝️ Pick one']}[d.lock];
+  const dm = DAYMETA[d.id];
+  const wx = dm ? `<span class="chip wx" data-loc="${dm.loc}" data-date="${wxDateFor(d)}" hidden></span>` : '';
   return `<div class="chips">
     ${TODAY===d.id?'<span class="chip today">TODAY</span>':''}
+    ${wx}
     <span class="chip ${lock[0]}">${lock[1]}</span>
     ${d.heat?`<span class="chip heat">${HEAT}</span>`:''}
   </div>`;
@@ -692,6 +758,7 @@ function show(id){
   if(on) on.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
   window.scrollTo(0,0);
   try{history.replaceState(null,'','#'+s.id)}catch(e){}
+  fillWx();
 }
 
 tabs.innerHTML = SCREENS.map(s=>`<button class="tab ${s.din?'din':''}" data-id="${s.id}">
@@ -702,6 +769,7 @@ tabs.addEventListener('click',e=>{
 });
 
 show(location.hash.replace('#','') || TODAY || 'fri17');
+loadWeather();
 </script>
 </body>
 </html>
