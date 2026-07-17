@@ -502,7 +502,7 @@ function rowHtml(r){
 function optHtml(o){
   const hero = `<div class="hero ${o.g||'g1'}">
       ${o.img?`<img loading="lazy" src="${o.img}" alt="${o.title}" onload="this.classList.add('ok')" onerror="this.remove()">`:''}
-      <span class="emoji">${o.e}</span>
+      ${(o.img&&o.img.startsWith('photos/'))?'':`<span class="emoji">${o.e}</span>`}
       ${o.k?`<span class="letter">${o.k}</span>`:''}
       ${o.verified?'':'<span class="fin">being finalized</span>'}
     </div>`;
