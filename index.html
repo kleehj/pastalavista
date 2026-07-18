@@ -75,6 +75,7 @@ main{max-width:660px;margin:0 auto;padding:16px 14px 60px}
 .chip.semi{background:var(--olive);color:#fff}
 .chip.heat{background:#F6E3D3;color:#A0431B}
 .chip.wx{background:#E7EEF2;color:#2E5568;font-variant-numeric:tabular-nums}
+.chip.home{background:var(--green);color:#fff;text-decoration:none;display:inline-flex;align-items:center}
 .chip.today{background:var(--terra);color:#fff}
 
 /* ---------- timeline ---------- */
@@ -228,14 +229,17 @@ const LOCS = {
   sangim:{lat:43.4677, lon:11.0430}, // San Gimignano / Poderi Arcangelo
   cetona:{lat:42.9636, lon:11.8996},
 };
-// which base each screen sits at (+ explicit date for the dinner screens)
+// which base each screen sits at (+ explicit date for the dinner screens, + that night's lodging)
+const H_CIAO=['🏠 Ciao Bella','Via Mecenate 27 Roma'], H_BIG=['🏠 Big House','Via Merulana 105 Roma'],
+      H_PODERI=['🏠 Poderi','Poderi Arcangelo San Gimignano'], H_VILLA=['🏠 Villa','Podere San Girolamo Cetona'],
+      H_MONTI=['🏠 Monti','Via dei Serpenti 109 Roma'];
 const DAYMETA = {
-  fri17:{loc:'rome'},   sat18:{loc:'rome'},   sun19:{loc:'sangim'},
-  mon20:{loc:'sangim'}, din1:{loc:'sangim',date:'2026-07-20'},
-  tue21:{loc:'sangim'}, din2:{loc:'sangim',date:'2026-07-21'},
-  wed22:{loc:'cetona'}, thu23:{loc:'cetona'}, din3:{loc:'cetona',date:'2026-07-23'},
-  fri24:{loc:'cetona'}, din4:{loc:'cetona',date:'2026-07-24'},
-  sat25:{loc:'rome'},   sun26:{loc:'rome'},
+  fri17:{loc:'rome',home:[H_CIAO,H_BIG]}, sat18:{loc:'rome',home:[H_CIAO,H_BIG]}, sun19:{loc:'sangim',home:[H_PODERI]},
+  mon20:{loc:'sangim',home:[H_PODERI]}, din1:{loc:'sangim',date:'2026-07-20',home:[H_PODERI]},
+  tue21:{loc:'sangim',home:[H_PODERI]}, din2:{loc:'sangim',date:'2026-07-21',home:[H_PODERI]},
+  wed22:{loc:'cetona',home:[H_VILLA]}, thu23:{loc:'cetona',home:[H_VILLA]}, din3:{loc:'cetona',date:'2026-07-23',home:[H_VILLA]},
+  fri24:{loc:'cetona',home:[H_VILLA]}, din4:{loc:'cetona',date:'2026-07-24',home:[H_VILLA]},
+  sat25:{loc:'rome',home:[H_MONTI]}, sun26:{loc:'rome',home:[H_MONTI]},
 };
 let WX = null;
 const wxDateFor = d => { const m = DAYMETA[d.id]; return m ? (m.date || '2026-07-' + String(d.num).padStart(2,'0')) : null; };
@@ -666,9 +670,11 @@ function chipRow(d){
   const lock = {locked:['locked','🔒 Locked timeline'],semi:['semi','🔗 Semi-locked'],pick:['pick','☝️ Pick one']}[d.lock];
   const dm = DAYMETA[d.id];
   const wx = dm ? `<span class="chip wx" data-loc="${dm.loc}" data-date="${wxDateFor(d)}" hidden></span>` : '';
+  const home = dm && dm.home ? dm.home.map(h=>`<a class="chip home" href="${mapsQ(h[1])}" target="_blank" rel="noopener">${h[0]}</a>`).join('') : '';
   return `<div class="chips">
     ${TODAY===d.id?'<span class="chip today">TODAY</span>':''}
     ${wx}
+    ${home}
     <span class="chip ${lock[0]}">${lock[1]}</span>
     ${d.heat?`<span class="chip heat">${HEAT}</span>`:''}
   </div>`;
