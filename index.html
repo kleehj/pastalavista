@@ -130,6 +130,7 @@ main{max-width:660px;margin:0 auto;padding:16px 14px 60px}
 .spot-t{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-size:15px}
 .spot-t .rate{font-size:11.5px;font-weight:700;color:#8a6d0f;background:#FBF3D9;border-radius:6px;padding:1px 7px}
 .spot-t .cl{font-size:11px;font-weight:700;color:#A0431B;background:#F6E3D3;border-radius:6px;padding:1px 7px}
+.spot-t .tag{font-size:11px;font-weight:700;color:#2E4A33;background:var(--green-soft);border-radius:6px;padding:1px 7px}
 .spot-d{font-size:13px;color:var(--ink-soft);margin:3px 0 5px;line-height:1.5}
 .spot-h{font-size:12px;color:var(--ink-soft);margin-bottom:7px}
 .alert{font-size:13.5px;background:#F6E3D3;border:1px solid #E0A87A;color:#8A4519;border-radius:12px;padding:11px 13px;margin-bottom:14px;line-height:1.55}
@@ -290,56 +291,54 @@ function loadWeather(){
 
 /* ---- shared card menus ---- */
 
-// San Gimignano base (Mon 20 / Tue 21) — day-shape "Lego blocks".
-// Rhythm: one morning outing → lunch → pool/river through the 2–5pm heat → golden-hour town + apéro → dinner ~7:30. "Home by 5" is a feature. Max two real stops/day.
-const PODERI_SHAPES = [
- {e:'🏞️',g:'g2',verified:true,img:'photos/monteriggioni.jpg',title:'Monteriggioni + Colle + River',pitch:'The gentle day — a castle photo, a crowd-free walled town, an afternoon in cold turquoise water',
-  drive:'~1 h 23 total driving, no backtrack',hours:'home by ~5',price:'basically free',
-  steps:[
-   {t:'AM',txt:'Poderi → <b>Monteriggioni</b> (33 min). A disciplined 30-min ring-wall walk + photo — it’s a 30-minute stop, not a morning.'},
-   {t:'~11',txt:'→ <b>Colle di Val d’Elsa</b> (15 min). Lived-in walled old town, no crowds. Free parking below the old town (follow signs to Volterra); upper town is one long strollable street, a lift links upper/lower. Lunch here.'},
-   {t:'PM',txt:'→ <b>SentierElsa river</b> (5 min). Swim in the gorge through the hottest hours.'},
-   {t:'Eve',txt:'Home, then dinner in a dinner town (below).'}],
-  flip:'<b>Flip the afternoon.</b> Town-first → river cools you through the hot part of the day (best on scorchers). River-first → kids swim fresh in the AM, then end on a golden-hour town + dinner. Colle and the river are 5 min apart — swapping costs nothing.',
-  links:[['🗺️ Monteriggioni',mapsQ('Monteriggioni')],['🗺️ Colle parking',mapsQ('Parcheggio Porta Vecchia Colle di Val d\'Elsa')],['🗺️ SentierElsa',mapsQ('SentierElsa Ponte di San Marziale Colle di Val d\'Elsa')]]},
- {e:'🏛️',g:'g3',verified:true,img:'photos/volterra.jpg',title:'Volterra',pitch:'The far one, worth it — a lived-in Etruscan/Roman town, then a restful pool afternoon',
+// San Gimignano base (Mon 20 / Tue 21) — FIXED activities.
+// Rhythm: morning outing → lunch → pool/river through the 2–5pm heat → golden-hour town + apéro → dinner ~7:30.
+const ACT_VOLTERRA = {e:'🏛️',g:'g3',verified:true,open:true,img:'photos/volterra.jpg',title:'Volterra',pitch:'A lived-in Etruscan/Roman hill town in the cool morning, then the villa pool',
   drive:'43 min each way',hours:'cool morning + pool PM',price:'lunch + alabaster',
   steps:[
    {t:'AM',txt:'Poderi → <b>Volterra</b> (43 min — go in the cool morning). Lived-in Etruscan/Roman town: alabaster workshops, Roman theatre. Our kind of town, not a honeypot.'},
    {t:'Lunch',txt:'In town.'},
-   {t:'PM',txt:'Home → <b>villa pool</b>. Volterra stands alone (it’s the far one), so pair it with a restful pool afternoon rather than the river.'},
-   {t:'Eve',txt:'Dinner in a dinner town (below).'}],
-  links:[['🗺️ Volterra parking',mapsQ('Volterra parking')]]},
- {e:'🏊',g:'g2',verified:true,img:'photos/poderi-pool.jpg',title:'Farm Day',pitch:'Zero driving — pool + on-site experiences. The heat-spike / worn-out day',
-  drive:'0 min',hours:'all day at Poderi',price:'experiences booked at reception',
-  more:'Stay put. Pool, plus on-site bookables (reserve at reception the evening before): wine &amp; EVO-oil tasting with a cellar tour, a Tuscan cooking class, a pizza-making class, e-bikes. Good for a heat-spike day or when everyone’s worn out. No pool towels provided — bring them.'},
-];
+   {t:'PM',txt:'Home → <b>villa pool</b> through the 2–5pm heat.'},
+   {t:'Eve',txt:'Dinner in town — see the 🍷 tab.'}],
+  links:[['🗺️ Volterra parking',mapsQ('Volterra parking')],['🚗 Directions',dirTo('Poderi Arcangelo San Gimignano','Volterra')]]};
 
-const PODERI_WATER = [
- {e:'💦',g:'g2',verified:true,img:'photos/sentierelsa.jpg',title:'SentierElsa river',pitch:'The cold-water afternoon built into the Monteriggioni + Colle day',
+const ACT_MONTE = {e:'🏞️',g:'g2',verified:true,open:true,img:'photos/monteriggioni.jpg',title:'Monteriggioni + Colle + River',pitch:'A castle photo, a crowd-free walled town for lunch, then cold turquoise water',
+  drive:'~1 h 23 total driving, no backtrack',hours:'home by ~5',price:'basically free',
+  steps:[
+   {t:'AM',txt:'Poderi → <b>Monteriggioni</b> (33 min). A disciplined 30-min ring-wall walk + photo — a 30-minute stop, not a morning.'},
+   {t:'~11',txt:'→ <b>Colle di Val d’Elsa</b> (15 min). Lived-in walled old town, no crowds. Free parking below the old town (follow signs to Volterra); upper town is one long strollable street, a lift links upper/lower. Lunch here.'},
+   {t:'PM',txt:'→ <b>SentierElsa river</b> (5 min). Swim in the gorge through the hottest hours (details below).'},
+   {t:'Eve',txt:'Home, then dinner in town — see the 🍷 tab.'}],
+  flip:'<b>Flip the afternoon.</b> Town-first → river cools you through the hot part of the day (best on scorchers). River-first → kids swim fresh in the AM, then end on a golden-hour town + dinner. Colle and the river are 5 min apart — swapping costs nothing.',
+  links:[['🗺️ Monteriggioni',mapsQ('Monteriggioni')],['🗺️ Colle parking',mapsQ('Parcheggio Porta Vecchia Colle di Val d\'Elsa')],['🗺️ SentierElsa',mapsQ('SentierElsa Ponte di San Marziale Colle di Val d\'Elsa')]]};
+
+const ACT_RIVER = {e:'💦',g:'g2',verified:true,img:'photos/sentierelsa.jpg',title:'SentierElsa river',pitch:'The cold-water afternoon of the Monteriggioni + Colle day',
   drive:'5 min from Colle · 28 min from Poderi',hours:'daylight, no gate',price:'free (paid parking)',
-  more:'This is the afternoon leg of the <b>Monteriggioni + Colle</b> day — not a standalone trip. Free, no gate. Turquoise river, ~4 km round-trip trail, the <b>Diborrato Waterfall</b> (15 m drop into a deep pool). Recommended entrance: <b>Ponte di San Marziale, Gracciano</b>. Park at Fluviale Elsa Parking, ~200 m from the entrance (paid). Shallow designated areas are OK for little ones (Theo) under supervision.',
+  more:'The afternoon leg of Tuesday. Free, no gate. Turquoise river, ~4 km round-trip trail, the <b>Diborrato Waterfall</b> (15 m drop into a deep pool). Recommended entrance: <b>Ponte di San Marziale, Gracciano</b>. Park at Fluviale Elsa Parking, ~200 m from the entrance (paid). Shallow designated areas are OK for little ones (Theo) under supervision.',
   warn:'<b>Water shoes essential</b> (slippery stone fords, sharp rocks). Deep waterfall pools = strong swimmers only. NO lifeguards, currents change — never let kids swim unsupervised. No restrooms or shops: bring water, snacks, towels, a dry bag.',
-  links:[['🗺️ San Marziale entrance',mapsQ('SentierElsa Ponte di San Marziale Colle di Val d\'Elsa')],['🗺️ Fluviale Elsa parking',mapsQ('Parcheggio Fluviale Elsa Gracciano')]]},
-];
+  links:[['🗺️ San Marziale entrance',mapsQ('SentierElsa Ponte di San Marziale Colle di Val d\'Elsa')],['🗺️ Fluviale Elsa parking',mapsQ('Parcheggio Fluviale Elsa Gracciano')]]};
 
 const PODERI_DINNER = [
  {e:'🏙️',g:'g1',verified:true,img:'photos/san-gimignano.jpg',title:'San Gimignano',pitch:'Golden-hour towers, Dondoli gelato, then a table inside the walls',
   drive:'17 min (P2 Montemaggio)',hours:'roll in after 6pm',price:'reserve for 8',
-  more:'Arrive <b>after 6pm</b>, once the day-trippers clear (mobbed 10–5, the Gordes of Tuscany). Golden-hour towers, <b>Gelateria Dondoli</b> for world-champion gelato, then dinner inside the walls. All three reserve — <b>phone only</b>, book a few days ahead for 8.',
+  more:'Arrive <b>after 6pm</b>, once the day-trippers clear (mobbed 10–5, the Gordes of Tuscany). Golden-hour towers, <b>Gelateria Dondoli</b> for world-champion gelato, then dinner inside the walls. All reserve — <b>phone only</b>, book a few days ahead for 8. Two <b>casual · value</b> backups at the bottom.',
   spots:[
    {name:'Le Vecchie Mura',rating:'4.6',desc:'<b>The view.</b> Famous panoramic terrace over the valley, ~€35pp for three courses. Request the terrace (~€2pp) — 1hr+ wait without a booking.',hours:'18:00–21:30',closed:'Closed Tue',tel:'+390577940270',map:mapsPid('Le Vecchie Mura San Gimignano','ChIJDXKCbT88KhMRP3A9mrALxZo')},
    {name:'Osteria del Carcere',rating:'4.4',desc:'Food-first, no pizza/pasta — Tuscan soups, cheese &amp; cured-meat boards, standout desserts. Same warm team for decades.',hours:'19:30–22:00',closed:'Closed Wed & Thu',tel:'+390577941905',map:mapsPid('Osteria del Carcere San Gimignano','ChIJ18UWFj88KhMR9THE6UfEhBw')},
-   {name:'La Mandragola',rating:'4.4',desc:'Warm, group-friendly all-rounder on the west side. Open every day — the <b>Tuesday-safe</b> pick.',hours:'19:00–21:30 · daily',tel:'+390577940377',map:mapsPid('La Mandragola San Gimignano','ChIJZWcdKDk8KhMRhRT20uC_yzM')}],
+   {name:'La Mandragola',rating:'4.4',desc:'Warm, group-friendly all-rounder on the west side. Open every day — the <b>Tuesday-safe</b> pick.',hours:'19:00–21:30 · daily',tel:'+390577940377',map:mapsPid('La Mandragola San Gimignano','ChIJZWcdKDk8KhMRhRT20uC_yzM')},
+   {name:'Trattoria Chiribiri',tag:'casual · value',desc:'Tiny, beloved, family-run just inside the walls (side alley on the left as you enter). Homemade pici + wild boar stew, notably fairer prices than the town norm. Small room — go early or expect a wait.',hours:'lunch + dinner',map:mapsQ('Trattoria Chiribiri San Gimignano')},
+   {name:'Dulcisinfundo',tag:'casual · value',desc:'Cosy cellar setting, ~4.5★ over 2,000 reviews. Family-friendly, good gluten-free options, reasonably priced wine. Vicolo degli Innocenti 21.',hours:'dinner',map:mapsQ('Dulcisinfundo San Gimignano')}],
   links:[['🗺️ Parking P2 Montemaggio',mapsQ('Parcheggio Montemaggio San Gimignano')]]},
  {e:'🚡',g:'g4',verified:true,img:'photos/certaldo.jpg',title:'Certaldo Alto',pitch:'Funicular up to a quiet medieval borgo — more local than San Gim',
   drive:'9 min',hours:'funicular up',price:'reserve for 8',
-  more:'Quieter and more local than San Gimignano. Ride the funicular up to the medieval borgo — a kid win, and it saves the climb in the heat. Reserve ahead — <b>phone only</b>.',
+  more:'Quieter and more local than San Gimignano. Ride the funicular up to the medieval borgo — a kid win, and it saves the climb in the heat. Reserve ahead — <b>phone only</b>. Two <b>casual · value</b> backups at the bottom.',
   warn:'Verify the funicular’s same-day hours — posted times aren’t always respected.',
   spots:[
    {name:'Ristorante Il Castello',rating:'4.4',desc:'Best-rated in the old town, by the funicular top. Garden with sweeping valley/sunset views, handles groups well. Book ahead &amp; request a view table.',hours:'18:30–21:30',closed:'Closed Tue',tel:'+3905711900261',map:mapsPid('Ristorante Il Castello Certaldo','ChIJ2Sx8VmU_KhMReNzcxyW7b2M')},
    {name:'Osteria del Vicario',rating:'4.4',desc:'Terrace with breathtaking views — but <b>fully vegan/vegetarian</b> and only ~8 seats a night. Could be a magical whole-group booking, or wrong for the meat-eaters. Pricier; know before you book.',hours:'reserve essential',tel:'+390571667809',map:mapsPid('Osteria del Vicario Certaldo','ChIJH-Ua_2g_KhMR2USmcCwfFNA')},
-   {name:'Enoteca Boccaccio',rating:'4.6',desc:'Wine bar + light bites (bruschetta, cheese boards, spritz). Great for a lighter apéro evening — <b>not a full group dinner</b>. ~€1pp cover + plate fee.',hours:'11:00–23:00 · daily',tel:'+393336500414',map:mapsPid('Enoteca Boccaccio Certaldo','ChIJnUmDe08_KhMRZUOvBVUHgT0')}],
+   {name:'Enoteca Boccaccio',rating:'4.6',desc:'Wine bar + light bites (bruschetta, cheese boards, spritz). Great for a lighter apéro evening — <b>not a full group dinner</b>. ~€1pp cover + plate fee.',hours:'11:00–23:00 · daily',tel:'+393336500414',map:mapsPid('Enoteca Boccaccio Certaldo','ChIJnUmDe08_KhMRZUOvBVUHgT0')},
+   {name:'Da Messer Boccaccio',tag:'casual · value',desc:'Up in the old town — medieval vaulted rooms, thin-crust pizzas that reviewers rave about, reasonable prices, good with kids. (A different place from the Enoteca above.)',hours:'dinner',map:mapsQ('Da Messer Boccaccio Certaldo')},
+   {name:'Trattoria La Casalinga',tag:'casual · value',desc:'Cheap-and-cheerful family trattoria at the foot of the hill (opposite the path up to Certaldo Alto). Uncomplicated pasta, steaks, roast potatoes — roughly €20pp. The value pick.',hours:'dinner',map:mapsQ('Trattoria La Casalinga Certaldo')}],
   links:[['🗺️ Funicolare di Certaldo',mapsQ('Funicolare di Certaldo')]]},
 ];
 
@@ -458,20 +457,18 @@ const DAYS = [
     btns:[['maps','🗺️ Poderi Arcangelo',mapsQ('Poderi Arcangelo San Gimignano')]]},
    {t:'20:00',title:'Farm dinner on the terrace 🍷',s:'€32/pp, kids ≤10 discounted 30–60% — <b>being pre-confirmed with Chiara</b>.',pending:true}]}]},
 
- {id:'mon20',dow:'Mon',num:'20',name:'Build your day',base:'Base: Poderi Arcangelo, San Gimignano',lock:'pick',heat:true,
-  intro:'Two days here (Mon + Tue), built from blocks — not fixed. <b>The rhythm:</b> one morning outing → lunch → water through the 2–5pm heat → golden-hour town + apéro → dinner ~7:30. “Home by 5” is a feature; max two real stops a day. Suggested shape: one day Volterra + one Monteriggioni + Colle + River — or swap either for a Farm Day. <b>Each day’s water is fixed:</b> Volterra &amp; Farm days end at the <b>villa pool</b>; the Monteriggioni + Colle day ends in the <b>SentierElsa river</b>. Tonight’s town + table is the next tab → 🍷',
+ {id:'mon20',dow:'Mon',num:'20',name:'Volterra',base:'Base: Poderi Arcangelo, San Gimignano',lock:'set',heat:true,
+  intro:'Locked in: <b>Volterra</b> in the cool morning, then the <b>villa pool</b> through the 2–5pm heat. Golden-hour town + dinner in the evening — tonight’s town + table is the next tab → 🍷',
   sections:[
-   {label:'☀️ Day shape — pick one',items:PODERI_SHAPES},
-   {label:'💦 The river · built into the Monteriggioni + Colle day',items:PODERI_WATER}]},
+   {label:'📍 Monday — Volterra + pool',items:[ACT_VOLTERRA]}]},
 
  {id:'din1',dow:'Mon',num:'🍷',name:'Evening out · Monday',dinner:true,eyebrow:'🍷 Golden hour + dinner · Mon Jul 20',base:'A hill town after 6pm, then a table · reserve for 8',lock:'pick',menu:PODERI_DINNER,
   intro:'Head up around 6pm as the day-trippers leave. Pick a town for tonight — then do the <b>other</b> tomorrow (don’t repeat). Tap a town for its vetted tables; all reserve by phone in July.'},
 
- {id:'tue21',dow:'Tue',num:'21',name:'Build your day',base:'Base: Poderi Arcangelo, San Gimignano · day 2',lock:'pick',heat:true,
-  intro:'Same blocks as Monday — build the second day from whatever you didn’t do. If Monday was Volterra (pool), Tuesday is the Monteriggioni + Colle + River day — or a restful Farm Day (pool). On-site farm experiences need booking at reception the evening before. Tonight’s town + table is the next tab → 🍷',
+ {id:'tue21',dow:'Tue',num:'21',name:'Monteriggioni + River',base:'Base: Poderi Arcangelo, San Gimignano · day 2',lock:'set',heat:true,
+  intro:'Locked in: <b>Monteriggioni</b> for a quick ring-wall photo → <b>Colle di Val d’Elsa</b> for lunch → the <b>SentierElsa river</b> to beat the afternoon heat. Tonight’s town + table is the next tab → 🍷',
   sections:[
-   {label:'☀️ Day shape — pick one',items:PODERI_SHAPES},
-   {label:'💦 The river · built into the Monteriggioni + Colle day',items:PODERI_WATER}]},
+   {label:'📍 Tuesday — Monteriggioni + Colle + River',items:[ACT_MONTE, ACT_RIVER]}]},
 
  {id:'din2',dow:'Tue',num:'🍷',name:'Evening out · Tuesday',dinner:true,eyebrow:'🍷 Golden hour + dinner · Tue Jul 21',base:'A hill town after 6pm, then a table · reserve for 8',lock:'pick',menu:PODERI_DINNER,
   alert:'<b>Tuesday closures.</b> Le Vecchie Mura (San Gimignano) and Il Castello (Certaldo) are <b>closed tonight</b>. Tuesday-safe tables: <b>La Mandragola</b> in San Gimignano, or <b>Osteria del Vicario</b> / <b>Enoteca Boccaccio</b> in Certaldo.',
@@ -633,7 +630,7 @@ function optHtml(o){
   const steps = o.steps?`<ol class="steps">${o.steps.map(s=>`<li><span class="st">${s.t}</span><div>${s.txt}</div></li>`).join('')}</ol>`:'';
   const spots = o.spots?`<div class="spots">${o.spots.map(s=>`
       <div class="spot">
-        <div class="spot-t"><b>${s.name}</b>${s.rating?`<span class="rate">★ ${s.rating}</span>`:''}${s.closed?`<span class="cl">${s.closed}</span>`:''}</div>
+        <div class="spot-t"><b>${s.name}</b>${s.rating?`<span class="rate">★ ${s.rating}</span>`:''}${s.tag?`<span class="tag">${s.tag}</span>`:''}${s.closed?`<span class="cl">${s.closed}</span>`:''}</div>
         <div class="spot-d">${s.desc}</div>
         ${s.hours?`<div class="spot-h">🕐 ${s.hours}</div>`:''}
         <div class="btnrow">
@@ -644,7 +641,7 @@ function optHtml(o){
   const flip = o.flip?`<div class="flip">🔄 <div>${o.flip}</div></div>`:'';
   const gallery = o.gallery?galleryHtml(o.gallery):'';
   const links = (o.links||[]).map(l=>`<a class="btn dir" href="${l[1]}" target="_blank" rel="noopener">${l[0]}</a>`).join('');
-  return `<details class="opt">
+  return `<details class="opt"${o.open?' open':''}>
     <summary>${hero}
       <div class="head"><h3>${o.title}</h3><div class="pitch">${o.pitch}</div></div>
       ${meta}
@@ -667,7 +664,7 @@ function optHtml(o){
 }
 
 function chipRow(d){
-  const lock = {locked:['locked','🔒 Locked timeline'],semi:['semi','🔗 Semi-locked'],pick:['pick','☝️ Pick one']}[d.lock];
+  const lock = {locked:['locked','🔒 Locked timeline'],semi:['semi','🔗 Semi-locked'],pick:['pick','☝️ Pick one'],set:['locked','📌 Locked in']}[d.lock];
   const dm = DAYMETA[d.id];
   const wx = dm ? `<span class="chip wx" data-loc="${dm.loc}" data-date="${wxDateFor(d)}" hidden></span>` : '';
   const home = dm && dm.home ? dm.home.map(h=>`<a class="chip home" href="${mapsQ(h[1])}" target="_blank" rel="noopener">${h[0]}</a>`).join('') : '';
