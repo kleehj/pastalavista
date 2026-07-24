@@ -124,6 +124,11 @@ main{max-width:660px;margin:0 auto;padding:16px 14px 60px}
 .gal img{width:150px;height:100px;object-fit:cover;border-radius:11px;display:block;box-shadow:var(--shadow)}
 .gal figcaption{font-size:11px;color:var(--ink-soft);margin-top:4px;line-height:1.3}
 .dayhead + .gal{margin:0 0 14px}
+.gelato{margin:6px 0 8px}
+.gelato .gh{font-family:'Fraunces',serif;font-size:14px;font-weight:600;color:var(--green);margin-bottom:6px}
+.gelato ol{margin:0;padding-left:20px}
+.gelato li{font-size:13px;color:var(--ink-soft);margin-bottom:6px;line-height:1.45}
+.gelato .glink{font-weight:700;color:var(--terra-dark);text-decoration:none}
 .spots{margin:4px 0 4px}
 .spot{border-top:1px dashed var(--line);padding:10px 0 4px}
 .spot:first-child{border-top:0}
@@ -411,6 +416,12 @@ const ACT_MONTEPULCIANO = {e:'🍷',g:'g4',verified:true,open:true,img:'photos/m
    {name:'🍴 Pizzeria e Cucina da Linda',tag:'lunch · value',desc:'Casual pizzeria just outside the walls — calzone + pizza the kids love, welcoming owner, parking close by. (For a quick counter lunch instead, <b>Angolo dei Sapori</b> up in town.)',hours:'lunch + dinner',map:mapsQ('Pizzeria da Linda Montepulciano')},
    {name:'🍷 Cantina Contucci',tag:'wine · walk-in',desc:'On Piazza Grande — one of the founding families of Vino Nobile. <b>Free walk-in</b> into a warren of ancient cellars with giant oak barrels; tasting at the end. Kids can roam the caves.',hours:'daytime · no booking',map:mapsQ('Cantina Contucci Montepulciano')},
    {name:'🍷 Cantine del Redi (De’ Ricci)',tag:'wine · walk-in',desc:'A dramatic Gothic cellar dug deep into the tufa — a “cathedral” of barrels, the big kid-wow. Walk-in Vino Nobile tasting.',hours:'daytime',map:mapsQ('Cantine del Redi Montepulciano')}],
+  gelato:[
+   ['Buongusto Gelateria','the town’s #1 — white-coffee + the classics, “best gelato in Tuscany” (Via di Voltaia nel Corso 27/29)','Buongusto Gelateria Montepulciano'],
+   ['Salamoia Gelateria Naturale','all-natural with gluten-free options, raved about (Via di Voltaia nel Corso 14)','Salamoia Gelateria Naturale Montepulciano'],
+   ['Il Capriccio','artisanal, smooth &amp; creamy — a local favourite','Gelateria Il Capriccio Montepulciano'],
+   ['Bar Gelateria Duomo','right on Piazza Grande — the convenient scoop with a view','Bar Gelateria Duomo Montepulciano'],
+   ['Caffè Poliziano','historic Art-Nouveau café — come for the panoramic terrace + a scoop (the view’s the draw)','Caffe Poliziano Montepulciano']],
   warn:'Parking (4 options below, none of them the fast-filler): skip the tiny <b>Fortezza (P8)</b> lot up top — it fills by ~9am. Best access is <b>P5</b> (elevator up + a €1.50 Pollicino shuttle). In summer the ring lots fill through midday, so if P5/P1/P2 are full, drop down to <b>San Biagio</b> below town (big, usually has space) and walk up ~12 min. Rates ~€1.20/h, pay by card.',
   links:[['🅿️ P5 Sant’Agnese · lift + shuttle',mapsQ('Parcheggio Sant Agnese Montepulciano')],['🅿️ P1 Porta al Prato · main gate',mapsQ('Parcheggio Porta al Prato Montepulciano')],['🅿️ P2 Viale Calamandrei',mapsQ('Parcheggio Viale Calamandrei Montepulciano')],['🅿️ San Biagio · overflow ~12 min walk',mapsQ('Parcheggio San Biagio Montepulciano')],['🚗 Directions',dirTo('Podere San Girolamo Cetona','Parcheggio Sant Agnese Montepulciano')],['🗺️ Piazza Grande',mapsQ('Piazza Grande Montepulciano')]]};
 
@@ -661,6 +672,7 @@ function optHtml(o){
         </div>
       </div>`).join('')}</div>`:'';
   const flip = o.flip?`<div class="flip">🔄 <div>${o.flip}</div></div>`:'';
+  const gelato = o.gelato?`<div class="gelato"><div class="gh">🍦 Top 5 gelato</div><ol>${o.gelato.map(([name,note,q])=>`<li><a class="glink" href="${mapsQ(q)}" target="_blank" rel="noopener">${name}</a> — ${note}</li>`).join('')}</ol></div>`:'';
   const gallery = o.gallery?galleryHtml(o.gallery):'';
   const links = (o.links||[]).map(l=>`<a class="btn dir" href="${l[1]}" target="_blank" rel="noopener">${l[0]}</a>`).join('');
   return `<details class="opt"${o.open?' open':''}>
@@ -673,6 +685,7 @@ function optHtml(o){
       ${o.more?`<p>${o.more}</p>`:''}
       ${steps}
       ${spots}
+      ${gelato}
       ${gallery}
       ${flip}
       ${o.warn?`<div class="warn" style="margin-bottom:8px">⚠️ <span>${o.warn}</span></div>`:''}
