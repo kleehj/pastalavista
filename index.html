@@ -397,6 +397,23 @@ const CETONA_MARKET = {e:'🧺',g:'g3',verified:true,photoTBD:'Sarteano — town
   more:'Cetona’s own market is Saturday (you leave that day). The nearest weekday is <b>Sarteano, Friday morning</b> (~10 min). Honest note: it’s a general civic market (clothes, housewares, some produce), <b>not</b> the artisan-producer market you might picture — worth a quick pass, not a plan.',
   links:[['🗺️ Sarteano',mapsQ('Sarteano')]]};
 
+// Friday (Jul 24) — LOCKED to Montepulciano.
+const ACT_MONTEPULCIANO = {e:'🍷',g:'g4',verified:true,open:true,img:'photos/montepulciano.jpg',gallery:[['photos/montepulciano-cellar.jpg','The underground Vino Nobile cellars']],title:'Montepulciano',pitch:'Renaissance hilltop, underground tufa wine cellars, Piazza Grande — the last full day',
+  drive:'~30 min from Cetona',hours:'cool morning best',price:'lunch + tastings',
+  steps:[
+   {t:'AM',txt:'Cetona → <b>Montepulciano</b> (~30 min). Park below (options below), ride the <b>P5 lift</b> up to the gardens, then climb the Corso to <b>Piazza Grande</b> at the top.'},
+   {t:'Cellars',txt:'The <b>kids’ favourite:</b> the historic cellars dug into the tufa under the palazzi — cool, cavernous, giant oak barrels. Walk-in, no booking (tastings in the list below).'},
+   {t:'Lunch',txt:'In town — two casual picks below 🍴'},
+   {t:'PM',txt:'A Vino Nobile tasting (below), gelato on Piazza Grande, wander. Home through the afternoon heat.'},
+   {t:'Eve',txt:'Farewell dinner — see the 🥂 tab.'}],
+  spots:[
+   {name:'🍴 Trattoria di Cagnano',tag:'lunch · value',desc:'Cosy and rustic — homemade pasta + wood-fired pizza, <b>big portions, great value</b>, fast friendly service. Easy with kids.',hours:'lunch + dinner',map:mapsQ('Trattoria di Cagnano Montepulciano')},
+   {name:'🍴 Pizzeria e Cucina da Linda',tag:'lunch · value',desc:'Casual pizzeria just outside the walls — calzone + pizza the kids love, welcoming owner, parking close by. (For a quick counter lunch instead, <b>Angolo dei Sapori</b> up in town.)',hours:'lunch + dinner',map:mapsQ('Pizzeria da Linda Montepulciano')},
+   {name:'🍷 Cantina Contucci',tag:'wine · walk-in',desc:'On Piazza Grande — one of the founding families of Vino Nobile. <b>Free walk-in</b> into a warren of ancient cellars with giant oak barrels; tasting at the end. Kids can roam the caves.',hours:'daytime · no booking',map:mapsQ('Cantina Contucci Montepulciano')},
+   {name:'🍷 Cantine del Redi (De’ Ricci)',tag:'wine · walk-in',desc:'A dramatic Gothic cellar dug deep into the tufa — a “cathedral” of barrels, the big kid-wow. Walk-in Vino Nobile tasting.',hours:'daytime',map:mapsQ('Cantine del Redi Montepulciano')}],
+  warn:'Parking: the tiny <b>Fortezza</b> lot up top is closest to Piazza Grande but fills by ~9am — don’t count on it midday.',
+  links:[['🅿️ P5 Sant’Agnese · lift up (best with kids)',mapsQ('Parcheggio Sant Agnese Montepulciano')],['🅿️ Porta al Prato (backup)',mapsQ('Parcheggio Porta al Prato Montepulciano')],['🚗 Directions',dirTo('Podere San Girolamo Cetona','Parcheggio Sant Agnese Montepulciano')],['🗺️ Piazza Grande',mapsQ('Piazza Grande Montepulciano')]]};
+
 /* ---- days ---- */
 
 const DAYS = [
@@ -505,11 +522,10 @@ const DAYS = [
  {id:'din3',dow:'Thu',num:'🍷',name:'Evening out · Thursday',dinner:true,eyebrow:'🍷 Golden hour + dinner · Thu Jul 23',base:'Cetona’s piazza, or a Val d’Orcia village · reserve for 8',lock:'pick',menu:CETONA_DINNER,
   intro:'Cetona town is the easy default — dinner + passeggiata on the doorstep, no drive. Or make an evening of it in a Val d’Orcia village if you’re already out west. Pick one; book ahead for 8.'},
 
- {id:'fri24',dow:'Fri',num:'24',name:'Build your day',base:'Base: Podere San Girolamo, Cetona · last full day',lock:'pick',heat:true,
-  intro:'Last full day — whatever you didn’t do Thursday. Same blocks; keep the evening free for the farewell (next tab). One optional low-key add below.',
+ {id:'fri24',dow:'Fri',num:'24',name:'Montepulciano',base:'Base: Podere San Girolamo, Cetona · last full day',lock:'set',heat:true,
+  intro:'Locked in for the last full day: <b>Montepulciano</b> — Renaissance hilltop, the underground Vino Nobile cellars (the kids’ favourite), Piazza Grande, lunch + a tasting. Home for the farewell — that’s the next tab → 🥂',
   sections:[
-   {label:'☀️ Day shape — pick one',items:CETONA_SHAPES}],
-  extra:CETONA_MARKET},
+   {label:'📍 Friday — Montepulciano',items:[ACT_MONTEPULCIANO]}]},
 
  {id:'din4',dow:'Fri',num:'🥂',name:'Farewell evening · Friday',dinner:true,eyebrow:'🥂 Last night · Fri Jul 24',base:'Send-off dinner · pick one',lock:'pick',menu:CETONA_DINNER,extra:CETONA_FAREWELL,
   intro:'The last supper of the trip. The splurge idea is <b>Chef Walter at the villa</b> (below — pending pricing), or the same Cetona / Val d’Orcia tables as any night.'},
