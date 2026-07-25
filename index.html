@@ -182,6 +182,18 @@ main{max-width:660px;margin:0 auto;padding:16px 14px 60px}
 .opt[open] .expander{display:none}
 
 /* ---------- reference ---------- */
+.walk{background:var(--card);border:1px solid var(--gold);border-radius:16px;box-shadow:var(--shadow);padding:16px 16px 4px;margin-top:16px;background:linear-gradient(180deg,#FFF9EC,var(--card))}
+.walk-t{font-family:'Fraunces',serif;font-size:21px;font-weight:600;color:var(--terra-dark)}
+.walk-sub{font-size:13px;color:var(--ink-soft);margin-top:4px;line-height:1.55}
+.walkstops{list-style:none;margin:12px 0 0;padding:0}
+.walkstops li{display:flex;gap:12px;padding-bottom:16px;position:relative}
+.walkstops li::before{content:"";position:absolute;left:16px;top:34px;bottom:0;width:2px;background:var(--terra-soft)}
+.walkstops li:last-child::before{display:none}
+.ws-ic{flex:0 0 34px;height:34px;border-radius:50%;background:#F4E7CC;display:flex;align-items:center;justify-content:center;font-size:17px;z-index:1}
+.ws-b{flex:1;min-width:0;padding-top:3px}
+.ws-l{font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--terra-dark)}
+.ws-t{font-family:'Fraunces',serif;font-weight:600;font-size:16px;margin:2px 0 4px}
+.ws-d{font-size:13.5px;color:var(--ink-soft);line-height:1.55}
 .refsec{margin-bottom:22px}
 .refsec>h3{font-size:21px;font-weight:700;color:var(--green);margin:0 4px 10px;display:flex;align-items:center;gap:8px}
 .refsec>h3::after{content:"";flex:1;height:1px;background:var(--line)}
@@ -428,6 +440,24 @@ const ACT_MONTEPULCIANO = {e:'🍷',g:'g4',verified:true,open:true,img:'photos/m
   warn:'Parking (4 options below, none of them the fast-filler): skip the tiny <b>Fortezza (P8)</b> lot up top — it fills by ~9am. Best access is <b>P5</b> (elevator up + a €1.50 Pollicino shuttle). In summer the ring lots fill through midday, so if P5/P1/P2 are full, drop down to <b>San Biagio</b> below town (big, usually has space) and walk up ~12 min. Rates ~€1.20/h, pay by card.',
   links:[['🅿️ P5 Sant’Agnese · lift + shuttle',mapsQ('Parcheggio Sant Agnese Montepulciano')],['🅿️ P1 Porta al Prato · main gate',mapsQ('Parcheggio Porta al Prato Montepulciano')],['🅿️ P2 Viale Calamandrei',mapsQ('Parcheggio Viale Calamandrei Montepulciano')],['🅿️ San Biagio · overflow ~12 min walk',mapsQ('Parcheggio San Biagio Montepulciano')],['🚗 Directions',dirTo('Podere San Girolamo Cetona','Parcheggio Sant Agnese Montepulciano')],['🗺️ Piazza Grande',mapsQ('Piazza Grande Montepulciano')]]};
 
+// Sat Jul 25 — Kleehs' last night: self-guided golden-hour walk Monti → Forum → Trastevere.
+const SAT_WALK = {
+  title:'🌅 Last Night Walk',
+  sub:'The earned send-off — golden light, gelato in hand, the Forum lit up, then Trastevere for dinner. Leave ~17:30, no rushing.',
+  stops:[
+   {icon:'🍦',label:'~17:30 · Start',t:'Gelato to go',d:'Grab a cone right at the door and eat it as you walk. <b>Gelateria dell’Angeletto</b> (Via dell’Angeletto, ~2 min away). Alt: <b>Fatamorgana Monti</b> on Piazza degli Zingari.',
+    btns:[['maps','🍦 dell’Angeletto',mapsQ('Gelateria dell\'Angeletto Roma')],['maps','🍦 Fatamorgana Monti',mapsQ('Fatamorgana Monti Piazza degli Zingari Roma')]]},
+   {icon:'🚶',label:'Walk · 25–35 min',t:'Down the Fori Imperiali to the Campidoglio',d:'Via dei Serpenti → down <b>Via dei Fori Imperiali</b> (the Roman Forum on your right, the Colosseum ahead, all lit at golden hour) → up the <b>Cordonata</b> ramp-staircase to Piazza del Campidoglio.',
+    btns:[['dir','🚶 Walking directions','https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent('Via dei Serpenti 109, Roma')+'&destination='+encodeURIComponent('Piazza del Campidoglio, Roma')+'&waypoints='+encodeURIComponent('Via dei Fori Imperiali, Roma')+'&travelmode=walking']]},
+   {icon:'🏛️',label:'Overlook · FREE',t:'Campidoglio Forum overlook (the hack)',d:'In Piazza del Campidoglio, slip around <b>either side of Palazzo Senatorio</b> (the central palace with the bell tower) to the rear terraces — a free, elevated panorama over the <b>whole Roman Forum</b>. <b>No ticket</b>, just walk up; the paid Capitoline Museums are separate, this view is free.',
+    btns:[['maps','🗺️ Piazza del Campidoglio',mapsQ('Piazza del Campidoglio Roma')]]},
+   {icon:'🚕',label:'Taxi · ~10 min · €10–12',t:'Bridge across the river to Trastevere',d:'The walk over the river isn’t scenic — cab this leg. Pickup at <b>Piazza d’Aracoeli</b> (bottom of the Campidoglio steps) → <b>Piazza di San Cosimato</b>. Tip: <b>FreeNow</b> (regulated white taxis) is usually cheaper than Uber in Rome.',
+    btns:[['dir','🚕 Uber',"https://m.uber.com/ul/?action=setPickup&pickup[latitude]=41.8946&pickup[longitude]=12.4818&pickup[nickname]="+encodeURIComponent("Piazza d'Aracoeli")+"&dropoff[latitude]=41.8867&dropoff[longitude]=12.4693&dropoff[nickname]="+encodeURIComponent('Piazza di San Cosimato')],['maps','🗺️ San Cosimato',mapsQ('Piazza di San Cosimato Roma')]]},
+   {icon:'🍽️',label:'~19:00 · Dinner',t:'An outdoor table in Trastevere',d:'Wander the lanes as the square fills at golden hour, then take whatever outdoor table appeals once kitchens open ~7pm — no reservation needed for 3 on an early Saturday. Want a target? <b>Da Fabrizio al 56</b> is the highest-rated traditional spot right nearby.',
+    btns:[['maps','🗺️ Da Fabrizio al 56',mapsQ('Da Fabrizio al 56 Trastevere Roma')]]},
+  ]
+};
+
 /* ---- days ---- */
 
 const DAYS = [
@@ -544,7 +574,7 @@ const DAYS = [
  {id:'din4',dow:'Fri',num:'🥂',name:'Farewell evening · Friday',dinner:true,eyebrow:'🥂 Last night · Fri Jul 24',base:'Send-off dinner · pick one',lock:'pick',menu:CETONA_DINNER,extra:CETONA_FAREWELL,
   intro:'The last supper of the trip. The splurge idea is <b>Chef Walter at the villa</b> (below — pending pricing), or the same Cetona / Val d’Orcia tables as any night.'},
 
- {id:'sat25',dow:'Sat',num:'25',name:'Departures',base:'Cetona → Rome · Hoosiers fly home · Kleehs via Orvieto',lock:'semi',
+ {id:'sat25',dow:'Sat',num:'25',name:'Departures',base:'Cetona → Rome · Hoosiers fly home · Kleehs via Orvieto',lock:'semi',walk:SAT_WALK,
   tracks:[
    {name:'Track A — Hoosiers · straight to FCO',rows:[
     {t:'09:00',title:'Pack + checkout, settle utilities',s:'San Girolamo out by 10:00 — leave the villa cash for utilities. It’s ~2 h Cetona → FCO.'},
@@ -563,7 +593,7 @@ const DAYS = [
      btns:[['maps','🗺️ Via Sardegna 25',mapsQ('Via Sardegna 25 Roma')]]},
     {t:'15:00',title:'To Condominio Monti',s:'Walk/taxi to Via dei Serpenti 109 · ref 57492808 · contact Letizia.',
      btns:[['maps','🗺️ Maps',mapsQ('Via dei Serpenti 109 Roma')],['tel','📞 Letizia',null,'+39064885889']]},
-    {t:'18:00',title:'Free Rome evening',s:'Monti at golden hour: Piazza della Madonna dei Monti, last carbonara, Colosseum lit up.'}]}]},
+    {t:'17:30',title:'Last Night Walk 🌅',s:'The relaxed send-off — golden light, gelato, the Forum, then Trastevere for dinner. Full stop-by-stop guide below ↓',hl:true}]}]},
 
  {id:'sun26',dow:'Sun',num:'26',name:'Ciao, Roma',base:'Kleehs → London',lock:'semi',
   tracks:[{name:null,rows:[
@@ -659,6 +689,22 @@ function galleryHtml(g){
   return `<div class="gal">${g.map(([src,label])=>`<figure><img loading="lazy" src="${src}" alt="${label}" onerror="this.closest('figure').remove()"><figcaption>${label}</figcaption></figure>`).join('')}</div>`;
 }
 
+function walkCard(w){
+  return `<div class="walk">
+    <div class="walk-hd"><div class="walk-t">${w.title}</div><div class="walk-sub">${w.sub}</div></div>
+    <ol class="walkstops">${w.stops.map(s=>`
+      <li>
+        <div class="ws-ic">${s.icon}</div>
+        <div class="ws-b">
+          ${s.label?`<div class="ws-l">${s.label}</div>`:''}
+          <div class="ws-t">${s.t}</div>
+          <div class="ws-d">${s.d}</div>
+          ${s.btns?`<div class="btnrow">${s.btns.map(btnHtml).join('')}</div>`:''}
+        </div>
+      </li>`).join('')}</ol>
+  </div>`;
+}
+
 function optHtml(o){
   const hero = `<div class="hero ${o.g||'g1'}">
       ${o.img?`<img loading="lazy" src="${o.img}" alt="${o.title}" onload="this.classList.add('ok')" onerror="this.remove()">`:''}
@@ -750,6 +796,7 @@ function dayScreen(d){
       if(tr.name) h += `<div class="trackname">${tr.name}</div>`;
       h += `<ul class="tl">${tr.rows.map(rowHtml).join('')}</ul>`;
     });
+    if(d.walk) h += walkCard(d.walk);
     if(d.foot) h += `<div class="warn" style="margin-top:4px">${d.foot}</div>`;
   }
   return h;
