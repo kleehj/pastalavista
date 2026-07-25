@@ -49,6 +49,9 @@ header{
 .brandr{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
 .todaybtn{border:0;cursor:pointer;font-family:'Inter',sans-serif;font-weight:700;font-size:12.5px;letter-spacing:.4px;background:var(--gold);color:#3d2f05;border-radius:999px;padding:6px 14px;box-shadow:0 1px 3px rgba(0,0,0,.18)}
 .todaybtn:active{background:#fff}
+.hbtns{display:flex;align-items:center;gap:8px}
+.iconbtn{border:0;cursor:pointer;font-family:inherit;background:rgba(250,244,232,.16);color:var(--cream);width:36px;height:36px;border-radius:50%;font-size:20px;line-height:1;display:flex;align-items:center;justify-content:center}
+.iconbtn:active{background:rgba(250,244,232,.36)}
 nav{display:flex;overflow-x:auto;gap:6px;padding:8px 12px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 nav::-webkit-scrollbar{display:none}
 .tab{
@@ -224,7 +227,10 @@ footer{max-width:660px;margin:0 auto;padding:0 18px 40px;font-size:12px;color:#B
 <header>
   <div class="brand">
     <h1>PASTA<span>LA</span>VISTA</h1>
-    <button id="todayBtn" class="todaybtn" hidden>◉ Today</button>
+    <div class="hbtns">
+      <button id="refreshBtn" class="iconbtn" aria-label="Refresh for latest">↻</button>
+      <button id="todayBtn" class="todaybtn" hidden>◉ Today</button>
+    </div>
   </div>
   <nav id="tabs"></nav>
 </header>
@@ -887,6 +893,11 @@ tabs.addEventListener('click',e=>{
 
 const todayBtn = document.getElementById('todayBtn');
 if(TODAY){ todayBtn.hidden = false; todayBtn.addEventListener('click',()=>show(TODAY)); }
+
+// Force-fetch the latest version (defeats iOS home-screen caching) via a unique query string.
+document.getElementById('refreshBtn').addEventListener('click',()=>{
+  location.replace(location.pathname + '?r=' + Date.now() + location.hash);
+});
 
 show(location.hash.replace('#','') || TODAY || 'fri17');
 loadWeather();
