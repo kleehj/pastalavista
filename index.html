@@ -79,6 +79,7 @@ main{max-width:660px;margin:0 auto;padding:16px 14px 60px}
 .chip.heat{background:#F6E3D3;color:#A0431B}
 .chip.wx{background:#E7EEF2;color:#2E5568;font-variant-numeric:tabular-nums}
 .chip.home{background:var(--green);color:#fff;text-decoration:none;display:inline-flex;align-items:center}
+.chip.uber{background:var(--ink);color:#fff;text-decoration:none;display:inline-flex;align-items:center}
 .chip.today{background:var(--terra);color:#fff}
 
 /* ---------- timeline ---------- */
@@ -246,6 +247,8 @@ const mapsPid = (name,id) => id
   ? 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(name) + '&query_place_id=' + id
   : mapsQ(name);
 const dirTo = (o,dst,mode) => 'https://www.google.com/maps/dir/?api=1&origin=' + encodeURIComponent(o) + '&destination=' + encodeURIComponent(dst) + '&travelmode=' + (mode||'driving');
+// Uber from the rider's current location to a fixed dropoff (opens the Uber app prefilled).
+const uberTo = (lat,lng,name) => 'https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[latitude]=' + lat + '&dropoff[longitude]=' + lng + '&dropoff[nickname]=' + encodeURIComponent(name);
 const HEAT = '🥵 Heat wave — mornings out, shade or pool at midday';
 
 /* ---- live weather (Open-Meteo, free, no key, °F) ---- */
@@ -255,9 +258,10 @@ const LOCS = {
   cetona:{lat:42.9636, lon:11.8996},
 };
 // which base each screen sits at (+ explicit date for the dinner screens, + that night's lodging)
-const H_CIAO=['🏠 Ciao Bella','Via Mecenate 27 Roma'], H_BIG=['🏠 Big House','Via Merulana 105 Roma'],
+// [label, maps query, optional [lat,lng] for an Uber-home chip — Rome only; Uber doesn't serve rural Tuscany]
+const H_CIAO=['🏠 Ciao Bella','Via Mecenate 27 Roma',[41.8957,12.5017]], H_BIG=['🏠 Big House','Via Merulana 105 Roma',[41.8925,12.5009]],
       H_PODERI=['🏠 Poderi','Poderi Arcangelo San Gimignano'], H_VILLA=['🏠 Villa','Podere San Girolamo Cetona'],
-      H_MONTI=['🏠 Monti','Via dei Serpenti 109 Roma'];
+      H_MONTI=['🏠 Monti','Via dei Serpenti 109 Roma',[41.8945,12.4905]];
 const DAYMETA = {
   fri17:{loc:'rome',home:[H_CIAO,H_BIG]}, sat18:{loc:'rome',home:[H_CIAO,H_BIG]}, sun19:{loc:'sangim',home:[H_PODERI]},
   mon20:{loc:'sangim',home:[H_PODERI]}, din1:{loc:'sangim',date:'2026-07-20',home:[H_PODERI]},
@@ -771,7 +775,12 @@ function chipRow(d){
   const lock = {locked:['locked','🔒 Locked timeline'],semi:['semi','🔗 Semi-locked'],pick:['pick','☝️ Pick one'],set:['locked','📌 Locked in']}[d.lock];
   const dm = DAYMETA[d.id];
   const wx = dm ? `<span class="chip wx" data-loc="${dm.loc}" data-date="${wxDateFor(d)}" hidden></span>` : '';
-  const home = dm && dm.home ? dm.home.map(h=>`<a class="chip home" href="${mapsQ(h[1])}" target="_blank" rel="noopener">${h[0]}</a>`).join('') : '';
+  const home = dm && dm.home ? dm.home.map(h=>{
+    const nm = h[0].replace(/^🏠\s*/,'');
+    let s = `<a class="chip home" href="${mapsQ(h[1])}" target="_blank" rel="noopener">${h[0]}</a>`;
+    if(h[2]) s += `<a class="chip uber" href="${uberTo(h[2][0],h[2][1],nm)}" target="_blank" rel="noopener">🚕 Uber ${nm}</a>`;
+    return s;
+  }).join('') : '';
   return `<div class="chips">
     ${TODAY===d.id?'<span class="chip today">TODAY</span>':''}
     ${wx}
