@@ -900,7 +900,10 @@ if(TODAY){ todayBtn.hidden = false; todayBtn.addEventListener('click',()=>hardRe
 
 document.getElementById('refreshBtn').addEventListener('click',()=>hardRefresh(location.hash));
 
-show(location.hash.replace('#','') || TODAY || 'fri17');
+// Cold open → jump to today; a refresh-reload (?r=) keeps the screen you were on.
+const _hashId = location.hash.replace('#','');
+const _isRefresh = /[?&]r=/.test(location.search);
+show(_isRefresh ? (_hashId || TODAY || 'fri17') : (TODAY || _hashId || 'fri17'));
 loadWeather();
 </script>
 </body>
