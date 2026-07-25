@@ -189,7 +189,10 @@ main{max-width:660px;margin:0 auto;padding:16px 14px 60px}
 .walkstops li{display:flex;gap:12px;padding-bottom:16px;position:relative}
 .walkstops li::before{content:"";position:absolute;left:16px;top:34px;bottom:0;width:2px;background:var(--terra-soft)}
 .walkstops li:last-child::before{display:none}
-.ws-ic{flex:0 0 34px;height:34px;border-radius:50%;background:#F4E7CC;display:flex;align-items:center;justify-content:center;font-size:17px;z-index:1}
+.walkroute{width:100%;justify-content:center;margin:12px 0 8px}
+.walknote{font-size:12.5px;color:var(--ink-soft);background:#FFF6E4;border:1px solid var(--gold);border-radius:10px;padding:8px 11px;margin-bottom:12px;line-height:1.5}
+.walknote b{color:#6B5410}
+.ws-ic{flex:0 0 34px;height:34px;border-radius:50%;background:var(--terra);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:15px;z-index:1}
 .ws-b{flex:1;min-width:0;padding-top:3px}
 .ws-l{font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--terra-dark)}
 .ws-t{font-family:'Fraunces',serif;font-weight:600;font-size:16px;margin:2px 0 4px}
@@ -444,14 +447,15 @@ const ACT_MONTEPULCIANO = {e:'🍷',g:'g4',verified:true,open:true,img:'photos/m
 const SAT_WALK = {
   title:'🌅 Last Night Walk',
   sub:'The earned send-off — golden light, gelato in hand, the Forum lit up, then Trastevere for dinner. Leave ~17:30, no rushing.',
+  route:'https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent('Via dei Serpenti 109, Roma')+'&destination='+encodeURIComponent('Piazza del Campidoglio, Roma')+'&waypoints='+encodeURIComponent('Gelateria dell\'Angeletto, Roma')+'%7C'+encodeURIComponent('Via dei Fori Imperiali, Roma')+'&travelmode=walking',
+  routeNote:'Open the route and the three pins are exactly stops <b>1 → 2 → 3</b> below (gelato → the Fori Imperiali stroll → the Campidoglio overlook). Stop 4 is a short taxi, stop 5 is dinner.',
   stops:[
-   {icon:'🍦',label:'~17:30 · Start',t:'Gelato to go',d:'Grab a cone right at the door and eat it as you walk. <b>Gelateria dell’Angeletto</b> (Via dell’Angeletto, ~2 min away). Alt: <b>Fatamorgana Monti</b> on Piazza degli Zingari.',
+   {icon:'🍦',label:'~17:30 · Start',t:'Gelato to go',d:'<b>Pin 1.</b> Grab a cone right at the door and eat it as you walk. <b>Gelateria dell’Angeletto</b> (Via dell’Angeletto, ~2 min away). Alt: <b>Fatamorgana Monti</b> on Piazza degli Zingari.',
     btns:[['maps','🍦 dell’Angeletto',mapsQ('Gelateria dell\'Angeletto Roma')],['maps','🍦 Fatamorgana Monti',mapsQ('Fatamorgana Monti Piazza degli Zingari Roma')]]},
-   {icon:'🚶',label:'Walk · 25–35 min',t:'Down the Fori Imperiali to the Campidoglio',d:'Via dei Serpenti → down <b>Via dei Fori Imperiali</b> (the Roman Forum on your right, the Colosseum ahead, all lit at golden hour) → up the <b>Cordonata</b> ramp-staircase to Piazza del Campidoglio.',
-    btns:[['dir','🚶 Walking directions','https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent('Via dei Serpenti 109, Roma')+'&destination='+encodeURIComponent('Piazza del Campidoglio, Roma')+'&waypoints='+encodeURIComponent('Via dei Fori Imperiali, Roma')+'&travelmode=walking']]},
-   {icon:'🏛️',label:'Overlook · FREE',t:'Campidoglio Forum overlook (the hack)',d:'In Piazza del Campidoglio, slip around <b>either side of Palazzo Senatorio</b> (the central palace with the bell tower) to the rear terraces — a free, elevated panorama over the <b>whole Roman Forum</b>. <b>No ticket</b>, just walk up; the paid Capitoline Museums are separate, this view is free.',
+   {icon:'🚶',label:'Walk · 25–35 min',t:'Down the Fori Imperiali',d:'<b>Pin 2.</b> Via dei Serpenti → down <b>Via dei Fori Imperiali</b> (the Roman Forum on your right, the Colosseum ahead, all lit at golden hour) → up the <b>Cordonata</b> ramp-staircase toward the Campidoglio. This whole stretch is the middle pin on the route above.'},
+   {icon:'🏛️',label:'Overlook · FREE',t:'Campidoglio Forum overlook (the hack)',d:'<b>Pin 3 — the destination.</b> In Piazza del Campidoglio, slip around <b>either side of Palazzo Senatorio</b> (the central palace with the bell tower) to the rear terraces — a free, elevated panorama over the <b>whole Roman Forum</b>. <b>No ticket</b>, just walk up; the paid Capitoline Museums are separate, this view is free.',
     btns:[['maps','🗺️ Piazza del Campidoglio',mapsQ('Piazza del Campidoglio Roma')]]},
-   {icon:'🚕',label:'Taxi · ~10 min · €10–12',t:'Bridge across the river to Trastevere',d:'The walk over the river isn’t scenic — cab this leg. Pickup at <b>Piazza d’Aracoeli</b> (bottom of the Campidoglio steps) → <b>Piazza di San Cosimato</b>. Tip: <b>FreeNow</b> (regulated white taxis) is usually cheaper than Uber in Rome.',
+   {icon:'🚕',label:'Taxi · ~10 min · €10–12',t:'Bridge across the river to Trastevere',d:'<b>Off the walking route.</b> The walk over the river isn’t scenic — cab this leg. Pickup at <b>Piazza d’Aracoeli</b> (bottom of the Campidoglio steps) → <b>Piazza di San Cosimato</b>. Tip: <b>FreeNow</b> (regulated white taxis) is usually cheaper than Uber in Rome.',
     btns:[['dir','🚕 Uber',"https://m.uber.com/ul/?action=setPickup&pickup[latitude]=41.8946&pickup[longitude]=12.4818&pickup[nickname]="+encodeURIComponent("Piazza d'Aracoeli")+"&dropoff[latitude]=41.8867&dropoff[longitude]=12.4693&dropoff[nickname]="+encodeURIComponent('Piazza di San Cosimato')],['maps','🗺️ San Cosimato',mapsQ('Piazza di San Cosimato Roma')]]},
    {icon:'🍽️',label:'~19:00 · Dinner',t:'An outdoor table in Trastevere',d:'Wander the lanes as the square fills at golden hour, then take whatever outdoor table appeals once kitchens open ~7pm — no reservation needed for 3 on an early Saturday. Want a target? <b>Da Fabrizio al 56</b> is the highest-rated traditional spot right nearby.',
     btns:[['maps','🗺️ Da Fabrizio al 56',mapsQ('Da Fabrizio al 56 Trastevere Roma')]]},
@@ -696,11 +700,13 @@ function galleryHtml(g){
 function walkCard(w){
   return `<div class="walk">
     <div class="walk-hd"><div class="walk-t">${w.title}</div><div class="walk-sub">${w.sub}</div></div>
-    <ol class="walkstops">${w.stops.map(s=>`
+    ${w.route?`<a class="btn maps walkroute" href="${w.route}" target="_blank" rel="noopener">🗺️ Open the walking route · stops 1 → 3</a>`:''}
+    ${w.routeNote?`<div class="walknote">📍 ${w.routeNote}</div>`:''}
+    <ol class="walkstops">${w.stops.map((s,i)=>`
       <li>
-        <div class="ws-ic">${s.icon}</div>
+        <div class="ws-ic">${i+1}</div>
         <div class="ws-b">
-          ${s.label?`<div class="ws-l">${s.label}</div>`:''}
+          ${s.label?`<div class="ws-l">${s.icon?s.icon+' ':''}${s.label}</div>`:''}
           <div class="ws-t">${s.t}</div>
           <div class="ws-d">${s.d}</div>
           ${s.btns?`<div class="btnrow">${s.btns.map(btnHtml).join('')}</div>`:''}
