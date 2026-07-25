@@ -541,17 +541,26 @@ const DAYS = [
  {id:'din4',dow:'Fri',num:'🥂',name:'Farewell evening · Friday',dinner:true,eyebrow:'🥂 Last night · Fri Jul 24',base:'Send-off dinner · pick one',lock:'pick',menu:CETONA_DINNER,extra:CETONA_FAREWELL,
   intro:'The last supper of the trip. The splurge idea is <b>Chef Walter at the villa</b> (below — pending pricing), or the same Cetona / Val d’Orcia tables as any night.'},
 
- {id:'sat25',dow:'Sat',num:'25',name:'Departures',base:'Cetona → Rome · Hoosiers fly home',lock:'semi',
-  tracks:[{name:null,rows:[
-   {t:'08:00',title:'Pack, settle utilities in cash',s:'San Girolamo checkout by 10:00. Leave by <b>~09:30</b> — it’s ~2 h to FCO and the flight is at 15:00.'},
-   {t:'09:30',title:'Both cars → Rome',s:'A1 south. <b>Optional Orvieto stop</b> (duomo façade, 30 min off the highway) only if wheels are rolling by 09:30 sharp.',
-    btns:[['dir','🚗 To FCO',dirTo('Podere San Girolamo Cetona','Aeroporto Fiumicino')],['maps','🗺️ Orvieto',mapsQ('Duomo di Orvieto')]]},
-   {t:'12:30',title:'Hoosiers → FCO ✈️',s:'Drop the Hoosiers’ rental at FCO, check in for the <b>15:00</b> departure. Hugs, tears, arrivederci.',hl:true},
-   {t:'14:30',title:'Kleehs drop car · Via Sardegna 25',s:'Alamo return, Ludovisi district — <b>outside the ZTL</b>. Target ~14:30.',
-    btns:[['maps','🗺️ Via Sardegna 25',mapsQ('Via Sardegna 25 Roma')]]},
-   {t:'15:00',title:'To Condominio Monti',s:'Walk/taxi to Via dei Serpenti 109 · ref 57492808 · contact Letizia.',
-    btns:[['maps','🗺️ Maps',mapsQ('Via dei Serpenti 109 Roma')],['tel','📞 Letizia',null,'+39064885889']]},
-   {t:'18:00',title:'Free Rome evening',s:'Monti at golden hour: Piazza della Madonna dei Monti, last carbonara, Colosseum lit up.'}]}]},
+ {id:'sat25',dow:'Sat',num:'25',name:'Departures',base:'Cetona → Rome · Hoosiers fly home · Kleehs via Orvieto',lock:'semi',
+  tracks:[
+   {name:'Track A — Hoosiers · straight to FCO',rows:[
+    {t:'09:00',title:'Pack + checkout, settle utilities',s:'San Girolamo out by 10:00 — leave the villa cash for utilities. It’s ~2 h Cetona → FCO.'},
+    {t:'09:30',title:'A1 south → FCO',s:'Straight through, no stops — the flight’s at <b>15:00</b>, so aim to be at FCO by ~12:30.',
+     btns:[['dir','🚗 To FCO',dirTo('Podere San Girolamo Cetona','Aeroporto Fiumicino')]]},
+    {t:'~12:30',title:'Drop rental + check in ✈️',s:'Return the Hoosiers’ car at FCO, check in for the <b>15:00</b> flight. Hugs, tears, arrivederci.',hl:true}]},
+   {name:'Track B — Kleehs · Orvieto stop (you’ve got time)',rows:[
+    {t:'09:30',title:'Checkout, then A1 south',s:'Same villa checkout, then A1 toward Rome — exit <b>Orvieto</b> (~40 min from Cetona).'},
+    {t:'~10:20',title:'Park + funicular up 🚡',s:'Orvieto sits on a tufa plateau — park at the base and ride the funicular up (5 min · €1.30pp / €2.60 return · kids under 6 free · the ticket also covers the shuttle from Piazza Cahen to the Duomo). <b>Park:</b> the Via Roma multi-storey right opposite the funicular, or the free <b>Piazza della Pace</b> lot behind the station.',
+     btns:[['maps','🅿️ Via Roma · by funicular',mapsQ('Parcheggio Via Roma Orvieto')],['maps','🅿️ Piazza della Pace · free',mapsQ('Parcheggio Piazza della Pace Orvieto')],['maps','🚡 Funicular base',mapsQ('Funicolare di Orvieto Piazza Matteotti')]]},
+    {t:'Explore',title:'Duomo + lunch',s:'Up top: the show-stopping striped <b>Duomo</b> façade, a wander, gelato. Two casual, good-value lunches: <b>Trattoria del Moro Aronne</b> (cozy, generous portions, famous umbricelli pasta) or <b>Il Giardino da Giovanni</b> (little garden with outdoor tables — nice with David). Both in the historic centre.',
+     btns:[['maps','🗺️ Duomo di Orvieto',mapsQ('Duomo di Orvieto')],['maps','🍴 del Moro Aronne',mapsQ('Trattoria del Moro Aronne Orvieto')],['maps','🍴 Il Giardino da Giovanni',mapsQ('Ristorante Il Giardino da Giovanni Orvieto')]]},
+    {t:'~13:30',title:'Back on the A1 → Rome',s:'Orvieto → Rome ~1 h 15. Aim to drop the car by ~14:30.',
+     btns:[['dir','🚗 To Rome',dirTo('Orvieto','Via Sardegna 25 Roma')]]},
+    {t:'14:30',title:'Drop Alamo car · Via Sardegna 25',s:'Alamo return, Ludovisi district — <b>outside the ZTL</b>.',
+     btns:[['maps','🗺️ Via Sardegna 25',mapsQ('Via Sardegna 25 Roma')]]},
+    {t:'15:00',title:'To Condominio Monti',s:'Walk/taxi to Via dei Serpenti 109 · ref 57492808 · contact Letizia.',
+     btns:[['maps','🗺️ Maps',mapsQ('Via dei Serpenti 109 Roma')],['tel','📞 Letizia',null,'+39064885889']]},
+    {t:'18:00',title:'Free Rome evening',s:'Monti at golden hour: Piazza della Madonna dei Monti, last carbonara, Colosseum lit up.'}]}]},
 
  {id:'sun26',dow:'Sun',num:'26',name:'Ciao, Roma',base:'Kleehs → London',lock:'semi',
   tracks:[{name:null,rows:[
