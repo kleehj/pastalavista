@@ -260,7 +260,7 @@ const DAYMETA = {
   tue21:{loc:'sangim',home:[H_PODERI]}, din2:{loc:'sangim',date:'2026-07-21',home:[H_PODERI]},
   wed22:{loc:'cetona',home:[H_VILLA]}, thu23:{loc:'cetona',home:[H_VILLA]}, din3:{loc:'cetona',date:'2026-07-23',home:[H_VILLA]},
   fri24:{loc:'cetona',home:[H_VILLA]}, din4:{loc:'cetona',date:'2026-07-24',home:[H_VILLA]},
-  sat25:{loc:'rome',home:[H_MONTI]}, sun26:{loc:'rome',home:[H_MONTI]},
+  sat25:{loc:'rome',home:[H_MONTI]}, satnight:{loc:'rome',date:'2026-07-25',home:[H_MONTI]}, sun26:{loc:'rome',home:[H_MONTI]},
 };
 let WX = null;
 const wxDateFor = d => { const m = DAYMETA[d.id]; return m ? (m.date || '2026-07-' + String(d.num).padStart(2,'0')) : null; };
@@ -574,7 +574,7 @@ const DAYS = [
  {id:'din4',dow:'Fri',num:'🥂',name:'Farewell evening · Friday',dinner:true,eyebrow:'🥂 Last night · Fri Jul 24',base:'Send-off dinner · pick one',lock:'pick',menu:CETONA_DINNER,extra:CETONA_FAREWELL,
   intro:'The last supper of the trip. The splurge idea is <b>Chef Walter at the villa</b> (below — pending pricing), or the same Cetona / Val d’Orcia tables as any night.'},
 
- {id:'sat25',dow:'Sat',num:'25',name:'Departures',base:'Cetona → Rome · Hoosiers fly home · Kleehs via Orvieto',lock:'semi',walk:SAT_WALK,
+ {id:'sat25',dow:'Sat',num:'25',name:'Departures',base:'Cetona → Rome · Hoosiers fly home · Kleehs via Orvieto',lock:'semi',
   tracks:[
    {name:'Track A — Hoosiers · straight to FCO',rows:[
     {t:'09:00',title:'Pack + checkout, settle utilities',s:'San Girolamo out by 10:00 — leave the villa cash for utilities. It’s ~2 h Cetona → FCO.'},
@@ -593,7 +593,11 @@ const DAYS = [
      btns:[['maps','🗺️ Via Sardegna 25',mapsQ('Via Sardegna 25 Roma')]]},
     {t:'15:00',title:'To Condominio Monti',s:'Walk/taxi to Via dei Serpenti 109 · ref 57492808 · contact Letizia.',
      btns:[['maps','🗺️ Maps',mapsQ('Via dei Serpenti 109 Roma')],['tel','📞 Letizia',null,'+39064885889']]},
-    {t:'17:30',title:'Last Night Walk 🌅',s:'The relaxed send-off — golden light, gelato, the Forum, then Trastevere for dinner. Full stop-by-stop guide below ↓',hl:true}]}]},
+    {t:'17:30',title:'Last Night Walk 🌅',s:'The relaxed send-off — golden light, gelato, the Forum, then Trastevere for dinner. Full stop-by-stop guide on the next tab → 🌅',hl:true}]}]},
+
+ {id:'satnight',dow:'Sat',num:'🌅',dinner:true,eyebrow:'🌅 Last night in Rome · Sat Jul 25',name:'Last Night Walk',base:'Kleehs · a golden-hour stroll to Trastevere for dinner',lock:'set',
+  intro:'The earned send-off — leave Condominio Monti ~17:30, gelato in hand, no rushing. Follow the stops down to dinner in Trastevere.',
+  walk:SAT_WALK},
 
  {id:'sun26',dow:'Sun',num:'26',name:'Ciao, Roma',base:'Kleehs → London',lock:'semi',
   tracks:[{name:null,rows:[
@@ -791,12 +795,14 @@ function dayScreen(d){
     h += `<div class="pickbar">☝️ ${d.intro}</div>`;
     h += d.menu.map(optHtml).join('');
     if(d.extra) h += optHtml(d.extra);
+  } else if(d.walk){
+    if(d.intro) h += `<div class="pickbar">${d.intro}</div>`;
+    h += walkCard(d.walk);
   } else {
     d.tracks.forEach(tr=>{
       if(tr.name) h += `<div class="trackname">${tr.name}</div>`;
       h += `<ul class="tl">${tr.rows.map(rowHtml).join('')}</ul>`;
     });
-    if(d.walk) h += walkCard(d.walk);
     if(d.foot) h += `<div class="warn" style="margin-top:4px">${d.foot}</div>`;
   }
   return h;
