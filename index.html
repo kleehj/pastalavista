@@ -42,7 +42,7 @@ header{
   padding-top:env(safe-area-inset-top);
   box-shadow:0 2px 10px rgba(51,38,29,.25);
 }
-.brand{display:flex;align-items:baseline;justify-content:space-between;padding:10px 16px 2px}
+.brand{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 4px}
 .brand h1{color:var(--cream);font-size:21px;font-weight:700;letter-spacing:.5px}
 .brand h1 span{color:#F2C98F}
 .brand small{color:#F2C98F;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase}
@@ -212,10 +212,7 @@ footer{max-width:660px;margin:0 auto;padding:0 18px 40px;font-size:12px;color:#B
 <header>
   <div class="brand">
     <h1>PASTA<span>LA</span>VISTA</h1>
-    <div class="brandr">
-      <small>Roma · Toscana 2026</small>
-      <button id="todayBtn" class="todaybtn" hidden>◉ Today</button>
-    </div>
+    <button id="todayBtn" class="todaybtn" hidden>◉ Today</button>
   </div>
   <nav id="tabs"></nav>
 </header>
