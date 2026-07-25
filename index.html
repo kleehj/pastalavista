@@ -891,13 +891,14 @@ tabs.addEventListener('click',e=>{
   const b = e.target.closest('.tab'); if(b) show(b.dataset.id);
 });
 
-const todayBtn = document.getElementById('todayBtn');
-if(TODAY){ todayBtn.hidden = false; todayBtn.addEventListener('click',()=>show(TODAY)); }
+// Reload with a unique ?r=<timestamp> so iOS can't serve a stale cached copy; land on `hash`.
+function hardRefresh(hash){ location.replace(location.pathname + '?r=' + Date.now() + (hash||'')); }
 
-// Force-fetch the latest version (defeats iOS home-screen caching) via a unique query string.
-document.getElementById('refreshBtn').addEventListener('click',()=>{
-  location.replace(location.pathname + '?r=' + Date.now() + location.hash);
-});
+// Today now also force-refreshes (fetches the latest) on its way to today's screen.
+const todayBtn = document.getElementById('todayBtn');
+if(TODAY){ todayBtn.hidden = false; todayBtn.addEventListener('click',()=>hardRefresh('#'+TODAY)); }
+
+document.getElementById('refreshBtn').addEventListener('click',()=>hardRefresh(location.hash));
 
 show(location.hash.replace('#','') || TODAY || 'fri17');
 loadWeather();
